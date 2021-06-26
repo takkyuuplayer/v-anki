@@ -1,0 +1,1624 @@
+[
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}old things that have been thrown away or that have little value "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "a {it}junk{/it} collector"
+                      },
+                      {
+                        "t": "The yard was cluttered with {it}junk{/it} like broken bicycles and old washing machines."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "1 a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}something that is in very poor condition "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "That car is {it}junk{/it}. = That car is a piece of {it}junk{/it}."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "b"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}material that has no real value or interest "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "There's nothing but {it}junk{/it} on TV tonight."
+                      },
+                      {
+                        "t": "movies that fill people's minds with {it}junk{/it}"
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "c"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}{sx|heroin||}"
+                  ]
+                ],
+                "sls": [
+                  "slang"
+                ],
+                "sn": "2"
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "dxnls": [
+      "compare {dxt|junk:2||}"
+    ],
+    "fl": "noun",
+    "gram": "noncount",
+    "hom": 1,
+    "hwi": {
+      "hw": "junk",
+      "prs": [
+        {
+          "ipa": "ˈʤʌŋk",
+          "sound": {
+            "audio": "junk0001"
+          }
+        }
+      ]
+    },
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} old things that have been thrown away or that have little value",
+          "{bc} something that is in very poor condition",
+          "{bc} material that has no real value or interest"
+        ],
+        "fl": "noun",
+        "hw": "junk:1"
+      },
+      "id": "junk:1",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk",
+        "junkier",
+        "junkiest",
+        "junks",
+        "junky"
+      ],
+      "uuid": "c29828ba-fb6a-4df3-975c-5c0ab7eb9ec8"
+    },
+    "shortdef": [
+      "old things that have been thrown away or that have little value",
+      "something that is in very poor condition",
+      "material that has no real value or interest"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an Asian boat that is high in the front and has four-cornered sails"
+                  ]
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "dxnls": [
+      "compare {dxt|junk:1||}"
+    ],
+    "fl": "noun",
+    "gram": "count",
+    "hom": 2,
+    "hwi": {
+      "altprs": [
+        {
+          "ipa": "ˈʤʌŋk"
+        }
+      ],
+      "hw": "junk"
+    },
+    "ins": [
+      {
+        "if": "junks",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} an Asian boat that is high in the front and has four-cornered sails"
+        ],
+        "fl": "noun",
+        "hw": "junk:2"
+      },
+      "id": "junk:2",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk",
+        "junkier",
+        "junkiest",
+        "junks",
+        "junky"
+      ],
+      "uuid": "60886ceb-0a51-443e-a45c-1616cc4e1fd7"
+    },
+    "shortdef": [
+      "an Asian boat that is high in the front and has four-cornered sails"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to get rid of (something) because it is worthless, damaged, etc. "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "We decided to {it}junk{/it} our old computer and buy a new one."
+                      },
+                      {
+                        "t": "{it}junk{/it} an old car"
+                      }
+                    ]
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "sometimes used figuratively "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "They had to {it}junk{/it} [={it}scrap{/it}] their vacation plans when their son got sick."
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sls": [
+                  "informal"
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "verb",
+    "gram": "+ obj",
+    "hom": 3,
+    "hwi": {
+      "altprs": [
+        {
+          "ipa": "ˈʤʌŋk"
+        }
+      ],
+      "hw": "junk"
+    },
+    "ins": [
+      {
+        "if": "junks"
+      },
+      {
+        "if": "junked"
+      },
+      {
+        "if": "junk*ing"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{it}informal{/it} {bc} to get rid of (something) because it is worthless, damaged, etc."
+        ],
+        "fl": "verb",
+        "hw": "junk:3"
+      },
+      "id": "junk:3",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk",
+        "junked",
+        "junking",
+        "junks"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "79295c3c-a54b-4406-8c04-248cbac838c4"
+      },
+      "uuid": "9d7a55f6-b367-4b04-a930-8d263545936d"
+    },
+    "shortdef": [
+      "to get rid of (something) because it is worthless, damaged, etc. —sometimes used figuratively"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a type of bond that pays high interest but also has a high risk"
+                  ]
+                ],
+                "sls": [
+                  "business"
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "noun",
+    "gram": "count",
+    "hwi": {
+      "hw": "junk bond"
+    },
+    "ins": [
+      {
+        "if": "junk bonds",
+        "ifc": "~ bonds",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{it}business{/it} {bc} a type of bond that pays high interest but also has a high risk"
+        ],
+        "fl": "noun",
+        "hw": "junk bond"
+      },
+      "id": "junk bond",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk bond",
+        "junk bonds"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "e72fcce8-de03-45b7-8d03-d59b1a11d446"
+      },
+      "uuid": "aa8eae4b-ca7a-4803-95d6-3efb14ac4861"
+    },
+    "shortdef": [
+      "a type of bond that pays high interest but also has a high risk"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}{sx|spam||}"
+                  ]
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "noun",
+    "gram": "noncount",
+    "hwi": {
+      "hw": "junk e-mail"
+    },
+    "meta": {
+      "app-shortdef": [],
+      "id": "junk e-mail",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk e-mail",
+        "junk e-mails"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "2ce835f2-4719-4fc6-ac9c-a847d61fba67"
+      },
+      "uuid": "70f20db0-c12d-4f06-9a6e-ef52edc0f320"
+    },
+    "shortdef": [
+      "spam"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}food that is not good for your health because it contains high amounts of fat or sugar "
+                  ],
+                  [
+                    "wsgram",
+                    "noncount"
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "worrying about kids eating too much {it}junk food{/it}"
+                      }
+                    ]
+                  ],
+                  [
+                    "wsgram",
+                    "count"
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "eating too many {it}junk foods{/it}"
+                      }
+                    ]
+                  ]
+                ],
+                "sls": [
+                  "informal"
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "noun",
+    "hwi": {
+      "hw": "junk food"
+    },
+    "ins": [
+      {
+        "if": "junk foods",
+        "ifc": "~ foods",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{it}informal{/it} {bc} food that is not good for your health because it contains high amounts of fat or sugar"
+        ],
+        "fl": "noun",
+        "hw": "junk food"
+      },
+      "id": "junk food",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk food",
+        "junk foods"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "04a2b275-a4d3-40c9-8f71-b811bd9414c1"
+      },
+      "uuid": "a4f82aad-e747-4cb9-aae8-17b64aa0e6fe"
+    },
+    "shortdef": [
+      "food that is not good for your health because it contains high amounts of fat or sugar"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}mail that is not wanted {bc}mail that consists mostly of advertising "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "bombarded with {it}junk mail{/it}"
+                      }
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "noun",
+    "gram": "noncount",
+    "hwi": {
+      "hw": "junk mail"
+    },
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} mail that is not wanted {bc} mail that consists mostly of advertising"
+        ],
+        "fl": "noun",
+        "hw": "junk mail"
+      },
+      "id": "junk mail",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "junk mail",
+        "junk mails"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "c05f4e2e-8049-4883-a886-95213e849513"
+      },
+      "uuid": "f292fa73-3d00-4d9f-9c12-82c8b9469a76"
+    },
+    "shortdef": [
+      "mail that is not wanted : mail that consists mostly of advertising"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sen",
+              {
+                "sgram": "count",
+                "sn": "1"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an amount that is cut or separated from a larger section of something "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Divide the pie into six equal {it}pieces{/it}."
+                      },
+                      {
+                        "t": "The cheese was cut into small {it}pieces{/it} and arranged on a silver platter."
+                      }
+                    ]
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "often + {it}of{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "I need a few more {it}pieces of{/it} tape."
+                            },
+                            {
+                              "t": "a long {it}piece of{/it} string"
+                            },
+                            {
+                              "t": "a {it}piece of{/it} wood/metal/plastic/leather/cloth"
+                            },
+                            {
+                              "t": "a {it}piece of{/it} steak/chicken/fish"
+                            },
+                            {
+                              "t": "a {it}piece{/it} [={it}slice{/it}] {it}of{/it} pizza/bread/cake"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {dxt|piece of cake||}{/dx}"
+                  ]
+                ],
+                "sn": "a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an amount of something considered separately from the rest"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "+ {it}of{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "She bought a small {it}piece of{/it} land/property in the country."
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a small often broken part of something "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "{it}pieces{/it} [={it}fragments{/it}] of broken glass"
+                      },
+                      {
+                        "t": "You have a {it}piece{/it} of lettuce stuck between your teeth."
+                      },
+                      {
+                        "t": "Her broken bicycle lay {phrase}in pieces{/phrase} by the side of the road."
+                      },
+                      {
+                        "t": "I watched her rip the letter {phrase}to/into pieces{/phrase} and throw it away."
+                      },
+                      {
+                        "t": "The old bridge was {phrase}blown to pieces{/phrase} [={it}blown apart{/it}] during the war."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "2"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}one of the parts that form a complete thing when they are put together "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "There are 12 {it}pieces{/it} in this stainless steel knife set."
+                      },
+                      {
+                        "t": "a jigsaw puzzle with 500 {it}pieces{/it}"
+                      },
+                      {
+                        "t": "We're missing one {it}piece{/it} of the puzzle."
+                      },
+                      {
+                        "t": "They built up the stone wall one {it}piece{/it} at a time. = They built up the stone wall {phrase}piece by piece{/phrase}."
+                      },
+                      {
+                        "t": "I took apart the engine {it}piece by piece{/it} and put it back together again."
+                      },
+                      {
+                        "t": "({it}Brit{/it}) The rifle {phrase}comes to pieces{/phrase} [=it separates into parts] for easy storage."
+                      },
+                      {
+                        "t": "({it}Brit{/it}) They {phrase}took{/phrase} the bed {phrase}to pieces{/phrase} [=they took apart the bed] and moved it out of the room."
+                      }
+                    ]
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "often used in combination "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "a three-{it}piece{/it} suit"
+                            },
+                            {
+                              "t": "one-{it}piece{/it} bathing suits"
+                            },
+                            {
+                              "t": "a five-{it}piece{/it} band"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "3"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a part of someone or something that is shared with other people {bc}{sx|portion||}"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "+ {it}of{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "a {it}piece of{/it} the jackpot"
+                            },
+                            {
+                              "t": "They went there to claim a {it}piece of{/it} the American dream for themselves."
+                            },
+                            {
+                              "t": "The town is growing fast, and these construction companies want a {it}piece of{/it} the new housing market."
+                            },
+                            {
+                              "t": "Once she became famous, everyone wanted {phrase}a piece of her{/phrase}. = Everyone wanted a {it}piece of{/it} her time. [=everyone wanted her to do things for them]"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {it}a piece of the action{/it} at {dxt|action||} {it}a piece of the pie{/it} at {dxt|pie||}{/dx}"
+                  ]
+                ],
+                "sgram": "singular",
+                "sn": "4"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}one of a particular type of thing"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "+ {it}of{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "Please take out a {it}piece{/it} [={it}sheet{/it}] {it}of{/it} paper and write your name on the top."
+                            },
+                            {
+                              "t": "I packed three {it}pieces of{/it} fruit: two apples and a banana."
+                            },
+                            {
+                              "t": "a {it}piece of{/it} candy/chalk"
+                            },
+                            {
+                              "t": "We had several new {it}pieces of{/it} furniture delivered to our home."
+                            },
+                            {
+                              "t": "You got two {it}pieces of{/it} mail today."
+                            },
+                            {
+                              "t": "a {it}piece of{/it} clothing"
+                            },
+                            {
+                              "t": "an expensive {it}piece of{/it} jewelry/luggage/equipment"
+                            },
+                            {
+                              "t": "His last car was {phrase}a piece of junk{/phrase}. [=it was worthless or of poor quality]"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {dxt|conversation piece||} {dxt|piece of work||}{/dx}"
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "5"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an example or amount of something"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "usually singular"
+                        ]
+                      ],
+                      [
+                        [
+                          "text",
+                          "+ {it}of{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "May I offer you a {it}piece{/it} [={it}bit{/it}] {it}of{/it} advice? [=may I offer you some advice?]"
+                            },
+                            {
+                              "t": "I just heard a wonderful {it}piece of{/it} news!"
+                            },
+                            {
+                              "t": "a new {it}piece of{/it} information/evidence"
+                            },
+                            {
+                              "t": "an important {it}piece of{/it} legislation"
+                            },
+                            {
+                              "t": "a silly {it}piece of{/it} nonsense"
+                            },
+                            {
+                              "t": "That's a really nice {it}piece of{/it} work you've done there!"
+                            },
+                            {
+                              "t": "an impressive {it}piece of{/it} acting"
+                            },
+                            {
+                              "t": "a famous {it}piece{/it} [={it}work{/it}] {it}of{/it} art/literature/music"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "6"
+              }
+            ]
+          ],
+          [
+            [
+              "sen",
+              {
+                "sgram": "count",
+                "sn": "7"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a work of art, music, drama, or literature "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "The statue {it}David{/it} is one of Michelangelo's most famous {it}pieces{/it}."
+                      },
+                      {
+                        "t": "a {it}piece{/it} painted by Pablo Picasso"
+                      },
+                      {
+                        "t": "Next, we will be performing a {it}piece{/it} by J. S. Bach."
+                      },
+                      {
+                        "t": "a piano {it}piece{/it} = a {it}piece{/it} (written) for piano"
+                      },
+                      {
+                        "t": "They performed a short dramatic {it}piece{/it} written for the king's birthday."
+                      }
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {dxt|museum piece||} {dxt|period piece||} {dxt|set piece||}{/dx}"
+                  ]
+                ],
+                "sn": "a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an article in a newspaper or magazine or one of the parts of a television or radio news program "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "He has written several {it}pieces{/it} for the magazine."
+                      },
+                      {
+                        "t": "The newspaper printed her {phrase}opinion piece{/phrase} [=an article that expresses someone's beliefs or views] criticizing the president."
+                      }
+                    ]
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "often + {it}about{/it} or {it}on{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "Did you see that {it}piece about{/it}/{it}on{/it} the earthquake survivors?"
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {dxt|puff piece||}{/dx}"
+                  ]
+                ],
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}one of the small movable objects in a game like chess or checkers "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Move your {it}piece{/it} [={it}man{/it}] forward three spaces."
+                      },
+                      {
+                        "t": "capturing an opponent's {it}pieces{/it}"
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "8"
+              }
+            ]
+          ],
+          [
+            [
+              "sen",
+              {
+                "sgram": "count",
+                "sn": "9"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a coin that has a specified value "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "a 50-cent {it}piece{/it}"
+                      },
+                      {
+                        "t": "a 10-pence {it}piece{/it}"
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a coin that is made of a specified metal "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "30 gold {it}pieces{/it}"
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}{sx|gun||} "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "({it}chiefly US, informal{/it}) He reached into his pocket and pulled out a {it}piece{/it}. [={it}handgun{/it}]"
+                      },
+                      {
+                        "t": "{phrase}artillery pieces{/phrase} [=large guns that shoot over long distances] from the First World War"
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "count",
+                "sn": "10"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}an amount of distance that is not specified "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Their house is a fair {it}piece{/it} from here. [=is a fairly long way away from here]"
+                      },
+                      {
+                        "t": "It's down the road a {it}piece{/it}."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "singular",
+                "sls": [
+                  "US",
+                  "informal"
+                ],
+                "sn": "11"
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "dros": [
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|bit:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "bits and pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to break into parts "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "The old map {it}fell to pieces{/it} [={it}came apart{/it}, {it}fell apart{/it}] in my hands."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "1"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to become ruined or destroyed "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "His life {it}fell to pieces{/it} after his divorce."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "2"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to become unable to control your emotions "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "She {it}falls to pieces{/it} [={it}breaks down{/it}] when she tries to talk about the accident."
+                          },
+                          {
+                            "t": "When he heard the bad news, he just {it}fell to pieces{/it}. [=he started to cry]"
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "3"
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "fall to pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|mind:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "give someone a piece of your mind"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to become unable to behave normally because you are very nervous or upset "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "He tends to {it}go to pieces{/it} [={it}break down{/it}] under pressure."
+                          },
+                          {
+                            "t": "I {it}go{/it} (all) {it}to pieces{/it} if I have to talk in front of a large group of people."
+                          }
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "go to pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}without being hurt or damaged "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "It was a difficult trip, but we all made it home {it}in one piece{/it}. [={it}safe and sound{/it}]"
+                          },
+                          {
+                            "t": "All our furniture arrived {it}in one piece{/it}."
+                          }
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "in one piece"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}having similar qualities or characteristics {bc}matching each other or belonging together "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "She believes that the two crimes are {it}of a piece{/it}. [=are very similar]"
+                          },
+                          {
+                            "t": "We chose these 12 songs for the album because they were {phrase}all of a piece{/phrase}."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "1"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}in agreement or harmony {it}with{/it} something "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "This new theory is very much {it}of a piece{/it} [=(more commonly) {it}consistent{/it}] {it}with{/it} their earlier work."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "2"
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "of a piece"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|pick:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "pick (someone or something) to pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {it}pick up{/it} at {dxt|pick:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "pick up the pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to say what you want to say {bc}to express your opinions or ideas "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "You will all be given a chance to {it}say your piece{/it} [={it}speak your mind{/it}] at the meeting tonight."
+                          },
+                          {
+                            "t": "You've {it}said your piece{/it}, now please let me respond."
+                          }
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "say your piece"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|tear:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "tear (someone or something) to pieces"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to a very great degree {bc}very much "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "We're thrilled {it}to pieces{/it} [={it}to bits{/it}] that you've decided to stay!"
+                          },
+                          {
+                            "t": "She loves him {it}to pieces{/it}."
+                          }
+                        ]
+                      ],
+                      [
+                        "text",
+                        "{dx}see also {dxt|piece:1||2, 3 (above)}{/dx}"
+                      ]
+                    ],
+                    "sls": [
+                      "informal"
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "to pieces"
+      }
+    ],
+    "fl": "noun",
+    "hom": 1,
+    "hwi": {
+      "hw": "piece",
+      "prs": [
+        {
+          "ipa": "ˈpiːs",
+          "sound": {
+            "audio": "piece001"
+          }
+        }
+      ]
+    },
+    "ins": [
+      {
+        "if": "piec*es",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} an amount that is cut or separated from a larger section of something",
+          "{bc} an amount of something considered separately from the rest",
+          "{bc} a small often broken part of something"
+        ],
+        "fl": "noun",
+        "hw": "piece:1"
+      },
+      "highlight": "yes",
+      "id": "piece:1",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "piece",
+        "of a piece",
+        "piece of one's mind",
+        "piece of her mind",
+        "piece of his mind",
+        "piece of their mind",
+        "piece of the action",
+        "pieces",
+        "to pieces",
+        "bits and pieces",
+        "fall to pieces",
+        "give someone a piece of your mind",
+        "go to pieces",
+        "in one piece",
+        "pick (someone or something) to pieces",
+        "pick someone to pieces",
+        "pick something to pieces",
+        "pick to pieces",
+        "pick up the pieces",
+        "say your piece",
+        "tear (someone or something) to pieces",
+        "tear someone to pieces",
+        "tear something to pieces",
+        "tear to pieces",
+        "in pieces",
+        "to/into pieces",
+        "into pieces",
+        "blown to pieces",
+        "piece by piece",
+        "comes to pieces",
+        "took",
+        "a piece of her",
+        "a piece of junk",
+        "opinion piece",
+        "artillery pieces",
+        "all of a piece"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "bb05cc16-c4bb-4dba-b9da-1ed66fdd6d7d"
+      },
+      "uuid": "0356e6ff-d08f-4f44-9d4f-da1569a89912"
+    },
+    "shortdef": [
+      "an amount that is cut or separated from a larger section of something —often + of",
+      "an amount of something considered separately from the rest—+ of",
+      "a small often broken part of something"
+    ]
+  }
+]
