@@ -1,0 +1,120 @@
+[
+  {
+    "dros": [
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}in the bed that you will soon die in "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "She made a startling confession {it}on her deathbed{/it}. [=just before she died]"
+                          }
+                        ]
+                      ],
+                      [
+                        "uns",
+                        [
+                          [
+                            [
+                              "text",
+                              "often used figuratively to say that someone is very close to dying or very sick "
+                            ],
+                            [
+                              "vis",
+                              [
+                                {
+                                  "t": "She's convinced that the old man is {it}on his deathbed{/it}, but he looks healthy enough to me."
+                                },
+                                {
+                                  "t": "I was so sick with the flu—practically {it}on my deathbed{/it}."
+                                }
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "on your deathbed"
+      }
+    ],
+    "fl": "noun",
+    "hwi": {
+      "hw": "death*bed",
+      "prs": [
+        {
+          "ipa": "ˈdɛθˌbɛd",
+          "sound": {
+            "audio": "deathb01"
+          }
+        }
+      ]
+    },
+    "ins": [
+      {
+        "if": "death*beds",
+        "ifc": "-beds",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} in the bed that you will soon die in"
+        ],
+        "fl": "noun",
+        "hw": "deathbed"
+      },
+      "id": "deathbed",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "deathbed",
+        "deathbeds",
+        "on your deathbed"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "62b82e5b-73e3-404d-b884-477abbdc1c05"
+      },
+      "uuid": "2d336b9c-3816-4002-8457-fe23aa67b55a"
+    },
+    "shortdef": [],
+    "uros": [
+      {
+        "fl": "adjective",
+        "lbs": [
+          "always used before a noun"
+        ],
+        "ure": "deathbed",
+        "utxt": [
+          [
+            "vis",
+            [
+              {
+                "t": "a {it}deathbed{/it} confession [=a confession made just before someone dies]"
+              }
+            ]
+          ]
+        ]
+      }
+    ]
+  }
+]

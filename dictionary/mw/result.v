@@ -57,10 +57,12 @@ fn (mut e Entry) from_json(f json2.Any) {
 	}
 	e.gram = mp['gram'].str()
 	mut def := []DefinitionSection{}
-	for ds in mp['def'].arr() {
-		mut d := DefinitionSection{}
-		d.from_json(ds)
-		def << d
+	if 'def' in mp {
+		for ds in mp['def'].arr() {
+			mut d := DefinitionSection{}
+			d.from_json(ds)
+			def << d
+		}
 	}
 	e.def = def
 	if 'uros' in mp {

@@ -5,6 +5,7 @@ import os
 
 fn test_parse_response() ? {
 	{
+		// basic
 		res := mw.parse_response(load('testdata/learners/test.json')) ?
 
 		assert res.len == 10
@@ -46,12 +47,7 @@ fn test_parse_response() ? {
 		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun '
 	}
 	{
-		junk := mw.parse_response(load('testdata/learners/junk.json')) ?
-
-		assert junk.len == 8
-		assert junk[4].meta.app_shortdef.def.len == 0
-	}
-	{
+		// entry in uros
 		entries := mw.parse_response(load('testdata/learners/accountability.json')) ?
 
 		assert entries.len == 1
@@ -67,10 +63,30 @@ fn test_parse_response() ? {
 		assert entry.uros[0].gram == 'noncount'
 	}
 	{
-		entries := mw.parse_response(load('testdata/learners/go_through.json')) ?
-		entry := entries.filter(it.dros.len > 0).filter(it.dros[0].drp == 'go through')
+		// no def section
+		entries := mw.parse_response(load('testdata/learners/deathbed.json')) ?
 
-		assert entry.len == 1
+		assert entries.len == 1
+		assert entries.first().def.len == 0
+		assert entries.first().uros.len == 1
+	}
+	{
+		// meta.app_shortdef.def is not an object
+		entries := mw.parse_response(load('testdata/learners/junk.json')) ?
+
+		assert entries.len == 8
+		assert entries[4].meta.app_shortdef.def.len == 0
+	}
+	{
+		// phrasal verb
+		entries := mw.parse_response(load('testdata/learners/drop_off.json')) ?
+
+		assert entries.len == 2
+
+		last := entries.last()
+
+		assert last.dros.len == 12
+		assert last.dros.filter(it.drp == "drop off").len == 1
 	}
 }
 
