@@ -436,14 +436,13 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
-			if obj.arr().len != 1 {
-				eprintln('UsageNote length with $obj.arr().len')
-			}
 			note.from_json(obj.arr()[0])
 			uns << note
 		} else if label == 'snote' {
 			mut snote := Snote{}
 			snote.from_json(obj)
+		} else {
+			eprintln('unknown label $label in DefinitionText')
 		}
 	}
 
