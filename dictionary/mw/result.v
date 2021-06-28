@@ -336,8 +336,9 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 	}
 	mut sseq := []Sense{}
 	for seq in mp['sseq'].arr() {
-		for sen in seq.arr() {
-			arr := sen.arr()
+		mut sen := Sen{}
+		for item in seq.arr() {
+			arr := item.arr()
 			if arr.len != 2 {
 				eprintln('sseq contains array.len = $arr.len array')
 			}
@@ -345,13 +346,42 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 			if label == 'sense' {
 				mut sense := Sense{}
 				sense.from_json(obj)
+
+				if sen.sgram != '' {
+					sense.dt.text = '[$sen.sgram] $sense.dt.text'
+				}
+
 				sseq << sense
+			} else if label == 'sen' {
+				sen.from_json(obj)
 			} else {
 				eprintln('label = $label is not allowed in sseq')
 			}
 		}
 	}
 	d.sseq = sseq
+}
+
+struct Sen {
+pub mut:
+	sn string
+	//	et
+	//	ins
+	//	lbs
+	//	prs
+	//	sdsense
+	sgram string
+	//	sls
+	//	vrs
+}
+
+fn (mut s Sen) from_json(f json2.Any) {
+	mp := f.as_map()
+
+	s.sn = mp['sn'].str()
+	if 'sgram' in mp {
+		s.sgram = mp['sgram'].str()
+	}
 }
 
 struct Sense {
@@ -363,7 +393,7 @@ pub mut:
 	//	lbs
 	//	prs
 	//	sdsense
-	//	sgram
+	sgram string
 	//	sls
 	//	vrs
 }
@@ -375,6 +405,10 @@ fn (mut s Sense) from_json(f json2.Any) {
 	mut dt := DefinitionText{}
 	dt.from_json(mp['dt'])
 	s.dt = dt
+
+	if 'sgram' in mp {
+		s.sgram = mp['sgram'].str()
+	}
 }
 
 struct DefinitionText {
