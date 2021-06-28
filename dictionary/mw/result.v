@@ -510,6 +510,8 @@ fn (mut s Snote) from_json(f json2.Any) {
 				mp := example.as_map()
 				vis << mp['t'].str()
 			}
+		} else {
+			eprintln('unknown label $label in Snote')
 		}
 	}
 	s.t = texts.join('; ')
