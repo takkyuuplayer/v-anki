@@ -3,15 +3,25 @@ module mw
 
 import x.json2
 
-type Suggestion = []string
+type Suggestions = []string
 type Entries = []Entry
-type Result = Suggestion | Entries
+type Result = Entries | Suggestions
 
 pub fn parse_response(body string) ?Result {
 	raw_entries := json2.raw_decode(body) ?
 
 	mut entries := []Entry{}
-	for _, entry in raw_entries.arr() {
+	arr := raw_entries.arr()
+
+	if arr.len == 0 {
+		return Result(Suggestions([]string{}))
+	}
+
+	if 'meta' !in arr[0].as_map() {
+		return Result(Suggestions(arr.map(it.str())))
+	}
+
+	for _, entry in arr {
 		mut e := Entry{}
 		e.from_json(entry)
 		entries << e

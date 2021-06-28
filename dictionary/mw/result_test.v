@@ -94,11 +94,31 @@ fn test_parse_response() ? {
 		last := entries[1]
 
 		assert last.dros.len == 12
-		assert last.dros.filter(it.drp == "drop off").len == 1
+		assert last.dros.filter(it.drp == 'drop off').len == 1
+	}
+	{
+		// when not found
+		res := mw.parse_response(load('testdata/learners/abcabcabcabc.json')) ?
+
+		assert res is mw.Suggestions
+
+		suggestions := res as mw.Suggestions
+
+		assert suggestions.len == 0
+	}
+	{
+		// when suggested
+		res := mw.parse_response(load('testdata/learners/furnitura.json')) ?
+
+		assert res is mw.Suggestions
+
+		suggestions := res as mw.Suggestions
+
+		assert suggestions.len == 16
+		assert suggestions[0] == 'furniture'
 	}
 }
 
 fn load(testfile string) string {
 	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
 }
-
