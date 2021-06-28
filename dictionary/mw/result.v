@@ -3,7 +3,11 @@ module mw
 
 import x.json2
 
-pub fn parse_response(body string) ?[]Entry {
+type Suggestion = []string
+type Entries = []Entry
+type Result = Suggestion | Entries
+
+pub fn parse_response(body string) ?Result {
 	raw_entries := json2.raw_decode(body) ?
 
 	mut entries := []Entry{}
@@ -13,7 +17,7 @@ pub fn parse_response(body string) ?[]Entry {
 		entries << e
 	}
 
-	return entries
+	return Result(Entries(entries))
 }
 
 struct Entry {

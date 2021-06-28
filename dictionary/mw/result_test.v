@@ -8,9 +8,13 @@ fn test_parse_response() ? {
 		// basic
 		res := mw.parse_response(load('testdata/learners/test.json')) ?
 
-		assert res.len == 10
+		assert res is mw.Entries
 
-		first := res[0]
+		entries := res as mw.Entries
+
+		assert entries.len == 10
+
+		first := entries[0]
 		assert first.meta.id == 'test:1'
 		assert first.meta.uuid == '050b619c-ffad-4eaf-ba0a-93e9dab0e278'
 		assert first.meta.src == 'learners'
@@ -48,7 +52,8 @@ fn test_parse_response() ? {
 	}
 	{
 		// entry in uros
-		entries := mw.parse_response(load('testdata/learners/accountability.json')) ?
+		res := mw.parse_response(load('testdata/learners/accountability.json')) ?
+		entries := res as mw.Entries
 
 		assert entries.len == 1
 
@@ -64,26 +69,29 @@ fn test_parse_response() ? {
 	}
 	{
 		// no def section
-		entries := mw.parse_response(load('testdata/learners/deathbed.json')) ?
+		res := mw.parse_response(load('testdata/learners/deathbed.json')) ?
+		entries := res as mw.Entries
 
 		assert entries.len == 1
-		assert entries.first().def.len == 0
-		assert entries.first().uros.len == 1
+		assert entries[0].def.len == 0
+		assert entries[0].uros.len == 1
 	}
 	{
 		// meta.app_shortdef.def is not an object
-		entries := mw.parse_response(load('testdata/learners/junk.json')) ?
+		res := mw.parse_response(load('testdata/learners/junk.json')) ?
+		entries := res as mw.Entries
 
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
 	}
 	{
 		// phrasal verb
-		entries := mw.parse_response(load('testdata/learners/drop_off.json')) ?
+		res := mw.parse_response(load('testdata/learners/drop_off.json')) ?
+		entries := res as mw.Entries
 
 		assert entries.len == 2
 
-		last := entries.last()
+		last := entries[1]
 
 		assert last.dros.len == 12
 		assert last.dros.filter(it.drp == "drop off").len == 1
