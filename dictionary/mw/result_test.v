@@ -75,7 +75,7 @@ fn test_parse_response() ? {
 		assert entries.len == 1
 		assert entries[0].def.len == 0
 		assert entries[0].uros.len == 1
-		assert entries[0].dros[0].def[0].sseq[0].dt.uns[0].text == "often used figuratively to say that someone is very close to dying or very sick "
+		assert entries[0].dros[0].def[0].sseq[0].dt.uns[0].text == 'often used figuratively to say that someone is very close to dying or very sick '
 	}
 	{
 		// meta.app_shortdef.def is not an object
@@ -85,7 +85,7 @@ fn test_parse_response() ? {
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
 
-		assert entries[7].def[0].sseq[0].sgram == "count"
+		assert entries[7].def[0].sseq[0].sgram == 'count'
 	}
 	{
 		// phrasal verb
