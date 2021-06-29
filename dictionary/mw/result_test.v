@@ -44,11 +44,11 @@ fn test_parse_response() ? {
 		assert first.def[0].sls.len == 0
 		assert first.def[0].sseq.len == 6
 		assert first.def[0].sseq[0].sn == '1'
-		assert first.def[0].sseq[0].dt.text == "{bc}a set of questions or problems that are designed to measure a person's knowledge, skills, or abilities ; {dx}see also {dxt|intelligence test||} {dxt|rorschach test||} {dxt|screen test||}{/dx}"
+		assert first.def[0].sseq[0].dt.text == "{bc}a set of questions or problems that are designed to measure a person's knowledge, skills, or abilities. {dx}see also {dxt|intelligence test||} {dxt|rorschach test||} {dxt|screen test||}{/dx}"
 		assert first.def[0].sseq[0].dt.vis.len == 9
 		assert first.def[0].sseq[0].dt.vis.len == 9
 		assert first.def[0].sseq[3].dt.uns.len == 1
-		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun '
+		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun'
 	}
 	{
 		// entry in uros
@@ -75,7 +75,7 @@ fn test_parse_response() ? {
 		assert entries.len == 1
 		assert entries[0].def.len == 0
 		assert entries[0].uros.len == 1
-		assert entries[0].dros[0].def[0].sseq[0].dt.uns[0].text == 'often used figuratively to say that someone is very close to dying or very sick '
+		assert entries[0].dros[0].def[0].sseq[0].dt.uns[0].text == 'often used figuratively to say that someone is very close to dying or very sick'
 	}
 	{
 		// meta.app_shortdef.def is not an object

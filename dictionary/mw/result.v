@@ -163,7 +163,7 @@ fn (mut a AppShortdef) from_json(f json2.Any) {
 
 	a.hw = mp['hw'].str()
 	a.fl = mp['fl'].str()
-	a.def = mp['def'].arr().map(it.str())
+	a.def = mp['def'].arr().map(it.str().trim_space())
 }
 
 struct Hwi {
@@ -414,11 +414,11 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		items := tuple.arr()
 		label, obj := items[0].str(), items[1]
 		if label == 'text' {
-			texts << obj.str()
+			texts << obj.str().trim_space()
 		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str()
+				vis << mp['t'].str().trim_space()
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
@@ -434,7 +434,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		}
 	}
 
-	d.text = texts.join('; ')
+	d.text = texts.join('. ')
 	d.vis = vis
 	d.uns = uns
 }
@@ -457,7 +457,7 @@ fn (mut u Utxt) from_json(f json2.Any) {
 		if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str()
+				vis << mp['t'].str().trim_space()
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
@@ -493,12 +493,12 @@ fn (mut s Snote) from_json(f json2.Any) {
 		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str()
+				vis << mp['t'].str().trim_space()
 			}
 		} else {
 			eprintln('unknown label $label in Snote')
 		}
 	}
-	s.t = texts.join('; ')
+	s.t = texts.join('. ')
 	s.vis = vis
 }
