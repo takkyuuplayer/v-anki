@@ -10,7 +10,6 @@ type Result = Entries | Suggestions
 pub fn parse_response(body string) ?Result {
 	raw_entries := json2.raw_decode(body) ?
 
-	mut entries := []Entry{}
 	arr := raw_entries.arr()
 
 	if arr.len == 0 {
@@ -21,6 +20,7 @@ pub fn parse_response(body string) ?Result {
 		return Result(Suggestions(arr.map(it.str())))
 	}
 
+	mut entries := []Entry{}
 	for _, entry in arr {
 		mut e := Entry{}
 		e.from_json(entry)
@@ -365,14 +365,7 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 struct Sen {
 pub mut:
 	sn string
-	//	et
-	//	ins
-	//	lbs
-	//	prs
-	//	sdsense
 	sgram string
-	//	sls
-	//	vrs
 }
 
 fn (mut s Sen) from_json(f json2.Any) {
@@ -388,14 +381,7 @@ struct Sense {
 pub mut:
 	sn string
 	dt DefinitionText
-	//	et
-	//	ins
-	//	lbs
-	//	prs
-	//	sdsense
 	sgram string
-	//	sls
-	//	vrs
 }
 
 fn (mut s Sense) from_json(f json2.Any) {
@@ -455,8 +441,6 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 
 type UsageNote = DefinitionText
 
-// type Utxt = DefinitionText
-
 struct Utxt {
 pub mut:
 	vis []string
@@ -495,7 +479,6 @@ struct Snote {
 pub mut:
 	t   string
 	vis []string
-	// ri
 }
 
 fn (mut s Snote) from_json(f json2.Any) {
