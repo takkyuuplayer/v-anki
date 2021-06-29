@@ -347,8 +347,8 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 				mut sense := Sense{}
 				sense.from_json(obj)
 
-				if sen.sgram != '' {
-					sense.dt.text = '[$sen.sgram] $sense.dt.text'
+				if sen.sgram != '' && sense.sgram == '' {
+					sense.sgram = sen.sgram
 				}
 
 				sseq << sense

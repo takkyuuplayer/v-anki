@@ -85,7 +85,7 @@ fn test_parse_response() ? {
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
 
-		assert entries[7].def[0].sseq[0].dt.text[..12] == "[count] {bc}"
+		assert entries[7].def[0].sseq[0].sgram == "count"
 	}
 	{
 		// phrasal verb
