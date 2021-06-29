@@ -441,6 +441,8 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		} else if label == 'snote' {
 			mut snote := Snote{}
 			snote.from_json(obj)
+		} else if label == 'wsgram' {
+			// nothing to do
 		} else {
 			eprintln('unknown label $label in DefinitionText')
 		}
