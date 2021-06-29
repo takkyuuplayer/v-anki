@@ -26,3 +26,15 @@ pub fn (l Learners) lookup_request(word string) http.Request {
 pub fn (l Learners) web_url(word string) string {
 	return 'https://learnersdictionary.com/definition/' + urllib.path_escape(word)
 }
+
+fn candidate(entry Entry, searhword string) bool {
+	mut variants := map[string]bool{}
+	variants[searhword] = true
+
+	is_phrase := searhword.split(' ').len > 1
+	if is_phrase {
+		variants[searhword.replace(' ', '-')] = true
+	}
+
+	return entry.meta.stems.filter(it in variants).len > 0
+}
