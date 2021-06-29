@@ -1,0 +1,1357 @@
+[
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a very steep downward slope "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "The {it}drop-off{/it} along the trail is very steep."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "1"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}a very large decrease in level or amount "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "There has been a {it}drop-off{/it} in attendance this year."
+                      }
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {it}drop off{/it} at {dxt|drop:2||}{/dx}"
+                  ]
+                ],
+                "sn": "2"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}the act of taking someone or something to a place and then leaving {bc}the act of dropping someone or something off "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "This area is for student {it}drop-offs{/it}."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "3"
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "fl": "noun",
+    "gram": "count",
+    "hwi": {
+      "hw": "drop-off",
+      "prs": [
+        {
+          "ipa": "ˈdrɑːpˌɑːf",
+          "sound": {
+            "audio": "drop_o01"
+          }
+        }
+      ]
+    },
+    "ins": [
+      {
+        "if": "drop-offs",
+        "ifc": "-offs",
+        "il": "plural"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} a very steep downward slope",
+          "{bc} a very large decrease in level or amount",
+          "{bc} the act of taking someone or something to a place and then leaving {bc} the act of dropping someone or something off"
+        ],
+        "fl": "noun",
+        "hw": "drop-off"
+      },
+      "id": "drop-off",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "drop-off",
+        "drop-offs"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "279032c8-1d86-4fd9-af1b-c5d3c63af14d"
+      },
+      "uuid": "094ddc46-d019-46cc-9d84-41c43b35c39f"
+    },
+    "shortdef": [
+      "a very steep downward slope",
+      "a very large decrease in level or amount",
+      "the act of taking someone or something to a place and then leaving : the act of dropping someone or something off"
+    ]
+  },
+  {
+    "def": [
+      {
+        "sseq": [
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to let (something) fall "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Be careful not to {it}drop{/it} the chair on your foot."
+                      },
+                      {
+                        "t": "She {it}dropped{/it} the apple core into the trash can."
+                      },
+                      {
+                        "t": "They {it}dropped{/it} bombs on the city."
+                      },
+                      {
+                        "t": "He {it}dropped{/it} the vase and it shattered into pieces."
+                      },
+                      {
+                        "t": "The player {it}dropped{/it} the ball."
+                      },
+                      {
+                        "t": "The trees {it}drop{/it} their needles in the winter. [=the needles fall off the trees in the winter]"
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "1 a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to fall "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "The pen rolled to the edge of the table and {it}dropped{/it} to the floor."
+                      },
+                      {
+                        "t": "The book {it}dropped{/it} from my hand."
+                      },
+                      {
+                        "t": "The ball {it}dropped{/it} between the right and center fielders."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "no obj",
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sen",
+              {
+                "sgram": "no obj",
+                "sn": "2"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to lie down or fall down suddenly "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "He {it}dropped{/it} (down) to the floor and hid under the bed."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to lie down or become unconscious because you are sick or exhausted {bc}{sx|collapse||} "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "She was so tired she felt she would {it}drop{/it}."
+                      },
+                      {
+                        "t": "He worked until he {it}dropped{/it}."
+                      },
+                      {
+                        "t": "({it}informal{/it}) We're going to the mall to {phrase}shop till we drop{/phrase}."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to go down suddenly and form a steep slope "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "The road {it}drops{/it} into the valley."
+                      },
+                      {
+                        "t": "The cliff {it}drops{/it} almost vertically."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "no obj",
+                "sn": "3"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to change to a lower level, amount, position, etc. "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "The temperature {it}dropped{/it} (to 50 degrees)."
+                      },
+                      {
+                        "t": "His voice {it}dropped{/it} [=became quieter] as he told us the secret."
+                      },
+                      {
+                        "t": "Increased competition has caused prices to {it}drop{/it}. [={it}decline, go down{/it}]"
+                      },
+                      {
+                        "t": "Production has {it}dropped{/it}. [={it}decreased{/it}]"
+                      },
+                      {
+                        "t": "The team has {it}dropped{/it} [={it}fallen{/it}] to third place."
+                      },
+                      {
+                        "t": "He {it}dropped{/it} [={it}fell{/it}] behind the other runners when he hurt his ankle."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "no obj",
+                "sn": "4 a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to cause (something) to lessen or decrease in level or amount "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "He {it}dropped{/it} [={it}lowered{/it}] his voice."
+                      },
+                      {
+                        "t": "She {it}dropped{/it} [={it}reduced{/it}] her speed when she saw the patrol car."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to send (someone) a letter, note, etc. "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "I'll {it}drop{/it} you an e-mail when I know my schedule."
+                      },
+                      {
+                        "t": "{phrase}Drop me a line{/phrase} [=write me a letter] sometime."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "5"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to stop talking or thinking about (something) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "You can {it}drop{/it} that idea right now."
+                      },
+                      {
+                        "t": "Let's just {phrase}drop the subject{/phrase}."
+                      },
+                      {
+                        "t": "Just {phrase}drop it{/phrase}. I don't want to talk about it any more."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "6 a"
+              }
+            ],
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to stop being talked about "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Please let the matter {it}drop{/it}."
+                      },
+                      {
+                        "t": "Once he starts talking about a subject he just won't {phrase}let it drop{/phrase}."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "no obj",
+                "sn": "b"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to stop doing or continuing with (something) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "I'm going to {it}drop{/it} my calculus class and take a biology course instead."
+                      },
+                      {
+                        "t": "New evidence was found and the case was {it}dropped{/it}."
+                      },
+                      {
+                        "t": "The prosecutors {phrase}dropped the charges{/phrase} against her."
+                      },
+                      {
+                        "t": "I {phrase}dropped everything{/phrase} [=stopped what I was doing] and ran to the window to see what was going on."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "7"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to not include (someone or something) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "You should {it}drop{/it} [={it}cut, omit{/it}] this sentence from your essay."
+                      },
+                      {
+                        "t": "The newspaper decided to {it}drop{/it} the story."
+                      },
+                      {
+                        "t": "He was {it}dropped{/it} from the team."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "8"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to suddenly end a relationship or connection with (someone) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "They dated for a while, but then she suddenly {it}dropped{/it} him."
+                      },
+                      {
+                        "t": "She moved away and {it}dropped{/it} her old friends."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "9"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to take (someone or something) to a place and then leave "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "She {it}dropped{/it} him in front of the library."
+                      },
+                      {
+                        "t": "He {it}dropped{/it} the package at the post office this morning."
+                      }
+                    ]
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "often + {it}off{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "I {it}drop{/it} the kids {it}off{/it} at school in the morning."
+                            },
+                            {
+                              "t": "I'll {it}drop off{/it} the paperwork as soon as it's all filled out."
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "10"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to make a brief social visit"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "usually + {it}by{/it} or {it}in{/it} or {it}over{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "His sister {it}dropped by{/it} unexpectedly."
+                            },
+                            {
+                              "t": "They {it}dropped in{/it} for a chat."
+                            },
+                            {
+                              "t": "{it}Drop over{/it} sometime!"
+                            },
+                            {
+                              "t": "We were in the neighborhood and thought we would {phrase}drop in on{/phrase} you."
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "text",
+                    "{dx}see also {dxt|drop-in||}{/dx}"
+                  ]
+                ],
+                "lbs": [
+                  "always followed by an adverb or preposition"
+                ],
+                "sgram": "no obj",
+                "sn": "11"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to say (something) in an informal or casual way "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "He casually {it}dropped{/it} the news that they are getting married."
+                      },
+                      {
+                        "t": "She's always {phrase}dropping names{/phrase}. [=saying the names of famous people she knows to try to impress others]"
+                      },
+                      {
+                        "t": "She has been {phrase}dropping hints{/phrase} that she is looking for another job."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "12"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to lose (a game) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "They {it}dropped{/it} the first game but won the next two."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sls": [
+                  "informal"
+                ],
+                "sn": "13"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to spend (an amount of money)"
+                  ],
+                  [
+                    "uns",
+                    [
+                      [
+                        [
+                          "text",
+                          "usually + {it}on{/it} "
+                        ],
+                        [
+                          "vis",
+                          [
+                            {
+                              "t": "She {it}dropped{/it} $300 {it}on{/it} a new suit."
+                            }
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sls": [
+                  "informal"
+                ],
+                "sn": "14"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to lose (an amount of weight) "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Through diet and exercise, I managed to {it}drop{/it} 20 pounds in a year."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sls": [
+                  "informal"
+                ],
+                "sn": "15"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to move down "
+                  ],
+                  [
+                    "wsgram",
+                    "+ obj"
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "When the teacher became angry at her, she {phrase}dropped her eyes/head{/phrase}. [=she looked down]"
+                      }
+                    ]
+                  ],
+                  [
+                    "wsgram",
+                    "no obj"
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "His gaze {it}dropped{/it} to the floor in embarrassment."
+                      }
+                    ]
+                  ]
+                ],
+                "sn": "16"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to let (a loop of yarn) fall off a knitting needle "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "Count the stitches on the needle to make sure you didn't {it}drop{/it} one."
+                      },
+                      {
+                        "t": "Be careful you don't {phrase}drop a stitch{/phrase}."
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sls": [
+                  "knitting"
+                ],
+                "sn": "17"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to not pronounce (a letter) when you speak "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "When she spoke quickly, she {it}dropped{/it} the {ldquo}g{rdquo} in {ldquo}running.{rdquo}"
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sn": "18"
+              }
+            ]
+          ],
+          [
+            [
+              "sense",
+              {
+                "dt": [
+                  [
+                    "text",
+                    "{bc}to take (a drug) by swallowing it "
+                  ],
+                  [
+                    "vis",
+                    [
+                      {
+                        "t": "They {phrase}dropped acid{/phrase}. [=they took LSD]"
+                      }
+                    ]
+                  ]
+                ],
+                "sgram": "+ obj",
+                "sls": [
+                  "informal"
+                ],
+                "sn": "19"
+              }
+            ]
+          ]
+        ]
+      }
+    ],
+    "dros": [
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to make a very bad or embarrassing mistake"
+                      ]
+                    ],
+                    "sls": [
+                      "British",
+                      "informal"
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop a brick",
+        "vrs": [
+          {
+            "va": "drop a clanger",
+            "vl": "or"
+          }
+        ]
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to move straight back from the line of scrimmage "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "The quarterback {it}dropped back{/it} and threw a long pass down the field."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sls": [
+                      "American football"
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop back",
+        "gram": "phrasal verb"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|dead:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop dead"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|lap:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop in/into/on your lap"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to decrease in amount "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "After the holidays, business usually {it}drops off{/it}."
+                          }
+                        ]
+                      ]
+                    ],
+                    "sn": "1"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to fall asleep "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "The baby tends to {it}drop off{/it} after he eats."
+                          },
+                          {
+                            "t": "She lay down and {phrase}dropped off to sleep{/phrase}."
+                          }
+                        ]
+                      ],
+                      [
+                        "text",
+                        "{dx}see also {dxt|drop:2||10 (above)}{/dx}"
+                      ]
+                    ],
+                    "sn": "2"
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop off",
+        "gram": "phrasal verb"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to stop attending a school or university before you have completed your studies "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "He {it}dropped out{/it} after 10th grade."
+                          }
+                        ]
+                      ],
+                      [
+                        "uns",
+                        [
+                          [
+                            [
+                              "text",
+                              "often + {it}of{/it} "
+                            ],
+                            [
+                              "vis",
+                              [
+                                {
+                                  "t": "He {it}dropped out of{/it} [={it}quit{/it}] college/school and began working full-time."
+                                }
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    "sn": "1"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to stop being part of a group"
+                      ],
+                      [
+                        "uns",
+                        [
+                          [
+                            [
+                              "text",
+                              "usually + {it}of{/it} "
+                            ],
+                            [
+                              "vis",
+                              [
+                                {
+                                  "t": "She was the first to {it}drop out of{/it} the band."
+                                }
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    "sn": "2"
+                  }
+                ]
+              ],
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to stop being involved in regular society because you do not agree with or support its rules, customs, and values "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "Back in the sixties he {it}dropped out{/it} and lived as a hippie for several years."
+                          }
+                        ]
+                      ],
+                      [
+                        "text",
+                        "{dx}see also {dxt|dropout||}{/dx}"
+                      ]
+                    ],
+                    "sn": "3"
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop out",
+        "gram": "phrasal verb"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{bc}to stop being seen "
+                      ],
+                      [
+                        "vis",
+                        [
+                          {
+                            "t": "The house {it}dropped out of sight{/it} as we drove over the hill."
+                          },
+                          {
+                            "t": "a famous and successful actor who suddenly {it}dropped out of sight{/it}"
+                          }
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop out of sight"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|ball:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "drop the ball"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|jaw:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "jaw drops"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|bottom:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "the bottom drops out"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|penny||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "the penny drops"
+      },
+      {
+        "def": [
+          {
+            "sseq": [
+              [
+                [
+                  "sense",
+                  {
+                    "dt": [
+                      [
+                        "text",
+                        "{dx}see {dxt|pin:1||}{/dx}"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        "drp": "you could hear a pin drop"
+      }
+    ],
+    "fl": "verb",
+    "hom": 2,
+    "hwi": {
+      "altprs": [
+        {
+          "ipa": "ˈdrɑːp"
+        }
+      ],
+      "hw": "drop"
+    },
+    "ins": [
+      {
+        "if": "drops"
+      },
+      {
+        "if": "dropped"
+      },
+      {
+        "if": "drop*ping"
+      }
+    ],
+    "meta": {
+      "app-shortdef": {
+        "def": [
+          "{bc} to let (something) fall",
+          "{bc} to fall",
+          "{bc} to lie down or fall down suddenly"
+        ],
+        "fl": "verb",
+        "hw": "drop:2"
+      },
+      "highlight": "yes",
+      "id": "drop:2",
+      "offensive": false,
+      "section": "alpha",
+      "src": "learners",
+      "stems": [
+        "drop",
+        "drop a dime",
+        "drop behind",
+        "drop the ball",
+        "droppable",
+        "dropped",
+        "dropping",
+        "drops",
+        "drop a brick",
+        "drop a clanger",
+        "drop back",
+        "drop dead",
+        "drop in/into/on your lap",
+        "drop in your lap",
+        "drop into your lap",
+        "drop on your lap",
+        "drop off",
+        "drop out",
+        "drop out of sight",
+        "jaw drops",
+        "the bottom drops out",
+        "the penny drops",
+        "you could hear a pin drop",
+        "shop till we drop",
+        "drop me a line",
+        "drop the subject",
+        "drop it",
+        "let it drop",
+        "dropped the charges",
+        "dropped everything",
+        "drop in on",
+        "dropping names",
+        "dropping hints",
+        "dropped her eyes/head",
+        "dropped her eyes",
+        "dropped her head",
+        "drop a stitch",
+        "dropped acid",
+        "dropped off to sleep"
+      ],
+      "target": {
+        "tsrc": "collegiate",
+        "tuuid": "1d1f4311-050d-42f1-8320-c5717b94be8e"
+      },
+      "uuid": "e074c7c9-e3b5-42d8-bb21-99fff3a14a9d"
+    },
+    "shortdef": [
+      "to let (something) fall",
+      "to fall",
+      "to lie down or fall down suddenly"
+    ]
+  }
+]
