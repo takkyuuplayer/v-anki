@@ -2,6 +2,9 @@ module mw
 
 import net.http
 import net.urllib
+import dictionary
+
+const dictionary_learners = "Merriam-Webster's Learner's Dictionary"
 
 struct Learners {
 	api_key string
@@ -20,6 +23,23 @@ pub fn (l Learners) lookup_request(word string) http.Request {
 	return http.Request{
 		method: http.Method.get
 		url: url
+	}
+}
+
+pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.Result {
+	if result is []string {
+		return dictionary.Result{
+			word: word
+			dictionary: mw.dictionary_learners
+			web_url: l.web_url(word)
+			suggestion: result
+		}
+	}
+
+	return dictionary.Result{
+		word: word
+		dictionary: mw.dictionary_learners
+		web_url: l.web_url(word)
 	}
 }
 
