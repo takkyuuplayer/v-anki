@@ -18,25 +18,12 @@ fn test_web_url() {
 }
 
 fn test_candidate() {
-	{
-		// basic
-		entry := Entry{
-			meta: Meta{
-				stems: ['drop', 'drops', 'drop off']
-			}
+	entry := Entry{
+		meta: Meta{
+			stems: ['drop', 'drops', 'drop off']
 		}
-		assert candidate(entry, 'drop') == true
-		assert candidate(entry, 'drops') == true
-		assert candidate(entry, 'dropped') == false
-		assert candidate(entry, 'drop off') == true
 	}
-	{
-		// phrase with hyphen(-)
-		entry := Entry{
-			meta: Meta{
-				stems: ['drop-off']
-			}
-		}
-		assert candidate(entry, 'drop off') == true
-	}
+	assert candidate('drop', entry) == true
+	assert candidate('DROPS', entry) == true
+	assert candidate('drop-off', entry) == false
 }
