@@ -3,9 +3,7 @@ module mw
 
 import x.json2
 
-type Suggestions = []string
-type Entries = []Entry
-type Result = Entries | Suggestions
+type Result = []Entry | []string
 
 pub fn parse_response(body string) ?Result {
 	raw_entries := json2.raw_decode(body) ?
@@ -13,11 +11,11 @@ pub fn parse_response(body string) ?Result {
 	arr := raw_entries.arr()
 
 	if arr.len == 0 {
-		return Result(Suggestions([]string{}))
+		return Result([]string{})
 	}
 
 	if 'meta' !in arr[0].as_map() {
-		return Result(Suggestions(arr.map(it.str())))
+		return Result(arr.map(it.str()))
 	}
 
 	mut entries := []Entry{}
@@ -27,7 +25,7 @@ pub fn parse_response(body string) ?Result {
 		entries << e
 	}
 
-	return Result(Entries(entries))
+	return entries
 }
 
 struct Entry {

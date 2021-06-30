@@ -8,9 +8,9 @@ fn test_parse_response() ? {
 		// basic
 		res := mw.parse_response(load('testdata/learners/test.json')) ?
 
-		assert res is mw.Entries
+		assert res is []mw.Entry
 
-		entries := res as mw.Entries
+		entries := res as []mw.Entry
 
 		assert entries.len == 10
 
@@ -53,7 +53,7 @@ fn test_parse_response() ? {
 	{
 		// entry in uros
 		res := mw.parse_response(load('testdata/learners/accountability.json')) ?
-		entries := res as mw.Entries
+		entries := res as []mw.Entry
 
 		assert entries.len == 1
 
@@ -70,7 +70,7 @@ fn test_parse_response() ? {
 	{
 		// no def section
 		res := mw.parse_response(load('testdata/learners/deathbed.json')) ?
-		entries := res as mw.Entries
+		entries := res as []mw.Entry
 
 		assert entries.len == 1
 		assert entries[0].def.len == 0
@@ -80,7 +80,7 @@ fn test_parse_response() ? {
 	{
 		// meta.app_shortdef.def is not an object
 		res := mw.parse_response(load('testdata/learners/junk.json')) ?
-		entries := res as mw.Entries
+		entries := res as []mw.Entry
 
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
@@ -90,7 +90,7 @@ fn test_parse_response() ? {
 	{
 		// phrasal verb
 		res := mw.parse_response(load('testdata/learners/drop_off.json')) ?
-		entries := res as mw.Entries
+		entries := res as []mw.Entry
 
 		assert entries.len == 2
 
@@ -103,9 +103,9 @@ fn test_parse_response() ? {
 		// when not found
 		res := mw.parse_response(load('testdata/learners/abcabcabcabc.json')) ?
 
-		assert res is mw.Suggestions
+		assert res is []string
 
-		suggestions := res as mw.Suggestions
+		suggestions := res as []string
 
 		assert suggestions.len == 0
 	}
@@ -113,9 +113,9 @@ fn test_parse_response() ? {
 		// when suggested
 		res := mw.parse_response(load('testdata/learners/furnitura.json')) ?
 
-		assert res is mw.Suggestions
+		assert res is []string
 
-		suggestions := res as mw.Suggestions
+		suggestions := res as []string
 
 		assert suggestions.len == 16
 		assert suggestions[0] == 'furniture'
