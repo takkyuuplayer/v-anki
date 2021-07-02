@@ -22,6 +22,7 @@ pub:
 
 pub struct Definition {
 pub:
+	grammatical_note string
 	sense    string
 	examples []string
 }
