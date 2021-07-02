@@ -37,53 +37,92 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 	}
 
 	mut dict_entries := []dictionary.Entry{}
-	// is_phrase := word.split(" ").len > 1
+	is_phrase := word.split(' ').len > 1
 	for entry in result as []Entry {
 		if !candidate(word, entry) {
 			continue
 		}
-		base_word := entry.meta.app_shortdef.hw.split(':')[0]
-		if word == base_word {
-			mut definitions := []dictionary.Definition{}
-			for def in entry.def {
-				for sense in def.sseq {
-					definitions << dictionary.Definition{
-						grammatical_note: sense.sgram
-						sense: sense.dt.text
-						examples: sense.dt.vis
+		// base_word := entry.meta.app_shortdef.hw.split(':')[0]
+		if !is_phrase {
+			{
+				mut definitions := []dictionary.Definition{}
+				for def in entry.def {
+					for sense in def.sseq {
+						definitions << dictionary.Definition{
+							grammatical_note: sense.sgram
+							sense: sense.dt.text
+							examples: sense.dt.vis
+						}
 					}
 				}
-			}
-			dict_entries << dictionary.Entry{
-				id: entry.meta.id
-				headword: base_word
-				function_label: entry.fl
-				grammatical_note: entry.gram
-				pronunciation: dictionary.Pronunciation{
-					notation: 'IPA'
-					accents: entry.hwi.prs.map(fn (pr Pr) dictionary.Accent {
-						return dictionary.Accent{
-							label: pr.l
-							spelling: pr.ipa
+				dict_entries << dictionary.Entry{
+					id: entry.meta.id
+					headword: entry.hwi.hw
+					function_label: entry.fl
+					grammatical_note: entry.gram
+					pronunciation: dictionary.Pronunciation{
+						notation: 'IPA'
+						accents: entry.hwi.prs.map(fn (pr Pr) dictionary.Accent {
+							return dictionary.Accent{
+								label: pr.l
+								spelling: pr.ipa
+							}
+						})
+					}
+					inflections: entry.ins.map(fn (inf Inf) dictionary.Inflection {
+						return dictionary.Inflection{
+							form_label: inf.il
+							inflected_form: inf.inf
+							pronunciation: dictionary.Pronunciation{
+								notation: 'IPA'
+								accents: inf.prs.map(fn (pr Pr) dictionary.Accent {
+									return dictionary.Accent{
+										label: pr.l
+										spelling: pr.ipa
+									}
+								})
+							}
 						}
 					})
+					definitions: definitions
 				}
-				inflections: entry.ins.map(fn (inf Inf) dictionary.Inflection {
-					return dictionary.Inflection{
-						form_label: inf.il
-						inflected_form: inf.inf
-						pronunciation: dictionary.Pronunciation{
-							notation: 'IPA'
-							accents: inf.prs.map(fn (pr Pr) dictionary.Accent {
-								return dictionary.Accent{
-									label: pr.l
-									spelling: pr.ipa
-								}
-							})
-						}
+			}
+			for uro in entry.uros {
+				mut definitions := []dictionary.Definition{}
+				definitions << dictionary.Definition{
+					examples: uro.utxt.vis
+				}
+				dict_entries << dictionary.Entry{
+					id: '$entry.meta.id-$uro.ure'
+					headword: uro.ure
+					function_label: uro.fl
+					grammatical_note: uro.gram
+					pronunciation: dictionary.Pronunciation{
+						notation: 'IPA'
+						accents: uro.prs.map(fn (pr Pr) dictionary.Accent {
+							return dictionary.Accent{
+								label: pr.l
+								spelling: pr.ipa
+							}
+						})
 					}
-				})
-				definitions: definitions
+					inflections: uro.ins.map(fn (inf Inf) dictionary.Inflection {
+						return dictionary.Inflection{
+							form_label: inf.il
+							inflected_form: inf.inf
+							pronunciation: dictionary.Pronunciation{
+								notation: 'IPA'
+								accents: inf.prs.map(fn (pr Pr) dictionary.Accent {
+									return dictionary.Accent{
+										label: pr.l
+										spelling: pr.ipa
+									}
+								})
+							}
+						}
+					})
+					definitions: definitions
+				}
 			}
 		}
 	}

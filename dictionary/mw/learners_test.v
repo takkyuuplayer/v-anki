@@ -40,6 +40,7 @@ fn test_to_dictionary_result() ? {
 		assert res.word == 'test'
 		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
 		assert res.web_url == 'https://learnersdictionary.com/definition/test'
+		dump(res)
 		assert res.entries.len == 2
 		first := res.entries.first()
 		assert first == dictionary.Entry{
@@ -79,6 +80,15 @@ fn test_to_dictionary_result() ? {
 				'The college relies on {phrase}test scores{/phrase} in its admissions process.',
 			]
 		}
+	}
+	{
+		// uros
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/accountability.json')) ?
+		res := learners.to_dictionary_result('accountability', entries)
+
+		assert res.word == 'accountable'
+		assert res.entries.len == 2
 	}
 	{
 		// Suggestions
