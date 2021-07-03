@@ -202,18 +202,12 @@ fn (mut p Pr) from_json(f json2.Any) {
 }
 
 fn (prs []Pr) to_dictionary_result() dictionary.Pronunciation {
-	return dictionary.Pronunciation
-	{
-		notation:
-		'IPA'
-		accents:
-		prs.map(fn (pr Pr) dictionary.Accent {
-			return dictionary.Accent
-			{
-				label:
-				pr.l
-				spelling:
-				pr.ipa
+	return dictionary.Pronunciation{
+		notation: 'IPA'
+		accents: prs.map(fn (pr Pr) dictionary.Accent {
+			return dictionary.Accent{
+				label: pr.l
+				spelling: pr.ipa
 			}
 		})
 	}
@@ -252,6 +246,16 @@ fn (mut i Inf) from_json(f json2.Any) {
 			prs << p
 		}
 	}
+}
+
+fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
+	return ins.map(fn (inf Inf) dictionary.Inflection {
+		return dictionary.Inflection{
+			form_label: inf.il
+			inflected_form: inf.inf
+			pronunciation: inf.prs.to_dictionary_result()
+		}
+	})
 }
 
 struct Uro {

@@ -61,13 +61,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					function_label: entry.fl
 					grammatical_note: entry.gram
 					pronunciation: entry.hwi.prs.to_dictionary_result()
-					inflections: entry.ins.map(fn (inf Inf) dictionary.Inflection {
-						return dictionary.Inflection{
-							form_label: inf.il
-							inflected_form: inf.inf
-							pronunciation: inf.prs.to_dictionary_result()
-						}
-					})
+					inflections: entry.ins.to_dictionary_result()
 					definitions: definitions
 				}
 			}
@@ -82,13 +76,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					function_label: uro.fl
 					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
-					inflections: uro.ins.map(fn (inf Inf) dictionary.Inflection {
-						return dictionary.Inflection{
-							form_label: inf.il
-							inflected_form: inf.inf
-							pronunciation: inf.prs.to_dictionary_result()
-						}
-					})
+					inflections: uro.ins.to_dictionary_result()
 					definitions: definitions
 				}
 			}
