@@ -362,7 +362,7 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 
 struct Sen {
 pub mut:
-	sn string
+	sn    string
 	sgram string
 }
 
@@ -377,8 +377,8 @@ fn (mut s Sen) from_json(f json2.Any) {
 
 struct Sense {
 pub mut:
-	sn string
-	dt DefinitionText
+	sn    string
+	dt    DefinitionText
 	sgram string
 }
 

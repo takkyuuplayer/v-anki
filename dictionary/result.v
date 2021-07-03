@@ -23,8 +23,8 @@ pub:
 pub struct Definition {
 pub:
 	grammatical_note string
-	sense    string
-	examples []string
+	sense            string
+	examples         []string
 }
 
 pub struct Inflection {
