@@ -60,28 +60,12 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					headword: entry.hwi.hw.replace('*', '')
 					function_label: entry.fl
 					grammatical_note: entry.gram
-					pronunciation: dictionary.Pronunciation{
-						notation: 'IPA'
-						accents: entry.hwi.prs.map(fn (pr Pr) dictionary.Accent {
-							return dictionary.Accent{
-								label: pr.l
-								spelling: pr.ipa
-							}
-						})
-					}
+					pronunciation: entry.hwi.prs.to_dictionary_result()
 					inflections: entry.ins.map(fn (inf Inf) dictionary.Inflection {
 						return dictionary.Inflection{
 							form_label: inf.il
 							inflected_form: inf.inf
-							pronunciation: dictionary.Pronunciation{
-								notation: 'IPA'
-								accents: inf.prs.map(fn (pr Pr) dictionary.Accent {
-									return dictionary.Accent{
-										label: pr.l
-										spelling: pr.ipa
-									}
-								})
-							}
+							pronunciation: inf.prs.to_dictionary_result()
 						}
 					})
 					definitions: definitions
@@ -97,28 +81,12 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					headword: uro.ure.replace('*', '')
 					function_label: uro.fl
 					grammatical_note: uro.gram
-					pronunciation: dictionary.Pronunciation{
-						notation: 'IPA'
-						accents: uro.prs.map(fn (pr Pr) dictionary.Accent {
-							return dictionary.Accent{
-								label: pr.l
-								spelling: pr.ipa
-							}
-						})
-					}
+					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.map(fn (inf Inf) dictionary.Inflection {
 						return dictionary.Inflection{
 							form_label: inf.il
 							inflected_form: inf.inf
-							pronunciation: dictionary.Pronunciation{
-								notation: 'IPA'
-								accents: inf.prs.map(fn (pr Pr) dictionary.Accent {
-									return dictionary.Accent{
-										label: pr.l
-										spelling: pr.ipa
-									}
-								})
-							}
+							pronunciation: inf.prs.to_dictionary_result()
 						}
 					})
 					definitions: definitions

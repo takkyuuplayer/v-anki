@@ -2,6 +2,7 @@
 module mw
 
 import x.json2
+import dictionary
 
 type Result = []Entry | []string
 
@@ -198,6 +199,24 @@ fn (mut p Pr) from_json(f json2.Any) {
 	mut sound := Sound{}
 	sound.from_json(mp['sound'])
 	p.sound = sound
+}
+
+fn (prs []Pr) to_dictionary_result() dictionary.Pronunciation {
+	return dictionary.Pronunciation
+	{
+		notation:
+		'IPA'
+		accents:
+		prs.map(fn (pr Pr) dictionary.Accent {
+			return dictionary.Accent
+			{
+				label:
+				pr.l
+				spelling:
+				pr.ipa
+			}
+		})
+	}
 }
 
 struct Sound {
