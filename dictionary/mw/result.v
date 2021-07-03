@@ -349,6 +349,20 @@ pub mut:
 	sseq []Sense
 }
 
+fn (sections []DefinitionSection) to_dictionary_result() []dictionary.Definition {
+	mut definitions := []dictionary.Definition{}
+	for section in sections {
+		for sense in section.sseq {
+			definitions << dictionary.Definition{
+				grammatical_note: sense.sgram
+				sense: sense.dt.text
+				examples: sense.dt.vis
+			}
+		}
+	}
+	return definitions
+}
+
 fn (mut d DefinitionSection) from_json(f json2.Any) {
 	mp := f.as_map()
 

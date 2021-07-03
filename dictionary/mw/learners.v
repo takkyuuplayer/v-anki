@@ -45,16 +45,6 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 		// base_word := entry.meta.app_shortdef.hw.split(':')[0]
 		if !is_phrase {
 			{
-				mut definitions := []dictionary.Definition{}
-				for def in entry.def {
-					for sense in def.sseq {
-						definitions << dictionary.Definition{
-							grammatical_note: sense.sgram
-							sense: sense.dt.text
-							examples: sense.dt.vis
-						}
-					}
-				}
 				dict_entries << dictionary.Entry{
 					id: entry.meta.id
 					headword: entry.hwi.hw.replace('*', '')
@@ -62,14 +52,10 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					grammatical_note: entry.gram
 					pronunciation: entry.hwi.prs.to_dictionary_result()
 					inflections: entry.ins.to_dictionary_result()
-					definitions: definitions
+					definitions: entry.def.to_dictionary_result()
 				}
 			}
 			for uro in entry.uros {
-				mut definitions := []dictionary.Definition{}
-				definitions << dictionary.Definition{
-					examples: uro.utxt.vis
-				}
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$uro.ure'
 					headword: uro.ure.replace('*', '')
@@ -77,7 +63,9 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
-					definitions: definitions
+					definitions: [dictionary.Definition{
+						examples: uro.utxt.vis
+					}]
 				}
 			}
 		}
@@ -85,21 +73,11 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 			if dro.drp != word {
 				continue
 			}
-			mut definitions := []dictionary.Definition{}
-			for def in dro.def {
-				for sense in def.sseq {
-					definitions << dictionary.Definition{
-						grammatical_note: sense.sgram
-						sense: sense.dt.text
-						examples: sense.dt.vis
-					}
-				}
-			}
 			dict_entries << dictionary.Entry{
 				id: '$entry.meta.id-$dro.drp'
 				headword: dro.drp
 				function_label: dro.gram
-				definitions: definitions
+				definitions: dro.def.to_dictionary_result()
 			}
 		}
 	}
