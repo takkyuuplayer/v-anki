@@ -57,7 +57,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 				}
 				dict_entries << dictionary.Entry{
 					id: entry.meta.id
-					headword: entry.hwi.hw
+					headword: entry.hwi.hw.replace('*', '')
 					function_label: entry.fl
 					grammatical_note: entry.gram
 					pronunciation: dictionary.Pronunciation{
@@ -94,7 +94,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 				}
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$uro.ure'
-					headword: uro.ure
+					headword: uro.ure.replace('*', '')
 					function_label: uro.fl
 					grammatical_note: uro.gram
 					pronunciation: dictionary.Pronunciation{
@@ -123,6 +123,27 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					})
 					definitions: definitions
 				}
+			}
+		}
+		for dro in entry.dros {
+			if dro.drp != word {
+				continue
+			}
+			mut definitions := []dictionary.Definition{}
+			for def in dro.def {
+				for sense in def.sseq {
+					definitions << dictionary.Definition{
+						grammatical_note: sense.sgram
+						sense: sense.dt.text
+						examples: sense.dt.vis
+					}
+				}
+			}
+			dict_entries << dictionary.Entry{
+				id: '$entry.meta.id-$dro.drp'
+				headword: dro.drp
+				function_label: dro.gram
+				definitions: definitions
 			}
 		}
 	}

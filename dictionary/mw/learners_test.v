@@ -40,8 +40,7 @@ fn test_to_dictionary_result() ? {
 		assert res.word == 'test'
 		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
 		assert res.web_url == 'https://learnersdictionary.com/definition/test'
-		dump(res)
-		assert res.entries.len == 2
+		assert res.entries.len == 3
 		first := res.entries.first()
 		assert first == dictionary.Entry{
 			id: 'test:1'
@@ -89,6 +88,60 @@ fn test_to_dictionary_result() ? {
 
 		assert res.word == 'accountable'
 		assert res.entries.len == 2
+		assert res.entries[1] == dictionary.Entry{
+			id: 'accountable-ac*count*abil*i*ty'
+			headword: 'accountability'
+			function_label: 'noun'
+			grammatical_note: 'noncount'
+			pronunciation: dictionary.Pronunciation{
+				notation: 'IPA'
+				accents: [dictionary.Accent{
+					label: ''
+					spelling: 'əˌkæʊntəˈbɪləti'
+					audio: ''
+				}]
+			}
+			inflections: []
+			definitions: [dictionary.Definition{
+				grammatical_note: ''
+				sense: ''
+				examples: [
+					'We now have greater {it}accountability{/it} in the department. [=people in the department can now be held more responsible for what happens]',
+					'corporate {it}accountability{/it}',
+				]
+			}]
+		}
+	}
+	{
+		// dros
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/drop_off.json')) ?
+		res := learners.to_dictionary_result('drop off', entries)
+
+		assert res.word == 'drop off'
+		assert res.entries.len == 1
+		assert res.entries == [dictionary.Entry{
+			id: 'drop:2-drop off'
+			headword: 'drop off'
+			function_label: 'phrasal verb'
+			grammatical_note: ''
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+			inflections: []
+			definitions: [dictionary.Definition{
+				grammatical_note: ''
+				sense: '{bc}to decrease in amount'
+				examples: ['After the holidays, business usually {it}drops off{/it}.']
+			}, dictionary.Definition{
+				grammatical_note: ''
+				sense: '{bc}to fall asleep. {dx}see also {dxt|drop:2||10 (above)}{/dx}'
+				examples: ['The baby tends to {it}drop off{/it} after he eats.',
+					'She lay down and {phrase}dropped off to sleep{/phrase}.',
+				]
+			}]
+		}]
 	}
 	{
 		// Suggestions
