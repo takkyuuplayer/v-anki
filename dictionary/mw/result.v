@@ -355,8 +355,8 @@ fn (sections []DefinitionSection) to_dictionary_result() []dictionary.Definition
 		for sense in section.sseq {
 			definitions << dictionary.Definition{
 				grammatical_note: sense.sgram
-				sense: sense.dt.text
-				examples: sense.dt.vis
+				sense: to_html(sense.dt.text)
+				examples: sense.dt.vis.map(to_html(it))
 			}
 		}
 	}

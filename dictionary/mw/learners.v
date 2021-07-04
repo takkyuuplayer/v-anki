@@ -31,7 +31,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 		return dictionary.Result{
 			word: word
 			dictionary: mw.dictionary_learners
-			web_url: l.web_url(word)
+			web_url: web_url(word)
 			suggestion: result
 		}
 	}
@@ -64,7 +64,7 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
 					definitions: [dictionary.Definition{
-						examples: uro.utxt.vis
+						examples: uro.utxt.vis.map(to_html(it))
 					}]
 				}
 			}
@@ -87,15 +87,72 @@ pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.
 	return dictionary.Result{
 		word: headword
 		dictionary: mw.dictionary_learners
-		web_url: l.web_url(word)
+		web_url: web_url(word)
 		entries: dict_entries
 	}
 }
 
-pub fn (l Learners) web_url(word string) string {
+pub fn web_url(word string) string {
 	return 'https://learnersdictionary.com/definition/' + urllib.path_escape(word)
 }
 
 fn candidate(word string, entry Entry) bool {
 	return word.to_lower() in entry.meta.stems
+}
+
+const tag_map = map{
+	'bc':      '<b>:</b> '
+	'b':       '<b>'
+	'/b':      '</b>'
+	'inf':     '<sub>'
+	'/inf':    '</sub>'
+	'it':      '<i>'
+	'/it':     '</i>'
+	'ldquo':   '&ldquo;'
+	'rdquo':   '&rdquo;'
+	'sc':      '<span style="font-variant: small-caps;">'
+	'/sc':     '</span>'
+	'sup':     '</sup>'
+	'phrase':  '<b><i>'
+	'/phrase': '</i></b>'
+	'qword':   '<i>'
+	'/qword':  '</i>'
+	'wi':      '<i>'
+	'/wi':     '</i>'
+	'parahw':  '<span style="font-variant: small-caps;">'
+	'/parahw': '</span>'
+	'gloss':   '&lsqb;'
+	'/gloss':  '&rsqb;'
+	'dx':      '&mdash; '
+	'/dx':     ''
+	'dx_ety':  '&mdash; '
+	'/dx_ety': ''
+	'ma':      '&mdash; more at '
+	'dx_def':  '('
+	'/dx_def': ')'
+}
+
+fn to_html(sentence string) string {
+	mut before, mut after := sentence.before('{'), sentence.all_after('{')
+	mut res := ''
+
+	for before != after {
+		res += before
+
+		tag := after.before('}')
+		after = after.all_after('}')
+		if tag in mw.tag_map {
+			res += mw.tag_map[tag]
+		} else if tag.contains('|') {
+			segments := tag.split('|')
+			link_word := segments[1].split(':')[0]
+			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
+		} else {
+			eprintln('unknown tag in sentence: $tag')
+		}
+		before, after = after.before('{'), after.all_after('{')
+	}
+	res += before
+
+	return res
 }

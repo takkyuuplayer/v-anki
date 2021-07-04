@@ -13,8 +13,7 @@ fn test_lookup_request() {
 }
 
 fn test_web_url() {
-	learners := new_learners('dummy key')
-	url := learners.web_url('put up')
+	url := web_url('put up')
 
 	assert url == 'https://learnersdictionary.com/definition/put%20up'
 }
@@ -68,15 +67,15 @@ fn test_to_dictionary_result() ? {
 		assert first.definitions.len == 6
 		assert first.definitions[0] == dictionary.Definition{
 			grammatical_note: ''
-			sense: "{bc}a set of questions or problems that are designed to measure a person's knowledge, skills, or abilities. {dx}see also {dxt|intelligence test||} {dxt|rorschach test||} {dxt|screen test||}{/dx}"
-			examples: ['She is studying for her math/spelling/history {it}test{/it}.',
-				'I passed/failed/flunked my biology {it}test{/it}.',
-				'The teacher sat at his desk grading {it}tests{/it}.',
-				"a driver's/driving {it}test{/it} [=a test that is used to see if someone is able to safely drive a car]",
-				'an IQ {it}test{/it}', '{it}test{/it} questions',
-				'The {it}test{/it} will be on [=the questions on the test will be about] the first three chapters of the book.',
-				'We {phrase}took/had a test{/phrase} on European capitals. = ({it}Brit{/it}) We {phrase}did a test{/phrase} on European capitals.',
-				'The college relies on {phrase}test scores{/phrase} in its admissions process.',
+			sense: '<b>:</b> a set of questions or problems that are designed to measure a person\'s knowledge, skills, or abilities. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/intelligence%20test">intelligence test</a> <a target="_blank" href="https://learnersdictionary.com/definition/rorschach%20test">rorschach test</a> <a target="_blank" href="https://learnersdictionary.com/definition/screen%20test">screen test</a>'
+			examples: ['She is studying for her math/spelling/history <i>test</i>.',
+				'I passed/failed/flunked my biology <i>test</i>.',
+				'The teacher sat at his desk grading <i>tests</i>.',
+				"a driver's/driving <i>test</i> [=a test that is used to see if someone is able to safely drive a car]",
+				'an IQ <i>test</i>', '<i>test</i> questions',
+				'The <i>test</i> will be on [=the questions on the test will be about] the first three chapters of the book.',
+				'We <b><i>took/had a test</i></b> on European capitals. = (<i>Brit</i>) We <b><i>did a test</i></b> on European capitals.',
+				'The college relies on <b><i>test scores</i></b> in its admissions process.',
 			]
 		}
 	}
@@ -106,8 +105,8 @@ fn test_to_dictionary_result() ? {
 				grammatical_note: ''
 				sense: ''
 				examples: [
-					'We now have greater {it}accountability{/it} in the department. [=people in the department can now be held more responsible for what happens]',
-					'corporate {it}accountability{/it}',
+					'We now have greater <i>accountability</i> in the department. [=people in the department can now be held more responsible for what happens]',
+					'corporate <i>accountability</i>',
 				]
 			}]
 		}
@@ -132,13 +131,13 @@ fn test_to_dictionary_result() ? {
 			inflections: []
 			definitions: [dictionary.Definition{
 				grammatical_note: ''
-				sense: '{bc}to decrease in amount'
-				examples: ['After the holidays, business usually {it}drops off{/it}.']
+				sense: '<b>:</b> to decrease in amount'
+				examples: ['After the holidays, business usually <i>drops off</i>.']
 			}, dictionary.Definition{
 				grammatical_note: ''
-				sense: '{bc}to fall asleep. {dx}see also {dxt|drop:2||10 (above)}{/dx}'
-				examples: ['The baby tends to {it}drop off{/it} after he eats.',
-					'She lay down and {phrase}dropped off to sleep{/phrase}.',
+				sense: '<b>:</b> to fall asleep. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/drop">drop</a>'
+				examples: ['The baby tends to <i>drop off</i> after he eats.',
+					'She lay down and <b><i>dropped off to sleep</i></b>.',
 				]
 			}]
 		}]
