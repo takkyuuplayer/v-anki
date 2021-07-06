@@ -1,4 +1,4 @@
-module mw_test
+module mw
 
 import mw
 import os
@@ -121,6 +121,18 @@ fn test_parse_response() ? {
 		assert suggestions[0] == 'furniture'
 	}
 }
+
+fn test_candidate() {
+	entry := Entry{
+		meta: Meta{
+			stems: ['drop', 'drops', 'drop off']
+		}
+	}
+	assert candidate('drop', entry) == true
+	assert candidate('DROPS', entry) == true
+	assert candidate('drop-off', entry) == false
+}
+
 
 fn load(testfile string) string {
 	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }

@@ -12,28 +12,18 @@ fn test_lookup_request() {
 	assert req.url == 'https://www.dictionaryapi.com/api/v3/references/learners/json/put%20up?key=dummy+key'
 }
 
-fn test_web_url() {
-	url := web_url('put up')
+fn test_learners_web_url() {
+	url := learners_web_url('put up')
 
 	assert url == 'https://learnersdictionary.com/definition/put%20up'
-}
-
-fn test_candidate() {
-	entry := Entry{
-		meta: Meta{
-			stems: ['drop', 'drops', 'drop off']
-		}
-	}
-	assert candidate('drop', entry) == true
-	assert candidate('DROPS', entry) == true
-	assert candidate('drop-off', entry) == false
 }
 
 fn test_to_dictionary_result() ? {
 	{
 		// basic
+		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/test.json')) ?
-		res := to_dictionary_result('test', entries)
+		res := learners.to_dictionary_result('test', entries)
 
 		assert res.word == 'test'
 		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
@@ -79,9 +69,10 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
+		learners := new_learners('dummy key')
 		// uros
 		entries := parse_response(load('testdata/learners/accountability.json')) ?
-		res := to_dictionary_result('accountability', entries)
+		res := learners.to_dictionary_result('accountability', entries)
 
 		assert res.word == 'accountable'
 		assert res.entries.len == 2
@@ -110,9 +101,10 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
+		learners := new_learners('dummy key')
 		// dros
 		entries := parse_response(load('testdata/learners/drop_off.json')) ?
-		res := to_dictionary_result('drop off', entries)
+		res := learners.to_dictionary_result('drop off', entries)
 
 		assert res.word == 'drop off'
 		assert res.entries.len == 1
@@ -140,9 +132,10 @@ fn test_to_dictionary_result() ? {
 		}]
 	}
 	{
+		learners := new_learners('dummy key')
 		// Suggestions
 		suggestions := parse_response(load('testdata/learners/furnitura.json')) ?
-		res := to_dictionary_result('furnitura', suggestions)
+		res := learners.to_dictionary_result('furnitura', suggestions)
 
 		assert res == dictionary.Result{
 			word: 'furnitura'

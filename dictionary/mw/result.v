@@ -98,6 +98,56 @@ fn (mut e Entry) from_json(f json2.Any) {
 	}
 }
 
+pub fn (entries []Entry) to_dictionary_result(word string, web_url fn(string) string) []dictionary.Entry {
+	mut dict_entries := []dictionary.Entry{}
+	is_phrase := word.split(' ').len > 1
+	for entry in entries {
+		if !candidate(word, entry) {
+			continue
+		}
+		if !is_phrase {
+			{
+				dict_entries << dictionary.Entry{
+					id: entry.meta.id
+					headword: entry.hwi.hw.replace('*', '')
+					function_label: entry.fl
+					grammatical_note: entry.gram
+					pronunciation: entry.hwi.prs.to_dictionary_result()
+					inflections: entry.ins.to_dictionary_result()
+					definitions: entry.def.to_dictionary_result(web_url)
+				}
+			}
+			for uro in entry.uros {
+				dict_entries << dictionary.Entry{
+					id: '$entry.meta.id-$uro.ure'
+					headword: uro.ure.replace('*', '')
+					function_label: uro.fl
+					grammatical_note: uro.gram
+					pronunciation: uro.prs.to_dictionary_result()
+					inflections: uro.ins.to_dictionary_result()
+					definitions: [dictionary.Definition{
+						examples: uro.utxt.vis.map(to_html(it, web_url))
+					}]
+				}
+			}
+		}
+		for dro in entry.dros {
+			if dro.drp != word {
+				continue
+			}
+			dict_entries << dictionary.Entry{
+				id: '$entry.meta.id-$dro.drp'
+				headword: dro.drp
+				function_label: dro.gram
+				definitions: dro.def.to_dictionary_result(web_url)
+			}
+		}
+	}
+
+	return dict_entries
+}
+
+
 struct Meta {
 pub mut:
 	id           string
@@ -349,14 +399,14 @@ pub mut:
 	sseq []Sense
 }
 
-fn (sections []DefinitionSection) to_dictionary_result() []dictionary.Definition {
+fn (sections []DefinitionSection) to_dictionary_result(web_url fn(string)string) []dictionary.Definition {
 	mut definitions := []dictionary.Definition{}
 	for section in sections {
 		for sense in section.sseq {
 			definitions << dictionary.Definition{
 				grammatical_note: sense.sgram
-				sense: to_html(sense.dt.text)
-				examples: sense.dt.vis.map(to_html(it))
+				sense: to_html(sense.dt.text, web_url)
+				examples: sense.dt.vis.map(to_html(it, web_url))
 			}
 		}
 	}
@@ -536,4 +586,65 @@ fn (mut s Snote) from_json(f json2.Any) {
 	}
 	s.t = texts.join('. ')
 	s.vis = vis
+}
+
+fn candidate(word string, entry Entry) bool {
+	return word.to_lower() in entry.meta.stems
+}
+
+const tag_map = map{
+	'bc':      '<b>:</b> '
+	'b':       '<b>'
+	'/b':      '</b>'
+	'inf':     '<sub>'
+	'/inf':    '</sub>'
+	'it':      '<i>'
+	'/it':     '</i>'
+	'ldquo':   '&ldquo;'
+	'rdquo':   '&rdquo;'
+	'sc':      '<span style="font-variant: small-caps;">'
+	'/sc':     '</span>'
+	'sup':     '</sup>'
+	'phrase':  '<b><i>'
+	'/phrase': '</i></b>'
+	'qword':   '<i>'
+	'/qword':  '</i>'
+	'wi':      '<i>'
+	'/wi':     '</i>'
+	'parahw':  '<span style="font-variant: small-caps;">'
+	'/parahw': '</span>'
+	'gloss':   '&lsqb;'
+	'/gloss':  '&rsqb;'
+	'dx':      '&mdash; '
+	'/dx':     ''
+	'dx_ety':  '&mdash; '
+	'/dx_ety': ''
+	'ma':      '&mdash; more at '
+	'dx_def':  '('
+	'/dx_def': ')'
+}
+
+fn to_html(sentence string, web_url fn(string) string) string {
+	mut before, mut after := sentence.before('{'), sentence.all_after('{')
+	mut res := ''
+
+	for before != after {
+		res += before
+
+		tag := after.before('}')
+		after = after.all_after('}')
+		if tag in mw.tag_map {
+			res += mw.tag_map[tag]
+		} else if tag.contains('|') {
+			segments := tag.split('|')
+			link_word := segments[1].split(':')[0]
+			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
+		} else {
+			eprintln('unknown tag in sentence: $tag')
+		}
+		before, after = after.before('{'), after.all_after('{')
+	}
+	res += before
+
+	return res
 }
