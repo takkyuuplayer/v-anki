@@ -26,7 +26,7 @@ pub fn (l Learners) lookup_request(word string) http.Request {
 	}
 }
 
-pub fn (l Learners) to_dictionary_result(word string, result Result) dictionary.Result {
+pub fn to_dictionary_result(word string, result Result) dictionary.Result {
 	if result is []string {
 		return dictionary.Result{
 			word: word
