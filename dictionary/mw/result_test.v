@@ -9,9 +9,9 @@ fn test_parse_response() ? {
 		// basic
 		res := mw.parse_response(load('testdata/learners/test.json')) ?
 
-		assert res is []mw.Entry
+		assert res is []Entry
 
-		entries := res as []mw.Entry
+		entries := res as []Entry
 
 		assert entries.len == 10
 
@@ -54,7 +54,7 @@ fn test_parse_response() ? {
 	{
 		// entry in uros
 		res := mw.parse_response(load('testdata/learners/accountability.json')) ?
-		entries := res as []mw.Entry
+		entries := res as []Entry
 
 		assert entries.len == 1
 
@@ -71,7 +71,7 @@ fn test_parse_response() ? {
 	{
 		// no def section
 		res := mw.parse_response(load('testdata/learners/deathbed.json')) ?
-		entries := res as []mw.Entry
+		entries := res as []Entry
 
 		assert entries.len == 1
 		assert entries[0].def.len == 0
@@ -81,7 +81,7 @@ fn test_parse_response() ? {
 	{
 		// meta.app_shortdef.def is not an object
 		res := mw.parse_response(load('testdata/learners/junk.json')) ?
-		entries := res as []mw.Entry
+		entries := res as []Entry
 
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
@@ -91,7 +91,7 @@ fn test_parse_response() ? {
 	{
 		// phrasal verb
 		res := mw.parse_response(load('testdata/learners/drop_off.json')) ?
-		entries := res as []mw.Entry
+		entries := res as []Entry
 
 		assert entries.len == 2
 
@@ -121,6 +121,41 @@ fn test_parse_response() ? {
 		assert suggestions.len == 16
 		assert suggestions[0] == 'furniture'
 	}
+	{
+		// collegiate
+		res := mw.parse_response(load('testdata/collegiate/test.json')) ?
+
+		assert res is []Entry
+
+		entries := res as []Entry
+
+		assert entries.len == 10
+
+		first := entries[0]
+		assert first.hwi == Hwi{
+			hw: 'test'
+			prs: [Pr{
+				mw: 'ˈtest'
+				sound: Sound{
+					audio: 'test0001'
+				}
+			}]
+		}
+		assert first.def[0].sseq.len == 9
+		assert first.def[0].sseq[3] == Sense{
+			sn: '2 a (1)'
+			dt: DefinitionText{
+				text: '{bc}a critical examination, observation, or evaluation {bc}{sx|trial||}'
+			}
+			sdsense: Sdsense{
+				sd: 'specifically'
+				dt: DefinitionText{
+					text: '{bc}the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection'
+					vis: ['a {wi}test{/wi} of a statistical hypothesis']
+				}
+			}
+		}
+	}
 }
 
 fn test_to_dictionary_result() ? {
@@ -138,18 +173,12 @@ fn test_to_dictionary_result() ? {
 			pronunciation: dictionary.Pronunciation{
 				notation: 'IPA'
 				accents: [dictionary.Accent{
-					label: ''
 					spelling: 'ˈtɛst'
-					audio: ''
 				}]
 			}
 			inflections: [dictionary.Inflection{
 				form_label: 'plural'
 				inflected_form: 'tests'
-				pronunciation: dictionary.Pronunciation{
-					notation: 'IPA'
-					accents: []
-				}
 			}]
 			definitions: first.definitions
 		}
@@ -182,15 +211,11 @@ fn test_to_dictionary_result() ? {
 			pronunciation: dictionary.Pronunciation{
 				notation: 'IPA'
 				accents: [dictionary.Accent{
-					label: ''
 					spelling: 'əˌkæʊntəˈbɪləti'
-					audio: ''
 				}]
 			}
 			inflections: []
 			definitions: [dictionary.Definition{
-				grammatical_note: ''
-				sense: ''
 				examples: [
 					'We now have greater <i>accountability</i> in the department. [=people in the department can now be held more responsible for what happens]',
 					'corporate <i>accountability</i>',
@@ -211,9 +236,7 @@ fn test_to_dictionary_result() ? {
 			grammatical_note: ''
 			pronunciation: dictionary.Pronunciation{
 				notation: ''
-				accents: []
 			}
-			inflections: []
 			definitions: [dictionary.Definition{
 				grammatical_note: ''
 				sense: '<b>:</b> to decrease in amount'
@@ -239,7 +262,6 @@ fn test_candidate() {
 	assert candidate('DROPS', entry) == true
 	assert candidate('drop-off', entry) == false
 }
-
 
 fn load(testfile string) string {
 	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
