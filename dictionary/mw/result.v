@@ -105,22 +105,22 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 		if !candidate(word, entry) {
 			continue
 		}
+		inflection_match := normalize(entry.hwi.hw) == word
+			|| entry.ins.any(normalize(it.inf) == word)
 		if !is_phrase {
-			{
-				dict_entries << dictionary.Entry{
-					id: entry.meta.id
-					headword: entry.hwi.hw.replace('*', '')
-					function_label: entry.fl
-					grammatical_note: entry.gram
-					pronunciation: entry.hwi.prs.to_dictionary_result()
-					inflections: entry.ins.to_dictionary_result()
-					definitions: entry.def.to_dictionary_result(web_url)
-				}
+			dict_entries << dictionary.Entry{
+				id: entry.meta.id
+				headword: normalize(entry.hwi.hw)
+				function_label: entry.fl
+				grammatical_note: entry.gram
+				pronunciation: entry.hwi.prs.to_dictionary_result()
+				inflections: entry.ins.to_dictionary_result()
+				definitions: entry.def.to_dictionary_result(web_url)
 			}
 			for uro in entry.uros {
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$uro.ure'
-					headword: uro.ure.replace('*', '')
+					headword: normalize(uro.ure)
 					function_label: uro.fl
 					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
@@ -129,6 +129,16 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 						examples: uro.utxt.vis.map(to_html(it, web_url))
 					}]
 				}
+			}
+		} else if inflection_match {
+			dict_entries << dictionary.Entry{
+				id: entry.meta.id
+				headword: normalize(entry.hwi.hw)
+				function_label: entry.fl
+				grammatical_note: entry.gram
+				pronunciation: entry.hwi.prs.to_dictionary_result()
+				inflections: entry.ins.to_dictionary_result()
+				definitions: entry.def.to_dictionary_result(web_url)
 			}
 		}
 		for dro in entry.dros {
@@ -426,8 +436,8 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 		for sense in section.sseq {
 			mut meaning := sense.dt.text
 			mut examples := sense.dt.vis.map(to_html(it, web_url))
-			if sense.sdsense.sd != "" {
-				meaning += ". ${sense.sdsense.sd.capitalize()} $sense.sdsense.dt.text"
+			if sense.sdsense.sd != '' {
+				meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
 				for example in sense.sdsense.dt.vis {
 					examples << to_html(example, web_url)
 				}
@@ -516,9 +526,9 @@ fn (mut s Sen) from_json(f json2.Any) {
 
 struct Sense {
 pub mut:
-	sn    string
-	dt    DefinitionText
-	sgram string
+	sn      string
+	dt      DefinitionText
+	sgram   string
 	sdsense Sdsense
 }
 
@@ -544,7 +554,7 @@ fn (mut s Sense) from_json(f json2.Any) {
 struct Sdsense {
 pub mut:
 	sd string
-	dt    DefinitionText
+	dt DefinitionText
 }
 
 fn (mut sd Sdsense) from_json(f json2.Any) {
@@ -723,4 +733,8 @@ fn to_html(sentence string, web_url fn (string) string) string {
 	res += before
 
 	return res
+}
+
+fn normalize(headword string) string {
+	return headword.replace('*', '')
 }
