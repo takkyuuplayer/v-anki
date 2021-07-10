@@ -28,8 +28,6 @@ fn test_to_dictionary_result() ? {
 		assert res.dictionary == "Merriam-Webster's Collegiate Dictionary"
 		assert res.web_url == 'https://www.merriam-webster.com/dictionary/test'
 		assert res.entries.len == 6
-		dump(res.entries)
-		assert false
 	}
 	{
 		// phrasal verb
