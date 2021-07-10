@@ -1,16 +1,17 @@
-module mw_test
+module mw
 
 import mw
 import os
+import dictionary
 
 fn test_parse_response() ? {
 	{
 		// basic
 		res := mw.parse_response(load('testdata/learners/test.json')) ?
 
-		assert res is mw.Entries
+		assert res is []Entry
 
-		entries := res as mw.Entries
+		entries := res as []Entry
 
 		assert entries.len == 10
 
@@ -53,7 +54,7 @@ fn test_parse_response() ? {
 	{
 		// entry in uros
 		res := mw.parse_response(load('testdata/learners/accountability.json')) ?
-		entries := res as mw.Entries
+		entries := res as []Entry
 
 		assert entries.len == 1
 
@@ -70,7 +71,7 @@ fn test_parse_response() ? {
 	{
 		// no def section
 		res := mw.parse_response(load('testdata/learners/deathbed.json')) ?
-		entries := res as mw.Entries
+		entries := res as []Entry
 
 		assert entries.len == 1
 		assert entries[0].def.len == 0
@@ -80,7 +81,7 @@ fn test_parse_response() ? {
 	{
 		// meta.app_shortdef.def is not an object
 		res := mw.parse_response(load('testdata/learners/junk.json')) ?
-		entries := res as mw.Entries
+		entries := res as []Entry
 
 		assert entries.len == 8
 		assert entries[4].meta.app_shortdef.def.len == 0
@@ -90,7 +91,7 @@ fn test_parse_response() ? {
 	{
 		// phrasal verb
 		res := mw.parse_response(load('testdata/learners/drop_off.json')) ?
-		entries := res as mw.Entries
+		entries := res as []Entry
 
 		assert entries.len == 2
 
@@ -103,9 +104,9 @@ fn test_parse_response() ? {
 		// when not found
 		res := mw.parse_response(load('testdata/learners/abcabcabcabc.json')) ?
 
-		assert res is mw.Suggestions
+		assert res is []string
 
-		suggestions := res as mw.Suggestions
+		suggestions := res as []string
 
 		assert suggestions.len == 0
 	}
@@ -113,13 +114,153 @@ fn test_parse_response() ? {
 		// when suggested
 		res := mw.parse_response(load('testdata/learners/furnitura.json')) ?
 
-		assert res is mw.Suggestions
+		assert res is []string
 
-		suggestions := res as mw.Suggestions
+		suggestions := res as []string
 
 		assert suggestions.len == 16
 		assert suggestions[0] == 'furniture'
 	}
+	{
+		// collegiate
+		res := mw.parse_response(load('testdata/collegiate/test.json')) ?
+
+		assert res is []Entry
+
+		entries := res as []Entry
+
+		assert entries.len == 10
+
+		first := entries[0]
+		assert first.hwi == Hwi{
+			hw: 'test'
+			prs: [Pr{
+				mw: 'ˈtest'
+				sound: Sound{
+					audio: 'test0001'
+				}
+			}]
+		}
+		assert first.def[0].sseq.len == 9
+		assert first.def[0].sseq[3] == Sense{
+			sn: '2 a (1)'
+			dt: DefinitionText{
+				text: '{bc}a critical examination, observation, or evaluation {bc}{sx|trial||}'
+			}
+			sdsense: Sdsense{
+				sd: 'specifically'
+				dt: DefinitionText{
+					text: '{bc}the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection'
+					vis: ['a {wi}test{/wi} of a statistical hypothesis']
+				}
+			}
+		}
+	}
+}
+
+fn test_to_dictionary_result() ? {
+	{
+		// basic
+		result := parse_response(load('testdata/learners/test.json')) ? as []Entry
+		entries := result.to_dictionary_result('test', learners_web_url)
+		assert entries.len == 3
+		first := entries.first()
+		assert first == dictionary.Entry{
+			id: 'test:1'
+			headword: 'test'
+			function_label: 'noun'
+			grammatical_note: 'count'
+			pronunciation: dictionary.Pronunciation{
+				notation: 'IPA'
+				accents: [dictionary.Accent{
+					spelling: 'ˈtɛst'
+				}]
+			}
+			inflections: [dictionary.Inflection{
+				form_label: 'plural'
+				inflected_form: 'tests'
+			}]
+			definitions: first.definitions
+		}
+		assert first.definitions.len == 6
+		assert first.definitions[0] == dictionary.Definition{
+			grammatical_note: ''
+			sense: '<b>:</b> a set of questions or problems that are designed to measure a person\'s knowledge, skills, or abilities. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/intelligence%20test">intelligence test</a> <a target="_blank" href="https://learnersdictionary.com/definition/rorschach%20test">rorschach test</a> <a target="_blank" href="https://learnersdictionary.com/definition/screen%20test">screen test</a>'
+			examples: ['She is studying for her math/spelling/history <i>test</i>.',
+				'I passed/failed/flunked my biology <i>test</i>.',
+				'The teacher sat at his desk grading <i>tests</i>.',
+				"a driver's/driving <i>test</i> [=a test that is used to see if someone is able to safely drive a car]",
+				'an IQ <i>test</i>', '<i>test</i> questions',
+				'The <i>test</i> will be on [=the questions on the test will be about] the first three chapters of the book.',
+				'We <b><i>took/had a test</i></b> on European capitals. = (<i>Brit</i>) We <b><i>did a test</i></b> on European capitals.',
+				'The college relies on <b><i>test scores</i></b> in its admissions process.',
+			]
+		}
+	}
+	{
+		// uros
+		result := parse_response(load('testdata/learners/accountability.json')) ? as []Entry
+		entries := result.to_dictionary_result('accountability', learners_web_url)
+
+		assert entries.len == 2
+		assert entries[1] == dictionary.Entry{
+			id: 'accountable-ac*count*abil*i*ty'
+			headword: 'accountability'
+			function_label: 'noun'
+			grammatical_note: 'noncount'
+			pronunciation: dictionary.Pronunciation{
+				notation: 'IPA'
+				accents: [dictionary.Accent{
+					spelling: 'əˌkæʊntəˈbɪləti'
+				}]
+			}
+			inflections: []
+			definitions: [dictionary.Definition{
+				examples: [
+					'We now have greater <i>accountability</i> in the department. [=people in the department can now be held more responsible for what happens]',
+					'corporate <i>accountability</i>',
+				]
+			}]
+		}
+	}
+	{
+		// dros
+		result := parse_response(load('testdata/learners/drop_off.json')) ? as []Entry
+		entries := result.to_dictionary_result('drop off', learners_web_url)
+
+		assert entries.len == 1
+		assert entries == [dictionary.Entry{
+			id: 'drop:2-drop off'
+			headword: 'drop off'
+			function_label: 'phrasal verb'
+			grammatical_note: ''
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+			}
+			definitions: [dictionary.Definition{
+				grammatical_note: ''
+				sense: '<b>:</b> to decrease in amount'
+				examples: ['After the holidays, business usually <i>drops off</i>.']
+			}, dictionary.Definition{
+				grammatical_note: ''
+				sense: '<b>:</b> to fall asleep. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/drop">drop</a>'
+				examples: ['The baby tends to <i>drop off</i> after he eats.',
+					'She lay down and <b><i>dropped off to sleep</i></b>.',
+				]
+			}]
+		}]
+	}
+}
+
+fn test_candidate() {
+	entry := Entry{
+		meta: Meta{
+			stems: ['drop', 'drops', 'drop off']
+		}
+	}
+	assert candidate('drop', entry) == true
+	assert candidate('DROPS', entry) == true
+	assert candidate('drop-off', entry) == false
 }
 
 fn load(testfile string) string {

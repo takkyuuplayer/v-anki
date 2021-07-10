@@ -2,10 +2,9 @@
 module mw
 
 import x.json2
+import dictionary
 
-type Suggestions = []string
-type Entries = []Entry
-type Result = Entries | Suggestions
+type Result = []Entry | []string
 
 pub fn parse_response(body string) ?Result {
 	raw_entries := json2.raw_decode(body) ?
@@ -13,11 +12,11 @@ pub fn parse_response(body string) ?Result {
 	arr := raw_entries.arr()
 
 	if arr.len == 0 {
-		return Result(Suggestions([]string{}))
+		return Result([]string{})
 	}
 
 	if 'meta' !in arr[0].as_map() {
-		return Result(Suggestions(arr.map(it.str())))
+		return Result(arr.map(it.str()))
 	}
 
 	mut entries := []Entry{}
@@ -27,7 +26,7 @@ pub fn parse_response(body string) ?Result {
 		entries << e
 	}
 
-	return Result(Entries(entries))
+	return entries
 }
 
 struct Entry {
@@ -97,6 +96,65 @@ fn (mut e Entry) from_json(f json2.Any) {
 		}
 		e.dros = dros
 	}
+}
+
+pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) string) []dictionary.Entry {
+	mut dict_entries := []dictionary.Entry{}
+	is_phrase := word.split(' ').len > 1
+	for entry in entries {
+		if !candidate(word, entry) {
+			continue
+		}
+		inflection_match := normalize(entry.hwi.hw) == word
+			|| entry.ins.any(normalize(it.inf) == word)
+		if !is_phrase {
+			dict_entries << dictionary.Entry{
+				id: entry.meta.id
+				headword: normalize(entry.hwi.hw)
+				function_label: entry.fl
+				grammatical_note: entry.gram
+				pronunciation: entry.hwi.prs.to_dictionary_result()
+				inflections: entry.ins.to_dictionary_result()
+				definitions: entry.def.to_dictionary_result(web_url)
+			}
+			for uro in entry.uros {
+				dict_entries << dictionary.Entry{
+					id: '$entry.meta.id-$uro.ure'
+					headword: normalize(uro.ure)
+					function_label: uro.fl
+					grammatical_note: uro.gram
+					pronunciation: uro.prs.to_dictionary_result()
+					inflections: uro.ins.to_dictionary_result()
+					definitions: [dictionary.Definition{
+						examples: uro.utxt.vis.map(to_html(it, web_url))
+					}]
+				}
+			}
+		} else if inflection_match {
+			dict_entries << dictionary.Entry{
+				id: entry.meta.id
+				headword: normalize(entry.hwi.hw)
+				function_label: entry.fl
+				grammatical_note: entry.gram
+				pronunciation: entry.hwi.prs.to_dictionary_result()
+				inflections: entry.ins.to_dictionary_result()
+				definitions: entry.def.to_dictionary_result(web_url)
+			}
+		}
+		for dro in entry.dros {
+			if dro.drp != word {
+				continue
+			}
+			dict_entries << dictionary.Entry{
+				id: '$entry.meta.id-$dro.drp'
+				headword: dro.drp
+				function_label: dro.gram
+				definitions: dro.def.to_dictionary_result(web_url)
+			}
+		}
+	}
+
+	return dict_entries
 }
 
 struct Meta {
@@ -177,17 +235,20 @@ fn (mut h Hwi) from_json(f json2.Any) {
 
 	h.hw = mp['hw'].str()
 	mut prs := []Pr{}
-	for pr in mp['prs'].arr() {
-		mut p := Pr{}
-		p.from_json(pr)
-		prs << p
+	if 'prs' in mp {
+		for pr in mp['prs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+		h.prs = prs
 	}
-	h.prs = prs
 }
 
 struct Pr {
 pub mut:
 	ipa   string
+	mw    string
 	l     string
 	sound Sound
 }
@@ -197,9 +258,40 @@ fn (mut p Pr) from_json(f json2.Any) {
 
 	p.ipa = mp['ipa'].str()
 	p.l = mp['l'].str()
+	p.mw = mp['mw'].str()
 	mut sound := Sound{}
 	sound.from_json(mp['sound'])
 	p.sound = sound
+}
+
+fn (prs []Pr) to_dictionary_result() dictionary.Pronunciation {
+	if prs.len == 0 {
+		return dictionary.Pronunciation{}
+	}
+	notation := if prs[0].ipa != '' {
+		'IPA'
+	} else if prs[0].mw != '' {
+		'MW'
+	} else {
+		eprintln('unknown pronunciation: ${prs[0]}')
+		''
+	}
+	return dictionary.Pronunciation{
+		notation: notation
+		accents: prs.map(fn (pr Pr) dictionary.Accent {
+			spelling := if pr.ipa != '' {
+				pr.ipa
+			} else if pr.mw != '' {
+				pr.mw
+			} else {
+				''
+			}
+			return dictionary.Accent{
+				label: pr.l
+				spelling: spelling
+			}
+		})
+	}
 }
 
 struct Sound {
@@ -235,6 +327,16 @@ fn (mut i Inf) from_json(f json2.Any) {
 			prs << p
 		}
 	}
+}
+
+fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
+	return ins.map(fn (inf Inf) dictionary.Inflection {
+		return dictionary.Inflection{
+			form_label: inf.il
+			inflected_form: inf.inf
+			pronunciation: inf.prs.to_dictionary_result()
+		}
+	})
 }
 
 struct Uro {
@@ -328,6 +430,28 @@ pub mut:
 	sseq []Sense
 }
 
+fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) string) []dictionary.Definition {
+	mut definitions := []dictionary.Definition{}
+	for section in sections {
+		for sense in section.sseq {
+			mut meaning := sense.dt.text
+			mut examples := sense.dt.vis.map(to_html(it, web_url))
+			if sense.sdsense.sd != '' {
+				meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
+				for example in sense.sdsense.dt.vis {
+					examples << to_html(example, web_url)
+				}
+			}
+			definitions << dictionary.Definition{
+				grammatical_note: sense.sgram
+				sense: to_html(meaning, web_url)
+				examples: examples
+			}
+		}
+	}
+	return definitions
+}
+
 fn (mut d DefinitionSection) from_json(f json2.Any) {
 	mp := f.as_map()
 
@@ -354,6 +478,29 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 				sseq << sense
 			} else if label == 'sen' {
 				sen.from_json(obj)
+			} else if label == 'pseq' {
+				empty := Sense{}
+				mut bs := empty
+				for pseq in obj.arr() {
+					arr2 := pseq.arr()
+					label2, obj2 := arr2[0].str(), arr2[1]
+
+					if label2 == 'bs' {
+						mut sense := Sense{}
+						sense.from_json(obj2.as_map()['sense'])
+						bs = sense
+					} else if label2 == 'sense' {
+						mut sense := Sense{}
+						sense.from_json(obj2)
+						if bs != empty {
+							sense.dt.text = '$bs.dt.text $sense.dt.text'
+						}
+
+						sseq << sense
+					} else {
+						eprintln('label = $label is not allowed in pseq')
+					}
+				}
 			} else {
 				eprintln('label = $label is not allowed in sseq')
 			}
@@ -364,7 +511,7 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 
 struct Sen {
 pub mut:
-	sn string
+	sn    string
 	sgram string
 }
 
@@ -379,21 +526,45 @@ fn (mut s Sen) from_json(f json2.Any) {
 
 struct Sense {
 pub mut:
-	sn string
-	dt DefinitionText
-	sgram string
+	sn      string
+	dt      DefinitionText
+	sgram   string
+	sdsense Sdsense
 }
 
 fn (mut s Sense) from_json(f json2.Any) {
 	mp := f.as_map()
 
 	s.sn = mp['sn'].str()
-	mut dt := DefinitionText{}
-	dt.from_json(mp['dt'])
-	s.dt = dt
-
+	if 'dt' in mp {
+		mut dt := DefinitionText{}
+		dt.from_json(mp['dt'])
+		s.dt = dt
+	}
 	if 'sgram' in mp {
 		s.sgram = mp['sgram'].str()
+	}
+	if 'sdsense' in mp {
+		mut sdsense := Sdsense{}
+		sdsense.from_json(mp['sdsense'])
+		s.sdsense = sdsense
+	}
+}
+
+struct Sdsense {
+pub mut:
+	sd string
+	dt DefinitionText
+}
+
+fn (mut sd Sdsense) from_json(f json2.Any) {
+	mp := f.as_map()
+
+	sd.sd = mp['sd'].str()
+	if 'dt' in mp {
+		mut dt := DefinitionText{}
+		dt.from_json(mp['dt'])
+		sd.dt = dt
 	}
 }
 
@@ -501,4 +672,69 @@ fn (mut s Snote) from_json(f json2.Any) {
 	}
 	s.t = texts.join('. ')
 	s.vis = vis
+}
+
+fn candidate(word string, entry Entry) bool {
+	return word.to_lower() in entry.meta.stems
+}
+
+const tag_map = map{
+	'bc':      '<b>:</b> '
+	'b':       '<b>'
+	'/b':      '</b>'
+	'inf':     '<sub>'
+	'/inf':    '</sub>'
+	'it':      '<i>'
+	'/it':     '</i>'
+	'ldquo':   '&ldquo;'
+	'rdquo':   '&rdquo;'
+	'sc':      '<span style="font-variant: small-caps;">'
+	'/sc':     '</span>'
+	'sup':     '</sup>'
+	'phrase':  '<b><i>'
+	'/phrase': '</i></b>'
+	'qword':   '<i>'
+	'/qword':  '</i>'
+	'wi':      '<i>'
+	'/wi':     '</i>'
+	'parahw':  '<span style="font-variant: small-caps;">'
+	'/parahw': '</span>'
+	'gloss':   '&lsqb;'
+	'/gloss':  '&rsqb;'
+	'dx':      '&mdash; '
+	'/dx':     ''
+	'dx_ety':  '&mdash; '
+	'/dx_ety': ''
+	'ma':      '&mdash; more at '
+	'dx_def':  '('
+	'/dx_def': ')'
+}
+
+fn to_html(sentence string, web_url fn (string) string) string {
+	mut before, mut after := sentence.before('{'), sentence.all_after('{')
+	mut res := ''
+
+	for before != after {
+		res += before
+
+		tag := after.before('}')
+		after = after.all_after('}')
+		if tag in mw.tag_map {
+			res += mw.tag_map[tag]
+		} else if tag.contains('|') {
+			segments := tag.split('|')
+			link_word := segments[1].split(':')[0]
+			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
+		} else {
+			eprintln('unknown tag in sentence: $tag')
+		}
+		before, after = after.before('{'), after.all_after('{')
+	}
+	res += before
+
+	return res
+}
+
+fn normalize(headword string) string {
+	return headword.replace('*', '')
 }
