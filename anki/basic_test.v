@@ -62,4 +62,7 @@ fn test_to_basic_card() ? {
 	card := to_basic_card(result) ?
 	assert card[0].front == 'word'
 	assert card[0].back.len > 0
+
+	//dump(card[0].back)
+	//assert false
 }
