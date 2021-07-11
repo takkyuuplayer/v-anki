@@ -715,7 +715,7 @@ fn to_html(sentence string, web_url fn (string) string) string {
 	mut res := ''
 
 	for before != after {
-		res += before
+		res += before // TODO: HTML escape
 
 		tag := after.before('}')
 		after = after.all_after('}')
@@ -730,7 +730,7 @@ fn to_html(sentence string, web_url fn (string) string) string {
 		}
 		before, after = after.before('{'), after.all_after('{')
 	}
-	res += before
+	res += before // TODO: HTML escape
 
 	return res
 }

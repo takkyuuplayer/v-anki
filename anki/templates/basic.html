@@ -1,0 +1,60 @@
+@for entry in result.entries
+<h2>@entry.headword (@entry.function_label)</h2>
+
+@if entry.pronunciation.accents.len > 0
+  <h4>Pronunciation (@entry.pronunciation.notation)</h4>
+  @for idx, accent in entry.pronunciation.accents
+    @if idx > 0
+      /
+    @end
+    @if accent.label != ""
+      [@accent.label]
+    @end
+    @accent.spelling
+  @end
+@end
+
+@if entry.inflections.len > 0
+  <h4>Inflection</h4>
+  @for idx, inflection in entry.inflections
+    @if idx > 0
+      /
+    @end
+    @if inflection.form_label != ""
+      (@inflection.form_label)
+    @end
+    @inflection.inflected_form
+    @if inflection.pronunciation.accents.len > 0
+      -
+      @for idx2, accent in inflection.pronunciation.accents
+        @if idx2 > 0
+          /
+        @end
+        @if accent.label != ""
+          [@accent.label]
+        @end
+        @accent.spelling
+      @end
+    @end
+  @end
+@end
+
+@if entry.definitions.len > 0
+  <h4>Definition</h4>
+  <ol>
+    @for definition in entry.definitions
+    <li>@definition.grammatical_note - @definition.sense</li>
+    @if definition.examples.len > 0
+    <ul>
+      @for example in definition.examples
+      <li>@example</li>
+      @end
+    </ul>
+    @end
+    @end
+  </ol>
+@end
+
+@end
+<hr />
+<a href="@result.web_url" target="_blank">@result.dictionary</a>
