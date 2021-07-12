@@ -20,11 +20,7 @@ fn test_to_basic_card() ? {
 							label: 'US'
 							spelling: 'spelling'
 						},
-						dictionary.Accent{
-							label: 'UK'
-							spelling: 'spelling'
-						},
-					]
+					].repeat(2)
 				}
 				inflections: [
 					dictionary.Inflection{
@@ -37,26 +33,19 @@ fn test_to_basic_card() ? {
 									label: 'US'
 									spelling: 'spelling'
 								},
-								dictionary.Accent{
-									label: 'UK'
-									spelling: 'spelling'
-								},
-							]
+							].repeat(2)
 						}
 					},
-				]
+				].repeat(2)
 				definitions: [
 					dictionary.Definition{
 						grammatical_note: 'grammatical_note'
 						sense: 'sense'
-						examples: [
-							'example sentence 1',
-							'example sentence 2',
-						]
+						examples: ['example sentence'].repeat(5)
 					},
 				]
 			},
-		]
+		].repeat(2)
 	}
 
 	card := to_basic_card(result) ?
