@@ -8,9 +8,9 @@ pub:
 	back  string
 }
 
-pub fn to_basic_card(result dictionary.Result) ?[]Card {
+pub fn to_basic_card(result dictionary.Result) []Card {
 	if result.entries.len == 0 {
-		return error('no entries for $result.word')
+		return []
 	}
 
 	front := result.word
