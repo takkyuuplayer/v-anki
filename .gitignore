@@ -1,0 +1,8 @@
+# Binaries for programs and plugins
+main
+v-anki
+*.exe
+*.exe~
+*.so
+*.dylib
+*.dll
