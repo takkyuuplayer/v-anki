@@ -1,6 +1,6 @@
 module mw
 
-import mw
+import dictionary.mw
 import os
 import dictionary
 
@@ -132,24 +132,24 @@ fn test_parse_response() ? {
 		assert entries.len == 10
 
 		first := entries[0]
-		assert first.hwi == Hwi{
+		assert first.hwi == mw.Hwi{
 			hw: 'test'
-			prs: [Pr{
+			prs: [mw.Pr{
 				mw: 'ˈtest'
-				sound: Sound{
+				sound: mw.Sound{
 					audio: 'test0001'
 				}
 			}]
 		}
 		assert first.def[0].sseq.len == 9
-		assert first.def[0].sseq[3] == Sense{
+		assert first.def[0].sseq[3] == mw.Sense{
 			sn: '2 a (1)'
-			dt: DefinitionText{
+			dt: mw.DefinitionText{
 				text: '{bc}a critical examination, observation, or evaluation {bc}{sx|trial||}'
 			}
-			sdsense: Sdsense{
+			sdsense: mw.Sdsense{
 				sd: 'specifically'
-				dt: DefinitionText{
+				dt: mw.DefinitionText{
 					text: '{bc}the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection'
 					vis: ['a {wi}test{/wi} of a statistical hypothesis']
 				}
@@ -253,8 +253,8 @@ fn test_to_dictionary_result() ? {
 }
 
 fn test_candidate() {
-	entry := Entry{
-		meta: Meta{
+	entry := mw.Entry{
+		meta: mw.Meta{
 			stems: ['drop', 'drops', 'drop off']
 		}
 	}
