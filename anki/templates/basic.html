@@ -43,7 +43,12 @@
   <h4>Definition</h4>
   <ol>
     @for definition in entry.definitions
-    <li>@definition.grammatical_note - @definition.sense</li>
+    <li>
+      @if definition.grammatical_note.len > 0
+        [@definition.grammatical_note]
+      @end
+      @definition.sense
+    </li>
     @if definition.examples.len > 0
     <ul>
       @for example in definition.examples
