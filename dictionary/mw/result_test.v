@@ -52,6 +52,20 @@ fn test_parse_response() ? {
 		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun'
 	}
 	{
+		// example sentense with wsgram
+		res := mw.parse_response(load('testdata/learners/hemorrhage.json')) ?
+		entries := res as []Entry
+
+		assert entries.len == 2
+
+		entry := entries[0]
+
+		assert entry.def[0].sseq[0].dt.vis == [
+			'[count] The patient suffered a cerebral {it}hemorrhage{/it}.',
+			'[noncount] There is a possibility of {it}hemorrhage{/it} with the procedure.',
+		]
+	}
+	{
 		// entry in uros
 		res := mw.parse_response(load('testdata/learners/accountability.json')) ?
 		entries := res as []Entry

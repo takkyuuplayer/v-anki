@@ -581,6 +581,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 	mut vis := []string{}
 	mut uns := []UsageNote{}
 
+	mut wsgram := ''
 	for tuple in f.arr() {
 		items := tuple.arr()
 		label, obj := items[0].str(), items[1]
@@ -589,7 +590,11 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str().trim_space()
+				if wsgram == '' {
+					vis << mp['t'].str().trim_space()
+				} else {
+					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+				}
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
@@ -599,6 +604,8 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			mut snote := Snote{}
 			snote.from_json(obj)
 		} else if label == 'wsgram' {
+			wsgram = obj.str()
+		} else if label == 'ca' {
 			// nothing to do
 		} else {
 			eprintln('unknown label $label in DefinitionText')
@@ -622,13 +629,18 @@ fn (mut u Utxt) from_json(f json2.Any) {
 	mut vis := []string{}
 	mut uns := []UsageNote{}
 
+	mut wsgram := ''
 	for tuple in f.arr() {
 		items := tuple.arr()
 		label, obj := items[0].str(), items[1]
 		if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str().trim_space()
+				if wsgram == '' {
+					vis << mp['t'].str().trim_space()
+				} else {
+					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+				}
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
@@ -637,8 +649,10 @@ fn (mut u Utxt) from_json(f json2.Any) {
 			}
 			note.from_json(obj.arr()[0])
 			uns << note
+		} else if label == 'wsgram' {
+			wsgram = obj.str()
 		} else {
-			eprintln('unknown label $label in Utxt')
+			eprintln('unknown label $label in Utxt.')
 		}
 	}
 

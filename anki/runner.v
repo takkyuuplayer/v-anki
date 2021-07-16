@@ -21,7 +21,7 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 					for card in cards {
 						// TODO csv escape
 						writer.writeln(card.front + '\t' +
-							card.back.replace_each(['\r', '', '\n', ''])) or {}
+							card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
 					}
 					break
 				}
