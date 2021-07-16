@@ -49,6 +49,21 @@ fn test_to_dictionary_result() ? {
 		assert res.entries.len == 1
 	}
 	{
+		// uns
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/lean.json')) ?
+		res := learners.to_dictionary_result('lean', entries)
+
+		assert res.entries[0].definitions.len == 7
+		assert res.entries[0].definitions[5] == dictionary.Definition{
+			grammatical_note: ''
+			sense: 'used to say that someone supports one group or set of beliefs more than another. often + <i>toward</i>'
+			examples: [
+				'an independent presidential candidate who <i>leans toward</i> the Democrats and their views',
+			]
+		}
+	}
+	{
 		// Suggestions
 		learners := new_learners('dummy key')
 		suggestions := parse_response(load('testdata/learners/furnitura.json')) ?

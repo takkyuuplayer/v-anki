@@ -434,18 +434,37 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 	mut definitions := []dictionary.Definition{}
 	for section in sections {
 		for sense in section.sseq {
-			mut meaning := sense.dt.text
-			mut examples := sense.dt.vis.map(to_html(it, web_url))
-			if sense.sdsense.sd != '' {
-				meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
-				for example in sense.sdsense.dt.vis {
-					examples << to_html(example, web_url)
+			if sense.dt.text != '' || sense.dt.vis.len > 0 {
+				mut meaning := sense.dt.text
+				mut examples := sense.dt.vis.map(to_html(it, web_url))
+				if sense.sdsense.sd != '' {
+					meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
+					for example in sense.sdsense.dt.vis {
+						examples << to_html(example, web_url)
+					}
+				}
+				definitions << dictionary.Definition{
+					grammatical_note: sense.sgram
+					sense: to_html(meaning, web_url)
+					examples: examples
 				}
 			}
-			definitions << dictionary.Definition{
-				grammatical_note: sense.sgram
-				sense: to_html(meaning, web_url)
-				examples: examples
+			if sense.dt.uns.len > 0 {
+				for usage_note in sense.dt.uns {
+					mut meaning := usage_note.text
+					mut examples := usage_note.vis.map(to_html(it, web_url))
+					if sense.sdsense.sd != '' {
+						meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
+						for example in sense.sdsense.dt.vis {
+							examples << to_html(example, web_url)
+						}
+					}
+					definitions << dictionary.Definition{
+						grammatical_note: sense.sgram
+						sense: to_html(meaning, web_url)
+						examples: examples
+					}
+				}
 			}
 		}
 	}
@@ -598,7 +617,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
-			note.from_json(obj.arr()[0])
+			note.from_json(obj)
 			uns << note
 		} else if label == 'snote' {
 			mut snote := Snote{}
@@ -618,6 +637,31 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 }
 
 type UsageNote = DefinitionText
+
+fn (mut u UsageNote) from_json(f json2.Any) {
+	mut texts := []string{}
+	mut vis := []string{}
+
+	for usage_notes in f.arr() {
+		for tuple in usage_notes.arr() {
+			items := tuple.arr()
+			label, obj := items[0].str(), items[1]
+			if label == 'text' {
+				texts << obj.str().trim_space()
+			} else if label == 'vis' {
+				for example in obj.arr() {
+					mp := example.as_map()
+					vis << mp['t'].str().trim_space()
+				}
+			} else {
+				eprintln('unknown label $label in UsageNote')
+			}
+		}
+	}
+
+	u.text = texts.join('. ')
+	u.vis = vis
+}
 
 struct Utxt {
 pub mut:
@@ -644,10 +688,7 @@ fn (mut u Utxt) from_json(f json2.Any) {
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
-			if obj.arr().len != 1 {
-				eprintln('UsageNote length with $obj.arr().len')
-			}
-			note.from_json(obj.arr()[0])
+			note.from_json(obj)
 			uns << note
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
