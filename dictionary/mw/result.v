@@ -442,7 +442,7 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 			}
 			if sense.dt.uns.len > 0 {
 				for usage_note in sense.dt.uns {
-					meaning += '&mdash; $usage_note.text'
+					meaning += ' &mdash; $usage_note.text'
 					for example in usage_note.vis {
 						examples << to_html(example, web_url)
 					}
@@ -652,7 +652,7 @@ fn (mut u UsageNote) from_json(f json2.Any) {
 		}
 	}
 
-	u.text = texts.join('. {mdash}')
+	u.text = texts.join(' {mdash} ')
 	u.vis = vis
 }
 
@@ -770,6 +770,7 @@ const tag_map = map{
 	'mdash':   '&mdash; '
 	'dx_def':  '('
 	'/dx_def': ')'
+	' or ': 'or'
 }
 
 fn to_html(sentence string, web_url fn (string) string) string {
@@ -788,7 +789,7 @@ fn to_html(sentence string, web_url fn (string) string) string {
 			link_word := segments[1].split(':')[0]
 			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
 		} else {
-			eprintln('unknown tag in sentence: $tag')
+			eprintln('unknown tag: $tag in sentence: $sentence')
 		}
 		before, after = after.before('{'), after.all_after('{')
 	}
