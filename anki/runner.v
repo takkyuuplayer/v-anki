@@ -25,7 +25,6 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 
 	for {
 		if word := br.read_line() {
-			eprintln('working on $word')
 			ch <- true
 			wg.add(1)
 
