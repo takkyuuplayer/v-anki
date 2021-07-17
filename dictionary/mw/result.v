@@ -770,7 +770,7 @@ const tag_map = map{
 	'mdash':   '&mdash; '
 	'dx_def':  '('
 	'/dx_def': ')'
-	' or ': 'or'
+	' or ':    'or'
 }
 
 fn to_html(sentence string, web_url fn (string) string) string {
