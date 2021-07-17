@@ -41,6 +41,9 @@
 
 @if entry.definitions.len > 0
   <h4>Definition</h4>
+  @if entry.grammatical_note != ''
+  [@entry.grammatical_note]
+  @end
   <ol>
     @for definition in entry.definitions
     <li>

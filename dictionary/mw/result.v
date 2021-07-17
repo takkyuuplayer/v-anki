@@ -316,7 +316,7 @@ pub mut:
 fn (mut i Inf) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	i.il = mp['il'].str()
+	i.il = normalize(mp['il'].str())
 	i.inf = mp['if'].str()
 	i.ifc = mp['ifc'].str()
 	if 'prs' in mp {
@@ -434,37 +434,26 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 	mut definitions := []dictionary.Definition{}
 	for section in sections {
 		for sense in section.sseq {
-			if sense.dt.text != '' || sense.dt.vis.len > 0 {
-				mut meaning := sense.dt.text
-				mut examples := sense.dt.vis.map(to_html(it, web_url))
-				if sense.sdsense.sd != '' {
-					meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
-					for example in sense.sdsense.dt.vis {
-						examples << to_html(example, web_url)
-					}
-				}
-				definitions << dictionary.Definition{
-					grammatical_note: sense.sgram
-					sense: to_html(meaning, web_url)
-					examples: examples
+			mut meaning := sense.dt.text
+			mut examples := sense.dt.vis.map(to_html(it, web_url))
+			if sense.sdsense.sd != '' {
+				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
+				for example in sense.sdsense.dt.vis {
+					examples << to_html(example, web_url)
 				}
 			}
 			if sense.dt.uns.len > 0 {
 				for usage_note in sense.dt.uns {
-					mut meaning := usage_note.text
-					mut examples := usage_note.vis.map(to_html(it, web_url))
-					if sense.sdsense.sd != '' {
-						meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
-						for example in sense.sdsense.dt.vis {
-							examples << to_html(example, web_url)
-						}
-					}
-					definitions << dictionary.Definition{
-						grammatical_note: sense.sgram
-						sense: to_html(meaning, web_url)
-						examples: examples
+					meaning += " &mdash; $usage_note.text"
+					for example in usage_note.vis {
+						examples << to_html(example, web_url)
 					}
 				}
+			}
+			definitions << dictionary.Definition{
+				grammatical_note: sense.sgram
+				sense: to_html(meaning, web_url)
+				examples: examples
 			}
 		}
 	}
