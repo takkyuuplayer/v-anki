@@ -125,9 +125,7 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
-					definitions: [dictionary.Definition{
-						examples: uro.utxt.vis.map(to_html(it, web_url))
-					}]
+					definitions: uro.utxt.to_dictionary_result(web_url)
 				}
 			}
 		} else if inflection_match {
@@ -444,7 +442,7 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 			}
 			if sense.dt.uns.len > 0 {
 				for usage_note in sense.dt.uns {
-					meaning += " &mdash; $usage_note.text"
+					meaning += '&mdash; $usage_note.text'
 					for example in usage_note.vis {
 						examples << to_html(example, web_url)
 					}
@@ -656,6 +654,19 @@ struct Utxt {
 pub mut:
 	vis []string
 	uns []UsageNote
+}
+
+fn (u Utxt) to_dictionary_result(web_url fn (string) string) []dictionary.Definition {
+	if u.uns.len > 0 {
+		eprintln('uns.len > 0 in Utxt')
+	}
+	if u.vis.len == 0 {
+		return []
+	}
+
+	return [dictionary.Definition{
+		examples: u.vis.map(to_html(it, web_url))
+	}]
 }
 
 fn (mut u Utxt) from_json(f json2.Any) {
