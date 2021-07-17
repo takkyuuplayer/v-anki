@@ -646,7 +646,7 @@ fn (mut u UsageNote) from_json(f json2.Any) {
 		}
 	}
 
-	u.text = texts.join('. ')
+	u.text = texts.join('. {mdash}')
 	u.vis = vis
 }
 
@@ -761,6 +761,7 @@ const tag_map = map{
 	'dx_ety':  '&mdash; '
 	'/dx_ety': ''
 	'ma':      '&mdash; more at '
+	'mdash':   '&mdash; '
 	'dx_def':  '('
 	'/dx_def': ')'
 }

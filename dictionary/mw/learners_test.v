@@ -58,7 +58,7 @@ fn test_to_dictionary_result() ? {
 		assert res.entries[0].definitions.len == 7
 		assert res.entries[0].definitions[5] == dictionary.Definition{
 			grammatical_note: ''
-			sense: '&mdash; used to say that someone supports one group or set of beliefs more than another. often + <i>toward</i>'
+			sense: '&mdash; used to say that someone supports one group or set of beliefs more than another. &mdash; often + <i>toward</i>'
 			examples: [
 				'an independent presidential candidate who <i>leans toward</i> the Democrats and their views',
 			]
