@@ -24,14 +24,11 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 	mut mu := sync.new_mutex()
 
 	for {
-		if word := br.read_line() {
-			ch <- true
-			wg.add(1)
+		word := br.read_line() or { break }
+		ch <- true
+		wg.add(1)
 
-			go run_on_word(dictionaries, reader, writer, word, ch, mut wg, mut mu)
-		} else {
-			break
-		}
+		go run_on_word(dictionaries, reader, writer, word, ch, mut wg, mut mu)
 	}
 
 	wg.wait()
@@ -46,21 +43,20 @@ fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Wr
 	}
 
 	for dict in dictionaries {
-		if result := dict.lookup(word) {
-			cards := to_basic_card(result)
-			if cards.len == 0 {
-				continue
+		lookedup := dict.lookup(word) or { continue }
+		cards := to_basic_card(lookedup)
+		if cards.len == 0 {
+			continue
+		}
+		for card in cards {
+			mu.@lock()
+			defer {
+				mu.unlock()
 			}
-			for card in cards {
-				mu.@lock()
-				defer {
-					mu.unlock()
-				}
 
-				// TODO csv escape
-				writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
-				return
-			}
+			// TODO csv escape
+			writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
+			return
 		}
 	}
 	eprintln(word + '\t' + 'Not Found')
