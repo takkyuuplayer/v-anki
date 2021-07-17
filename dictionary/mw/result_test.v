@@ -210,6 +210,30 @@ fn test_to_dictionary_result() ? {
 				'The college relies on <b><i>test scores</i></b> in its admissions process.',
 			]
 		}
+
+		second := entries[1]
+		assert second.inflections == [dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'tests'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}, dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'tested'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}, dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'testing'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}]
 	}
 	{
 		// uros

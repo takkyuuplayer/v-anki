@@ -331,7 +331,7 @@ fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
 	return ins.map(fn (inf Inf) dictionary.Inflection {
 		return dictionary.Inflection{
 			form_label: inf.il
-			inflected_form: inf.inf
+			inflected_form: normalize(inf.inf)
 			pronunciation: inf.prs.to_dictionary_result()
 		}
 	})
