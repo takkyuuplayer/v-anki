@@ -17,7 +17,9 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 	)
 
 	ch := chan bool{cap: anki.concurrency}
-	defer { ch.close() }
+	defer {
+		ch.close()
+	}
 	mut wg := sync.new_waitgroup()
 	mut mu := sync.new_mutex()
 
@@ -49,7 +51,9 @@ fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Wr
 			cards := to_basic_card(result)
 			for card in cards {
 				mu.@lock()
-				defer { mu.unlock() }
+				defer {
+					mu.unlock()
+				}
 
 				// TODO csv escape
 				writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
