@@ -464,29 +464,35 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 	if 'sls' in mp {
 		d.sls = mp['sls'].arr().map(it.str())
 	}
+	empty := Sense{}
 	mut sseq := []Sense{}
 	for seq in mp['sseq'].arr() {
 		mut sen := Sen{}
+		mut bs := empty
 		for item in seq.arr() {
 			arr := item.arr()
 			if arr.len != 2 {
 				eprintln('sseq contains array.len = $arr.len array')
 			}
 			label, obj := arr[0].str(), arr[1]
-			if label == 'sense' {
+			if label == 'bs' {
+				mut sense := Sense{}
+				sense.from_json(obj.as_map()['sense'])
+				bs = sense
+			} else if label == 'sense' {
 				mut sense := Sense{}
 				sense.from_json(obj)
-
 				if sen.sgram != '' && sense.sgram == '' {
 					sense.sgram = sen.sgram
 				}
-
+				if bs != empty {
+					sense.dt.text = '$bs.dt.text $sense.dt.text'
+				}
 				sseq << sense
 			} else if label == 'sen' {
 				sen.from_json(obj)
 			} else if label == 'pseq' {
-				empty := Sense{}
-				mut bs := empty
+				mut bs2 := empty
 				for pseq in obj.arr() {
 					arr2 := pseq.arr()
 					label2, obj2 := arr2[0].str(), arr2[1]
@@ -494,12 +500,12 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 					if label2 == 'bs' {
 						mut sense := Sense{}
 						sense.from_json(obj2.as_map()['sense'])
-						bs = sense
+						bs2 = sense
 					} else if label2 == 'sense' {
 						mut sense := Sense{}
 						sense.from_json(obj2)
-						if bs != empty {
-							sense.dt.text = '$bs.dt.text $sense.dt.text'
+						if bs2 != empty {
+							sense.dt.text = '$bs2.dt.text $sense.dt.text'
 						}
 
 						sseq << sense
@@ -611,7 +617,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			snote.from_json(obj)
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
-		} else if label == 'ca' {
+		} else if label in ['ca', 'srefs'] {
 			// nothing to do
 		} else {
 			eprintln('unknown label $label in DefinitionText')
