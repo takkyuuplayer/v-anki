@@ -48,6 +48,9 @@ fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Wr
 	for dict in dictionaries {
 		if result := dict.lookup(word) {
 			cards := to_basic_card(result)
+			if cards.len == 0 {
+				continue
+			}
 			for card in cards {
 				mu.@lock()
 				defer {
@@ -56,8 +59,9 @@ fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Wr
 
 				// TODO csv escape
 				writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
+				return
 			}
-			break
 		}
 	}
+	eprintln(word + "\t" + "Not Found")
 }
