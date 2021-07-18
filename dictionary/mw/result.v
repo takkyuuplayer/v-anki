@@ -655,6 +655,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		} else if label == 'snote' {
 			mut snote := Snote{}
 			snote.from_json(obj)
+			d.snote = snote
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
 		} else if label in ['ca', 'srefs', 'urefs'] {
@@ -750,7 +751,7 @@ fn (mut u Utxt) from_json(f json2.Any) {
 			uns << note
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
-		} else if label in ['snotebox'] {
+		} else if label == 'snotebox' {
 			// nothing to do
 		} else {
 			eprintln('unknown label $label in Utxt.')
