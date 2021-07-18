@@ -657,7 +657,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			snote.from_json(obj)
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
-		} else if label in ['ca', 'srefs'] {
+		} else if label in ['ca', 'srefs', 'urefs'] {
 			// nothing to do
 		} else {
 			eprintln('unknown label $label in DefinitionText')
@@ -698,24 +698,34 @@ fn (mut u UsageNote) from_json(f json2.Any) {
 
 struct Utxt {
 pub mut:
-	vis []string
-	uns []UsageNote
+	text string
+	vis  []string
+	uns  []UsageNote
 }
 
 fn (u Utxt) to_dictionary_result(web_url fn (string) string) []dictionary.Definition {
-	if u.uns.len > 0 {
-		eprintln('uns.len > 0 in Utxt')
-	}
 	if u.vis.len == 0 {
 		return []
 	}
+	mut meaning := u.text
+	mut examples := u.vis.map(to_html(it, web_url))
+	if u.uns.len > 0 {
+		for usage_note in u.uns {
+			meaning += ' &mdash; $usage_note.text'
+			for example in usage_note.vis {
+				examples << to_html(example, web_url)
+			}
+		}
+	}
 
 	return [dictionary.Definition{
-		examples: u.vis.map(to_html(it, web_url))
+		sense: to_html(meaning, web_url)
+		examples: examples
 	}]
 }
 
 fn (mut u Utxt) from_json(f json2.Any) {
+	mut texts := []string{}
 	mut vis := []string{}
 	mut uns := []UsageNote{}
 
@@ -723,7 +733,9 @@ fn (mut u Utxt) from_json(f json2.Any) {
 	for tuple in f.arr() {
 		items := tuple.arr()
 		label, obj := items[0].str(), items[1]
-		if label == 'vis' {
+		if label == 'text' {
+			texts << obj.str().trim_space()
+		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
 				if wsgram == '' {
@@ -738,11 +750,14 @@ fn (mut u Utxt) from_json(f json2.Any) {
 			uns << note
 		} else if label == 'wsgram' {
 			wsgram = obj.str()
+		} else if label in ['snotebox'] {
+			// nothing to do
 		} else {
 			eprintln('unknown label $label in Utxt.')
 		}
 	}
 
+	u.text = texts.join(' {mdash} ')
 	u.vis = vis
 	u.uns = uns
 }
