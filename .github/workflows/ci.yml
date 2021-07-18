@@ -28,6 +28,7 @@ jobs:
           sudo ./v symlink
       - name: v fmt
         run: |
+          cd repo
           v fmt -w .
           git diff --exit-code
       - name: v vet .
