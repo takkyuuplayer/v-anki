@@ -33,6 +33,7 @@ struct Entry {
 pub mut:
 	meta      Meta
 	hwi       Hwi
+	vrs       []Vr
 	hom       int
 	fl        string
 	lbs       []string
@@ -95,6 +96,15 @@ fn (mut e Entry) from_json(f json2.Any) {
 			dros << dro
 		}
 		e.dros = dros
+	}
+	if 'vrs' in mp {
+		mut vrs := []Vr{}
+		for item in mp['vrs'].arr() {
+			mut vr := Vr{}
+			vr.from_json(item)
+			vrs << vr
+		}
+		e.vrs = vrs
 	}
 }
 
@@ -414,12 +424,23 @@ struct Vr {
 pub mut:
 	vl string
 	va string
+	prs []Pr
 }
 
 fn (mut v Vr) from_json(f json2.Any) {
 	mp := f.as_map()
 	v.vl = mp['vl'].str()
 	v.va = mp['va'].str()
+
+	if 'prs' in mp {
+		mut prs := []Pr{}
+		for pr in mp['prs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+		v.prs = prs
+	}
 }
 
 struct DefinitionSection {

@@ -52,6 +52,32 @@ fn test_parse_response() ? {
 		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun'
 	}
 	{
+		// with vrs
+		res := mw.parse_response(load('testdata/learners/amortize.json')) ?
+		entries := res as []Entry
+
+		assert entries.len == 1
+		assert entries[0].vrs == [mw.Vr{
+			vl: 'also British'
+			va: 'am*or*tise'
+			prs: [mw.Pr{
+				ipa: 'ˈæmɚˌtaɪz'
+				mw: ''
+				l: ''
+				sound: mw.Sound{
+					audio: 'amorti02'
+				}
+			}, mw.Pr{
+				ipa: 'əˈmɔːˌtaɪz'
+				mw: ''
+				l: 'British'
+				sound: mw.Sound{
+					audio: ''
+				}
+			}]
+		}]
+	}
+	{
 		// example sentense with wsgram
 		res := mw.parse_response(load('testdata/learners/hemorrhage.json')) ?
 		entries := res as []Entry
