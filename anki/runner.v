@@ -24,7 +24,11 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 	mut mu := sync.new_mutex()
 
 	for {
-		word := br.read_line() or { break }
+		line := br.read_line() or { break }
+		word := line.trim_space()
+		if word == '' {
+			continue
+		}
 		ch <- true
 		wg.add(1)
 

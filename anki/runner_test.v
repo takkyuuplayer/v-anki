@@ -9,8 +9,7 @@ fn test_run() ? {
 		mut dictionaries := []dictionary.Dictionary{}
 		dictionaries << MockDictionary{}
 		mut reader := MockReader{
-			s: 'test
-test'.bytes()
+			s: 'test\n\ntest'.bytes()
 		}
 		mut writer := MockWriter{}
 		run(dictionaries, reader, writer)
