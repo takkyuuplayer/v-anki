@@ -422,8 +422,8 @@ fn (mut d Dro) from_json(f json2.Any) {
 
 struct Vr {
 pub mut:
-	vl string
-	va string
+	vl  string
+	va  string
 	prs []Pr
 }
 

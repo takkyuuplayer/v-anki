@@ -18,7 +18,7 @@ test'.bytes()
 		cards := to_basic_card(anki.result)
 		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
-		assert writer.sb.str() == "${line}\n${line}\n"
+		assert writer.sb.str() == '$line\n$line\n'
 	}
 }
 
