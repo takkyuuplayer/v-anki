@@ -24,8 +24,7 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 	mut mu := sync.new_mutex()
 
 	for {
-		line := br.read_line() or { break }
-		word := line.trim_space()
+		word := (br.read_line() or { break }).trim_space()
 		if word == '' {
 			continue
 		}
