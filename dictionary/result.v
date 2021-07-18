@@ -18,6 +18,7 @@ pub:
 	pronunciation    Pronunciation
 	inflections      []Inflection
 	definitions      []Definition
+	variants         []Variant
 }
 
 pub struct Definition {
@@ -45,4 +46,10 @@ pub:
 	label    string
 	spelling string
 	audio    string
+}
+
+pub struct Variant {
+pub:
+	label   string
+	variant string
 }

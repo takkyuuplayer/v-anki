@@ -1,6 +1,6 @@
 module mw
 
-import mw
+import dictionary.mw
 import os
 import dictionary
 
@@ -50,6 +50,46 @@ fn test_parse_response() ? {
 		assert first.def[0].sseq[0].dt.vis.len == 9
 		assert first.def[0].sseq[3].dt.uns.len == 1
 		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun'
+	}
+	{
+		// with vrs
+		res := mw.parse_response(load('testdata/learners/amortize.json')) ?
+		entries := res as []Entry
+
+		assert entries.len == 1
+		assert entries[0].vrs == [mw.Vr{
+			vl: 'also British'
+			va: 'am*or*tise'
+			prs: [mw.Pr{
+				ipa: 'ˈæmɚˌtaɪz'
+				mw: ''
+				l: ''
+				sound: mw.Sound{
+					audio: 'amorti02'
+				}
+			}, mw.Pr{
+				ipa: 'əˈmɔːˌtaɪz'
+				mw: ''
+				l: 'British'
+				sound: mw.Sound{
+					audio: ''
+				}
+			}]
+		}]
+	}
+	{
+		// example sentense with wsgram
+		res := mw.parse_response(load('testdata/learners/hemorrhage.json')) ?
+		entries := res as []Entry
+
+		assert entries.len == 2
+
+		entry := entries[0]
+
+		assert entry.def[0].sseq[0].dt.vis == [
+			'[count] The patient suffered a cerebral {it}hemorrhage{/it}.',
+			'[noncount] There is a possibility of {it}hemorrhage{/it} with the procedure.',
+		]
 	}
 	{
 		// entry in uros
@@ -132,24 +172,24 @@ fn test_parse_response() ? {
 		assert entries.len == 10
 
 		first := entries[0]
-		assert first.hwi == Hwi{
+		assert first.hwi == mw.Hwi{
 			hw: 'test'
-			prs: [Pr{
+			prs: [mw.Pr{
 				mw: 'ˈtest'
-				sound: Sound{
+				sound: mw.Sound{
 					audio: 'test0001'
 				}
 			}]
 		}
 		assert first.def[0].sseq.len == 9
-		assert first.def[0].sseq[3] == Sense{
+		assert first.def[0].sseq[3] == mw.Sense{
 			sn: '2 a (1)'
-			dt: DefinitionText{
+			dt: mw.DefinitionText{
 				text: '{bc}a critical examination, observation, or evaluation {bc}{sx|trial||}'
 			}
-			sdsense: Sdsense{
+			sdsense: mw.Sdsense{
 				sd: 'specifically'
-				dt: DefinitionText{
+				dt: mw.DefinitionText{
 					text: '{bc}the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection'
 					vis: ['a {wi}test{/wi} of a statistical hypothesis']
 				}
@@ -196,6 +236,30 @@ fn test_to_dictionary_result() ? {
 				'The college relies on <b><i>test scores</i></b> in its admissions process.',
 			]
 		}
+
+		second := entries[1]
+		assert second.inflections == [dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'tests'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}, dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'tested'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}, dictionary.Inflection{
+			form_label: ''
+			inflected_form: 'testing'
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+		}]
 	}
 	{
 		// uros
@@ -250,11 +314,30 @@ fn test_to_dictionary_result() ? {
 			}]
 		}]
 	}
+	{
+		// Pronunciation in vrs
+		result := parse_response(load('testdata/learners/amortize.json')) ? as []Entry
+		entries := result.to_dictionary_result('amortize', learners_web_url)
+
+		assert entries.len == 2
+		assert entries[0].pronunciation == dictionary.Pronunciation{
+			notation: 'IPA'
+			accents: [dictionary.Accent{
+				label: ''
+				spelling: 'ˈæmɚˌtaɪz'
+				audio: ''
+			}, dictionary.Accent{
+				label: 'British'
+				spelling: 'əˈmɔːˌtaɪz'
+				audio: ''
+			}]
+		}
+	}
 }
 
 fn test_candidate() {
-	entry := Entry{
-		meta: Meta{
+	entry := mw.Entry{
+		meta: mw.Meta{
 			stems: ['drop', 'drops', 'drop off']
 		}
 	}

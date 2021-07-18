@@ -16,6 +16,11 @@ pub fn new_collegiate(api_key string) Collegiate {
 	}
 }
 
+pub fn (c Collegiate) lookup(word string) ?dictionary.Result {
+	req := c.lookup_request(word)
+	return c.to_dictionary_result(word, parse_response((req.do() ?).text) ?)
+}
+
 pub fn (c Collegiate) lookup_request(word string) http.Request {
 	url := 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/' +
 		urllib.path_escape(word) + '?key=' + urllib.query_escape(c.api_key)

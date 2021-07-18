@@ -16,6 +16,11 @@ pub fn new_learners(api_key string) Learners {
 	}
 }
 
+pub fn (l Learners) lookup(word string) ?dictionary.Result {
+	req := l.lookup_request(word)
+	return l.to_dictionary_result(word, parse_response((req.do() ?).text) ?)
+}
+
 pub fn (l Learners) lookup_request(word string) http.Request {
 	url := 'https://www.dictionaryapi.com/api/v3/references/learners/json/' +
 		urllib.path_escape(word) + '?key=' + urllib.query_escape(l.api_key)

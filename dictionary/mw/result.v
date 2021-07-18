@@ -33,6 +33,7 @@ struct Entry {
 pub mut:
 	meta      Meta
 	hwi       Hwi
+	vrs       []Vr
 	hom       int
 	fl        string
 	lbs       []string
@@ -96,6 +97,15 @@ fn (mut e Entry) from_json(f json2.Any) {
 		}
 		e.dros = dros
 	}
+	if 'vrs' in mp {
+		mut vrs := []Vr{}
+		for item in mp['vrs'].arr() {
+			mut vr := Vr{}
+			vr.from_json(item)
+			vrs << vr
+		}
+		e.vrs = vrs
+	}
 }
 
 pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) string) []dictionary.Entry {
@@ -108,14 +118,33 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 		inflection_match := normalize(entry.hwi.hw) == word
 			|| entry.ins.any(normalize(it.inf) == word)
 		if !is_phrase {
+			pronunciation := entry.hwi.prs.to_dictionary_result()
+			mut notation := pronunciation.notation
+			mut accents := pronunciation.accents
+			for vr in entry.vrs {
+				pr := vr.prs.to_dictionary_result()
+				if notation == '' && pr.notation != '' {
+					notation = pr.notation
+				}
+				for accent in pr.accents {
+					accents << accent
+				}
+			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
 				grammatical_note: entry.gram
-				pronunciation: entry.hwi.prs.to_dictionary_result()
+				pronunciation: dictionary.Pronunciation{
+					notation: notation
+					accents: accents
+				}
 				inflections: entry.ins.to_dictionary_result()
 				definitions: entry.def.to_dictionary_result(web_url)
+				variants: entry.vrs.map(dictionary.Variant{
+					label: it.vl
+					variant: normalize(it.va)
+				})
 			}
 			for uro in entry.uros {
 				dict_entries << dictionary.Entry{
@@ -125,9 +154,7 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
-					definitions: [dictionary.Definition{
-						examples: uro.utxt.vis.map(to_html(it, web_url))
-					}]
+					definitions: uro.utxt.to_dictionary_result(web_url)
 				}
 			}
 		} else if inflection_match {
@@ -316,7 +343,7 @@ pub mut:
 fn (mut i Inf) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	i.il = mp['il'].str()
+	i.il = normalize(mp['il'].str())
 	i.inf = mp['if'].str()
 	i.ifc = mp['ifc'].str()
 	if 'prs' in mp {
@@ -333,7 +360,7 @@ fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
 	return ins.map(fn (inf Inf) dictionary.Inflection {
 		return dictionary.Inflection{
 			form_label: inf.il
-			inflected_form: inf.inf
+			inflected_form: normalize(inf.inf)
 			pronunciation: inf.prs.to_dictionary_result()
 		}
 	})
@@ -414,14 +441,25 @@ fn (mut d Dro) from_json(f json2.Any) {
 
 struct Vr {
 pub mut:
-	vl string
-	va string
+	vl  string
+	va  string
+	prs []Pr
 }
 
 fn (mut v Vr) from_json(f json2.Any) {
 	mp := f.as_map()
 	v.vl = mp['vl'].str()
 	v.va = mp['va'].str()
+
+	if 'prs' in mp {
+		mut prs := []Pr{}
+		for pr in mp['prs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+		v.prs = prs
+	}
 }
 
 struct DefinitionSection {
@@ -437,9 +475,17 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 			mut meaning := sense.dt.text
 			mut examples := sense.dt.vis.map(to_html(it, web_url))
 			if sense.sdsense.sd != '' {
-				meaning += '. $sense.sdsense.sd.capitalize() $sense.sdsense.dt.text'
+				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
 				for example in sense.sdsense.dt.vis {
 					examples << to_html(example, web_url)
+				}
+			}
+			if sense.dt.uns.len > 0 {
+				for usage_note in sense.dt.uns {
+					meaning += ' &mdash; $usage_note.text'
+					for example in usage_note.vis {
+						examples << to_html(example, web_url)
+					}
 				}
 			}
 			definitions << dictionary.Definition{
@@ -458,29 +504,35 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 	if 'sls' in mp {
 		d.sls = mp['sls'].arr().map(it.str())
 	}
+	empty := Sense{}
 	mut sseq := []Sense{}
 	for seq in mp['sseq'].arr() {
 		mut sen := Sen{}
+		mut bs := empty
 		for item in seq.arr() {
 			arr := item.arr()
 			if arr.len != 2 {
 				eprintln('sseq contains array.len = $arr.len array')
 			}
 			label, obj := arr[0].str(), arr[1]
-			if label == 'sense' {
+			if label == 'bs' {
+				mut sense := Sense{}
+				sense.from_json(obj.as_map()['sense'])
+				bs = sense
+			} else if label == 'sense' {
 				mut sense := Sense{}
 				sense.from_json(obj)
-
 				if sen.sgram != '' && sense.sgram == '' {
 					sense.sgram = sen.sgram
 				}
-
+				if bs != empty {
+					sense.dt.text = '$bs.dt.text $sense.dt.text'
+				}
 				sseq << sense
 			} else if label == 'sen' {
 				sen.from_json(obj)
 			} else if label == 'pseq' {
-				empty := Sense{}
-				mut bs := empty
+				mut bs2 := empty
 				for pseq in obj.arr() {
 					arr2 := pseq.arr()
 					label2, obj2 := arr2[0].str(), arr2[1]
@@ -488,12 +540,12 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 					if label2 == 'bs' {
 						mut sense := Sense{}
 						sense.from_json(obj2.as_map()['sense'])
-						bs = sense
+						bs2 = sense
 					} else if label2 == 'sense' {
 						mut sense := Sense{}
 						sense.from_json(obj2)
-						if bs != empty {
-							sense.dt.text = '$bs.dt.text $sense.dt.text'
+						if bs2 != empty {
+							sense.dt.text = '$bs2.dt.text $sense.dt.text'
 						}
 
 						sseq << sense
@@ -581,6 +633,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 	mut vis := []string{}
 	mut uns := []UsageNote{}
 
+	mut wsgram := ''
 	for tuple in f.arr() {
 		items := tuple.arr()
 		label, obj := items[0].str(), items[1]
@@ -589,16 +642,23 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str().trim_space()
+				if wsgram == '' {
+					vis << mp['t'].str().trim_space()
+				} else {
+					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+				}
 			}
 		} else if label == 'uns' {
 			mut note := UsageNote{}
-			note.from_json(obj.arr()[0])
+			note.from_json(obj)
 			uns << note
 		} else if label == 'snote' {
 			mut snote := Snote{}
 			snote.from_json(obj)
+			d.snote = snote
 		} else if label == 'wsgram' {
+			wsgram = obj.str()
+		} else if label in ['ca', 'srefs', 'urefs'] {
 			// nothing to do
 		} else {
 			eprintln('unknown label $label in DefinitionText')
@@ -612,36 +672,93 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 
 type UsageNote = DefinitionText
 
-struct Utxt {
-pub mut:
-	vis []string
-	uns []UsageNote
-}
-
-fn (mut u Utxt) from_json(f json2.Any) {
+fn (mut u UsageNote) from_json(f json2.Any) {
+	mut texts := []string{}
 	mut vis := []string{}
-	mut uns := []UsageNote{}
 
-	for tuple in f.arr() {
-		items := tuple.arr()
-		label, obj := items[0].str(), items[1]
-		if label == 'vis' {
-			for example in obj.arr() {
-				mp := example.as_map()
-				vis << mp['t'].str().trim_space()
+	for usage_notes in f.arr() {
+		for tuple in usage_notes.arr() {
+			items := tuple.arr()
+			label, obj := items[0].str(), items[1]
+			if label == 'text' {
+				texts << obj.str().trim_space()
+			} else if label == 'vis' {
+				for example in obj.arr() {
+					mp := example.as_map()
+					vis << mp['t'].str().trim_space()
+				}
+			} else {
+				eprintln('unknown label $label in UsageNote')
 			}
-		} else if label == 'uns' {
-			mut note := UsageNote{}
-			if obj.arr().len != 1 {
-				eprintln('UsageNote length with $obj.arr().len')
-			}
-			note.from_json(obj.arr()[0])
-			uns << note
-		} else {
-			eprintln('unknown label $label in Utxt')
 		}
 	}
 
+	u.text = texts.join(' {mdash} ')
+	u.vis = vis
+}
+
+struct Utxt {
+pub mut:
+	text string
+	vis  []string
+	uns  []UsageNote
+}
+
+fn (u Utxt) to_dictionary_result(web_url fn (string) string) []dictionary.Definition {
+	if u.vis.len == 0 {
+		return []
+	}
+	mut meaning := u.text
+	mut examples := u.vis.map(to_html(it, web_url))
+	if u.uns.len > 0 {
+		for usage_note in u.uns {
+			meaning += ' &mdash; $usage_note.text'
+			for example in usage_note.vis {
+				examples << to_html(example, web_url)
+			}
+		}
+	}
+
+	return [dictionary.Definition{
+		sense: to_html(meaning, web_url)
+		examples: examples
+	}]
+}
+
+fn (mut u Utxt) from_json(f json2.Any) {
+	mut texts := []string{}
+	mut vis := []string{}
+	mut uns := []UsageNote{}
+
+	mut wsgram := ''
+	for tuple in f.arr() {
+		items := tuple.arr()
+		label, obj := items[0].str(), items[1]
+		if label == 'text' {
+			texts << obj.str().trim_space()
+		} else if label == 'vis' {
+			for example in obj.arr() {
+				mp := example.as_map()
+				if wsgram == '' {
+					vis << mp['t'].str().trim_space()
+				} else {
+					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+				}
+			}
+		} else if label == 'uns' {
+			mut note := UsageNote{}
+			note.from_json(obj)
+			uns << note
+		} else if label == 'wsgram' {
+			wsgram = obj.str()
+		} else if label == 'snotebox' {
+			// nothing to do
+		} else {
+			eprintln('unknown label $label in Utxt.')
+		}
+	}
+
+	u.text = texts.join(' {mdash} ')
 	u.vis = vis
 	u.uns = uns
 }
@@ -706,8 +823,10 @@ const tag_map = map{
 	'dx_ety':  '&mdash; '
 	'/dx_ety': ''
 	'ma':      '&mdash; more at '
+	'mdash':   '&mdash; '
 	'dx_def':  '('
 	'/dx_def': ')'
+	' or ':    'or'
 }
 
 fn to_html(sentence string, web_url fn (string) string) string {
@@ -715,7 +834,7 @@ fn to_html(sentence string, web_url fn (string) string) string {
 	mut res := ''
 
 	for before != after {
-		res += before
+		res += before // TODO: HTML escape
 
 		tag := after.before('}')
 		after = after.all_after('}')
@@ -726,11 +845,11 @@ fn to_html(sentence string, web_url fn (string) string) string {
 			link_word := segments[1].split(':')[0]
 			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
 		} else {
-			eprintln('unknown tag in sentence: $tag')
+			eprintln('unknown tag: $tag in sentence: $sentence')
 		}
 		before, after = after.before('{'), after.all_after('{')
 	}
-	res += before
+	res += before // TODO: HTML escape
 
 	return res
 }
