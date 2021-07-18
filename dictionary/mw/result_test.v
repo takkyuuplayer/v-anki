@@ -314,6 +314,25 @@ fn test_to_dictionary_result() ? {
 			}]
 		}]
 	}
+	{
+		// Pronunciation in vrs
+		result := parse_response(load('testdata/learners/amortize.json')) ? as []Entry
+		entries := result.to_dictionary_result('amortize', learners_web_url)
+
+		assert entries.len == 2
+		assert entries[0].pronunciation == dictionary.Pronunciation{
+			notation: 'IPA'
+			accents: [dictionary.Accent{
+				label: ''
+				spelling: 'ˈæmɚˌtaɪz'
+				audio: ''
+			}, dictionary.Accent{
+				label: 'British'
+				spelling: 'əˈmɔːˌtaɪz'
+				audio: ''
+			}]
+		}
+	}
 }
 
 fn test_candidate() {

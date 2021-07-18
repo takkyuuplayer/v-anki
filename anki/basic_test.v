@@ -48,6 +48,12 @@ fn test_to_basic_card() {
 							].repeat(5)
 						},
 					]
+					variants: [
+						dictionary.Variant{
+							label: 'variant_label'
+							variant: 'variant'
+						},
+					].repeat(2)
 				},
 			].repeat(2)
 		}

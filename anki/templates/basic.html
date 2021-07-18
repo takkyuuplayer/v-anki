@@ -1,6 +1,15 @@
 @for entry in result.entries
 <h2>@entry.headword (@entry.function_label)</h2>
 
+@if entry.variants.len > 0
+  @for variant in entry.variants
+    @if variant.label != ""
+      [@variant.label]
+    @end
+    @variant.variant
+  @end
+@end
+
 @if entry.pronunciation.accents.len > 0
   <h4>Pronunciation (@entry.pronunciation.notation)</h4>
   @for idx, accent in entry.pronunciation.accents

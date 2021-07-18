@@ -118,14 +118,33 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 		inflection_match := normalize(entry.hwi.hw) == word
 			|| entry.ins.any(normalize(it.inf) == word)
 		if !is_phrase {
+			pronunciation := entry.hwi.prs.to_dictionary_result()
+			mut notation := pronunciation.notation
+			mut accents := pronunciation.accents
+			for vr in entry.vrs {
+				pr := vr.prs.to_dictionary_result()
+				if notation == '' && pr.notation != '' {
+					notation = pr.notation
+				}
+				for accent in pr.accents {
+					accents << accent
+				}
+			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
 				grammatical_note: entry.gram
-				pronunciation: entry.hwi.prs.to_dictionary_result()
+				pronunciation: dictionary.Pronunciation{
+					notation: notation
+					accents: accents
+				}
 				inflections: entry.ins.to_dictionary_result()
 				definitions: entry.def.to_dictionary_result(web_url)
+				variants: entry.vrs.map(dictionary.Variant{
+					label: it.vl
+					variant: normalize(it.va)
+				})
 			}
 			for uro in entry.uros {
 				dict_entries << dictionary.Entry{
