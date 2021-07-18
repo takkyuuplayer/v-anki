@@ -63,5 +63,5 @@ fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Wr
 			return
 		}
 	}
-	eprintln(word + '\t' + 'Not Found')
+	eprintln("NotFound\t${word}")
 }
