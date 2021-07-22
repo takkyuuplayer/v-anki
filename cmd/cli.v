@@ -29,7 +29,7 @@ fn cli(c cli.Command) ? {
 	card_type := c.flags.get_string('card') ?
 
 	if card_type !in anki.to_card {
-		return error('-card=$card_type is not supported')
+		return error('Only -card=basic|sentences is supported')
 	}
 
 	vdotenv.load()
