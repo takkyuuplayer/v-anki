@@ -62,14 +62,16 @@ fn (r Runner) run_on_word(reader io.Reader, writer Writer, word string, ch chan 
 		}
 		for card in cards {
 			mu.@lock()
-			defer {
-				mu.unlock()
-			}
 
 			// TODO csv escape
-			writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
-			return
+			writer.writeln(remove_new_lines(card.front) + '\t' + remove_new_lines(card.back)) or {}
+			mu.unlock()
 		}
+		return
 	}
 	eprintln('NotFound\t$word')
+}
+
+fn remove_new_lines(s string) string {
+	return s.replace_each(['\r', ' ', '\n', ' '])
 }
