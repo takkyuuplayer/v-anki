@@ -24,6 +24,7 @@ pub fn to_sentences_card(result dictionary.Result) []Card {
 					headword: entry.headword
 					function_label: entry.function_label
 					grammatical_note: entry.grammatical_note
+					pronunciation: entry.pronunciation
 					inflections: entry.inflections
 					definitions: [definition]
 					variants: entry.variants
