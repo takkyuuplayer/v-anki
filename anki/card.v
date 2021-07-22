@@ -5,4 +5,3 @@ pub:
 	front string
 	back  string
 }
-

@@ -77,4 +77,3 @@ fn test_to_sentences_card() {
 		assert cards.len == 0
 	}
 }
-

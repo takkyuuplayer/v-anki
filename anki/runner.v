@@ -6,10 +6,10 @@ import sync
 
 struct Runner {
 	dictionaries []dictionary.Dictionary
-	to_card fn(dictionary.Result) []Card
+	to_card      fn (dictionary.Result) []Card
 }
 
-pub fn new(dictionaries []dictionary.Dictionary, to_card fn(dictionary.Result) []Card) Runner {
+pub fn new(dictionaries []dictionary.Dictionary, to_card fn (dictionary.Result) []Card) Runner {
 	return Runner{dictionaries, to_card}
 }
 
