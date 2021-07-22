@@ -15,5 +15,6 @@ fn main() {
 	dictionaries << mw.new_learners(env.mw_learners_key)
 	dictionaries << mw.new_collegiate(env.mw_collegiate_key)
 
-	anki.run(dictionaries, os.stdin(), os.stdout())
+	runner := anki.new(dictionaries, anki.to_basic_card)
+	runner.run(os.stdin(), os.stdout())
 }

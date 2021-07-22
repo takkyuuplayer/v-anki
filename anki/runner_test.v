@@ -12,7 +12,8 @@ fn test_run() ? {
 			s: 'test\n\ntest'.bytes()
 		}
 		mut writer := MockWriter{}
-		run(dictionaries, reader, writer)
+		runner := new(dictionaries, to_basic_card)
+		runner.run(reader, writer)
 
 		cards := to_basic_card(anki.result)
 		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
