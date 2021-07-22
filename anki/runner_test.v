@@ -12,12 +12,30 @@ fn test_run() ? {
 			s: 'test\n\ntest'.bytes()
 		}
 		mut writer := MockWriter{}
-		run(dictionaries, reader, writer)
+		runner := new(dictionaries, to_basic_card)
+		runner.run(reader, writer)
 
 		cards := to_basic_card(anki.result)
 		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
-		assert writer.sb.str() == '$line\n$line\n'
+		assert writer.sb.str() == [line + '\n'].repeat(cards.len * 2).join('')
+	}
+	{
+		// sentences
+		mut dictionaries := []dictionary.Dictionary{}
+		dictionaries << MockDictionary{}
+		mut reader := MockReader{
+			s: 'test\n\ntest'.bytes()
+		}
+		mut writer := MockWriter{}
+		runner := new(dictionaries, to_sentences_card)
+		runner.run(reader, writer)
+
+		cards := to_sentences_card(anki.result)
+		line := cards[0].front.replace_each(['\r', ' ', '\n', ' ']) + '\t' +
+			cards[0].back.replace_each(['\r', ' ', '\n', ' '])
+
+		assert writer.sb.str() == [line + '\n'].repeat(cards.len * 2).join('')
 	}
 }
 
@@ -97,7 +115,7 @@ const result = dictionary.Result{
 						'example sentence',
 					].repeat(5)
 				},
-			]
+			].repeat(2)
 		},
 	].repeat(2)
 }

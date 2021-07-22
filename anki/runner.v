@@ -4,6 +4,15 @@ import io
 import dictionary
 import sync
 
+struct Runner {
+	dictionaries []dictionary.Dictionary
+	to_card      ToCard
+}
+
+pub fn new(dictionaries []dictionary.Dictionary, to_card ToCard) Runner {
+	return Runner{dictionaries, to_card}
+}
+
 interface Writer {
 	writeln(string) ?int
 	flush()
@@ -11,7 +20,7 @@ interface Writer {
 
 const concurrency = 10
 
-pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer) {
+pub fn (r Runner) run(reader io.Reader, writer Writer) {
 	mut br := io.new_buffered_reader(
 		reader: reader
 	)
@@ -31,7 +40,7 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 		ch <- true
 		wg.add(1)
 
-		go run_on_word(dictionaries, reader, writer, word, ch, mut wg, mut mu)
+		go r.run_on_word(reader, writer, word, ch, mut wg, mut mu)
 	}
 
 	wg.wait()
@@ -39,28 +48,30 @@ pub fn run(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer
 	writer.flush()
 }
 
-fn run_on_word(dictionaries []dictionary.Dictionary, reader io.Reader, writer Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
+fn (r Runner) run_on_word(reader io.Reader, writer Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
 	defer {
 		_ = <-ch
 		wg.done()
 	}
 
-	for dict in dictionaries {
+	for dict in r.dictionaries {
 		lookedup := dict.lookup(word) or { continue }
-		cards := to_basic_card(lookedup)
+		cards := r.to_card(lookedup)
 		if cards.len == 0 {
 			continue
 		}
 		for card in cards {
 			mu.@lock()
-			defer {
-				mu.unlock()
-			}
 
 			// TODO csv escape
-			writer.writeln(card.front + '\t' + card.back.replace_each(['\r', ' ', '\n', ' '])) or {}
-			return
+			writer.writeln(remove_new_lines(card.front) + '\t' + remove_new_lines(card.back)) or {}
+			mu.unlock()
 		}
+		return
 	}
 	eprintln('NotFound\t$word')
+}
+
+fn remove_new_lines(s string) string {
+	return s.replace_each(['\r', ' ', '\n', ' '])
 }

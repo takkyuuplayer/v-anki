@@ -2,12 +2,6 @@ module anki
 
 import dictionary
 
-pub struct Card {
-pub:
-	front string
-	back  string
-}
-
 pub fn to_basic_card(result dictionary.Result) []Card {
 	if result.entries.len == 0 {
 		return []
