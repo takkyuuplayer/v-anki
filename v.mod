@@ -1,5 +1,5 @@
 Module {
-	name: 'v-anki'
+	name: 'anki'
 	description: ''
 	version: ''
 	license: ''
