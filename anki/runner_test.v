@@ -1,33 +1,30 @@
 module anki
 
 import dictionary
-import strings
+import takkyuuplayer.streader
+import takkyuuplayer.bytebuf
 
 fn test_run() ? {
 	{
 		// basic
 		mut dictionaries := []dictionary.Dictionary{}
 		dictionaries << MockDictionary{}
-		mut reader := MockReader{
-			s: 'test\n\ntest'.bytes()
-		}
-		mut writer := MockWriter{}
+		mut reader := streader.new('test\n\ntest')
+		mut writer := bytebuf.Buffer{}
 		runner := new(dictionaries, to_basic_card)
 		runner.run(reader, writer)
 
 		cards := to_basic_card(anki.result)
 		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
-		assert writer.sb.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
 	}
 	{
 		// sentences
 		mut dictionaries := []dictionary.Dictionary{}
 		dictionaries << MockDictionary{}
-		mut reader := MockReader{
-			s: 'test\n\ntest'.bytes()
-		}
-		mut writer := MockWriter{}
+		mut reader := streader.new('test\n\ntest')
+		mut writer := bytebuf.Buffer{}
 		runner := new(dictionaries, to_sentences_card)
 		runner.run(reader, writer)
 
@@ -35,36 +32,8 @@ fn test_run() ? {
 		line := cards[0].front.replace_each(['\r', ' ', '\n', ' ']) + '\t' +
 			cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
-		assert writer.sb.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
 	}
-}
-
-struct MockReader {
-	s []byte
-mut:
-	i int
-}
-
-fn (mut m MockReader) read(mut buf []byte) ?int {
-	if m.i >= m.s.len {
-		return 0
-	}
-	n := copy(buf, m.s[m.i..])
-	m.i += n
-	return n
-}
-
-struct MockWriter {
-mut:
-	sb strings.Builder
-}
-
-fn (mut m MockWriter) writeln(s string) ?int {
-	m.sb.writeln(s)
-	return s.bytes().len
-}
-
-fn (m MockWriter) flush() {
 }
 
 struct MockDictionary {}

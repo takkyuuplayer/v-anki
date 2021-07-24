@@ -2,7 +2,15 @@
 
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
 
+Generate TSV to import into [Anki](https://apps.ankiweb.net/).
+
 ## Usage
+
+### Prerequisite
+
+1. Sign up [Merriam\-Webster Dictionary API](https://www.dictionaryapi.com/) and get a Learner's key and a Collegiate key.
+2. `cp .env.sample .env`
+3. Replace `.env` file's keys with your own ones.
 
 ### CLI
 

@@ -13,14 +13,9 @@ pub fn new(dictionaries []dictionary.Dictionary, to_card ToCard) Runner {
 	return Runner{dictionaries, to_card}
 }
 
-interface Writer {
-	writeln(string) ?int
-	flush()
-}
-
 const concurrency = 10
 
-pub fn (r Runner) run(reader io.Reader, writer Writer) {
+pub fn (r Runner) run(reader io.Reader, writer io.Writer) {
 	mut br := io.new_buffered_reader(
 		reader: reader
 	)
@@ -44,11 +39,9 @@ pub fn (r Runner) run(reader io.Reader, writer Writer) {
 	}
 
 	wg.wait()
-
-	writer.flush()
 }
 
-fn (r Runner) run_on_word(reader io.Reader, writer Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
+fn (r Runner) run_on_word(reader io.Reader, writer io.Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
 	defer {
 		_ = <-ch
 		wg.done()
@@ -64,7 +57,8 @@ fn (r Runner) run_on_word(reader io.Reader, writer Writer, word string, ch chan 
 			mu.@lock()
 
 			// TODO csv escape
-			writer.writeln(remove_new_lines(card.front) + '\t' + remove_new_lines(card.back)) or {}
+			line := remove_new_lines(card.front) + '\t' + remove_new_lines(card.back) + '\n'
+			writer.write(line.bytes()) or {}
 			mu.unlock()
 		}
 		return

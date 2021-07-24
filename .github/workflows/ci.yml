@@ -38,5 +38,6 @@ jobs:
       - name: v test .
         run: |
           cd repo
+          v install
           v test .
 
