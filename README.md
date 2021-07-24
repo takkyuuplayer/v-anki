@@ -2,6 +2,8 @@
 
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
 
+Generate TSV to import into [Anki](https://apps.ankiweb.net/).
+
 ## Usage
 
 ### CLI

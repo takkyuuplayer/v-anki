@@ -3,5 +3,9 @@ Module {
 	description: ''
 	version: ''
 	license: ''
-	dependencies: []
+	dependencies: [
+        'takkyuuplayer.bytebuf',
+        'takkyuuplayer.streader',
+        'zztkm.vdotenv'
+    ]
 }
