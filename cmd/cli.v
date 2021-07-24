@@ -41,5 +41,8 @@ fn cli(c cli.Command) ? {
 
 	to_card := anki.to_card[card_type]
 	runner := anki.new(dictionaries, to_card)
-	runner.run(os.stdin(), os.stdout())
+	mut input := os.stdin()
+	mut output := os.stdout()
+	runner.run(input, output)
+	output.flush()
 }
