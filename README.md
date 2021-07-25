@@ -12,6 +12,12 @@ Generate TSV to import into [Anki](https://apps.ankiweb.net/).
 2. `cp .env.sample .env`
 3. Replace `.env` file's keys with your own ones.
 
+### Web
+
+```bash
+v run main.v web
+```
+
 ### CLI
 
 #### basic card
