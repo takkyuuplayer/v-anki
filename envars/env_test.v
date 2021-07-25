@@ -16,4 +16,9 @@ fn test_load() {
 
 	assert env.mw_learners_key == 'key1'
 	assert env.mw_collegiate_key == 'key2'
+	assert env.port == 8080
+
+	os.setenv('PORT', '10080', true)
+	env = envars.load() or { panic(err) }
+	assert env.port == 10080
 }
