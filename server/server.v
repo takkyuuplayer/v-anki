@@ -40,7 +40,8 @@ pub fn (mut app App) lookup() vweb.Result {
 	}
 	mut input := streader.new(words)
 	mut output := bytebuf.Buffer{}
-	runner.run(input, output)
+	mut err_output := bytebuf.Buffer{}
+	runner.run(input, output, err_output)
 
-	return app.text(output.str())
+	return app.text(output.str() + err_output.str())
 }
