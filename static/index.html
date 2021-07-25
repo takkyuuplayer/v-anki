@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Anki Card Generator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h3>
+          Anki Card Generator
+          <img src="https://ankiweb.net/static/anki-logo2.png" height="64px" />
+        </h3>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <form action="/cards" method="POST">
+            <div class="mb-3">
+              <label for="cardType" class="form-label">Card Type</label>
+              <select
+                name="cardType"
+                class="form-select"
+                aria-label="card type"
+              >
+                <option value="basic">Basic</option>
+                <option value="sentences">Sentence</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="words" class="form-label">Words</label>
+              <textarea
+                class="form-control"
+                name="words"
+                rows="5"
+                placeholder="words and phrases separated by new lines"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate</button>
+          </form>
+        </div>
+        <div class="col-4">
+          <h6>Powered By</h6>
+          <a href="https://www.dictionaryapi.com/" target="_blank">
+            <img
+              class="hoverable"
+              height="120px"
+              src="https://www.dictionaryapi.com/images/MWLogo_120x120_2x.png"
+              alt="Merriam-Webster's Learner's Dictionary with Audio"
+            />
+          </a>
+        </div>
+      </div>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+  </body>
+</html>
