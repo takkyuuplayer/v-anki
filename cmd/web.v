@@ -6,7 +6,6 @@ import cli
 import dictionary
 import dictionary.mw
 import envars
-import zztkm.vdotenv
 
 pub fn new_web_cmd() cli.Command {
 	mut c := cli.Command{
@@ -19,7 +18,6 @@ pub fn new_web_cmd() cli.Command {
 }
 
 fn web(c cli.Command) ? {
-	vdotenv.load()
 	env := envars.load() ?
 
 	mut dictionaries := []dictionary.Dictionary{}
