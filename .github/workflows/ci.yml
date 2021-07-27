@@ -11,33 +11,21 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  ubuntu:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout V
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: nocturlab/setup-vlang-action@v1
         with:
-          repository: vlang/v
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          path: repo
-      - name: Build V
-        run: |
-          make
-          sudo ./v symlink
+          v-version: master
       - name: v fmt
         run: |
-          cd repo
           v fmt -w .
           git diff --exit-code
       - name: v vet .
         run: |
-          cd repo
           v vet .
       - name: v test .
         run: |
-          cd repo
           v install
           v test .
-
