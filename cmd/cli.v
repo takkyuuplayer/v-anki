@@ -43,6 +43,8 @@ fn cli(c cli.Command) ? {
 	runner := anki.new(dictionaries, to_card)
 	mut input := os.stdin()
 	mut output := os.stdout()
-	runner.run(input, output)
+	mut err_output := os.stderr()
+	runner.run(input, output, err_output)
 	output.flush()
+	err_output.flush()
 }

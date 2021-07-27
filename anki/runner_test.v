@@ -8,38 +8,58 @@ fn test_run() ? {
 	{
 		// basic
 		mut dictionaries := []dictionary.Dictionary{}
-		dictionaries << MockDictionary{}
+		dictionaries << MockDictionary{anki.result}
 		mut reader := streader.new('test\n\ntest')
 		mut writer := bytebuf.Buffer{}
+		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, to_basic_card)
-		runner.run(reader, writer)
+		runner.run(reader, writer, err_writer)
 
 		cards := to_basic_card(anki.result)
 		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
 		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		assert err_writer.str() == ''
 	}
 	{
 		// sentences
 		mut dictionaries := []dictionary.Dictionary{}
-		dictionaries << MockDictionary{}
+		dictionaries << MockDictionary{anki.result}
 		mut reader := streader.new('test\n\ntest')
 		mut writer := bytebuf.Buffer{}
+		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, to_sentences_card)
-		runner.run(reader, writer)
+		runner.run(reader, writer, err_writer)
 
 		cards := to_sentences_card(anki.result)
 		line := cards[0].front.replace_each(['\r', ' ', '\n', ' ']) + '\t' +
 			cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
 		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		assert err_writer.str() == ''
+	}
+	{
+		// no entries
+		mut dictionaries := []dictionary.Dictionary{}
+		dictionaries << MockDictionary{dictionary.Result{}}
+		mut reader := streader.new('test\n\ntest')
+		mut writer := bytebuf.Buffer{}
+		mut err_writer := bytebuf.Buffer{}
+		runner := new(dictionaries, to_basic_card)
+		runner.run(reader, writer, err_writer)
+
+		assert writer.str() == ''
+		line := 'NotFound\ttest'
+		assert err_writer.str() == [line + '\n'].repeat(2).join('')
 	}
 }
 
-struct MockDictionary {}
+struct MockDictionary {
+	result dictionary.Result
+}
 
 fn (m MockDictionary) lookup(word string) ?dictionary.Result {
-	return anki.result
+	return m.result
 }
 
 const result = dictionary.Result{

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Anki Card Generator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
+      integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"
+      crossorigin="anonymous"
+    />
+    <style type="text/css" media="all">
+      .container {
+        max-width: 1024px;
+      }
+      .social-icon {
+        font-size: x-large;
+        color: #444;
+      }
+      .social-icon:hover {
+        color: #4dadf7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <div class="row">
+        <h3>
+          Anki Card Generator
+          <img src="https://ankiweb.net/static/anki-logo2.png" height="64px" />
+        </h3>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <form action="/cards" method="POST">
+            <div class="mb-3">
+              <label for="cardType" class="form-label">Card Type</label>
+              <select
+                name="cardType"
+                class="form-select"
+                aria-label="card type"
+              >
+                <option value="basic">Basic</option>
+                <option value="sentences">Sentence</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="words" class="form-label">Words</label>
+              <textarea
+                class="form-control"
+                name="words"
+                rows="5"
+                placeholder="words and phrases separated by new lines"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Download</button>
+          </form>
+        </div>
+        <div class="col-4">
+          <h6>Powered By</h6>
+          <a href="https://www.dictionaryapi.com/" target="_blank">
+            <img
+              class="hoverable"
+              height="120px"
+              src="https://www.dictionaryapi.com/images/MWLogo_120x120_2x.png"
+              alt="Merriam-Webster's Learner's Dictionary with Audio"
+            />
+          </a>
+        </div>
+      </div>
+      <footer class="mt-3 pt-3 border-top">
+        <div class="row">
+          <div class="col">
+            &copy;
+            <script type="text/javascript">
+              var begin = 2021;
+              var year = new Date().getFullYear();
+              document.write(year === begin ? year : begin + " - " + year);
+            </script>
+            卓球Player All Rights Reserved.
+          </div>
+          <div class="col float-right">
+            <p class="col text-end">
+              <a href="https://github.com/takkyuuplayer/v-anki" target="_blank"
+                ><i class="fab fa-github social-icon"></i
+              ></a>
+              <a href="https://twitter.com/takkyuuplayer" target="_blank"
+                ><i class="fab fa-twitter social-icon"></i
+              ></a>
+              <a href="https://takkyuuplayer.com/" target="_blank"
+                ><i class="fas fa-home social-icon"></i
+              ></a>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript">
+      var form = new Vue({
+        el: "#form",
+        data: {
+          dictionary: "mw",
+          words: "",
+        },
+        mounted: function () {
+          this.$nextTick(function () {
+            M.AutoInit();
+            M.FormSelect.init(this.$refs.myInput);
+          });
+        },
+      });
+    </script>
+    <script
+      src="https://kit.fontawesome.com/6ea3832c59.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

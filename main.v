@@ -11,6 +11,7 @@ fn main() {
 		version: '0.0.1'
 	}
 	c.add_command(cmd.new_cli_cmd())
+	c.add_command(cmd.new_web_cmd())
 	c.setup()
 	c.parse(os.args)
 }
