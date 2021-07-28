@@ -15,6 +15,7 @@ Generate TSV to import into [Anki](https://apps.ankiweb.net/).
 ### Web
 
 ```bash
+source .env
 v run main.v web
 ```
 
@@ -23,6 +24,7 @@ v run main.v web
 #### basic card
 
 ```bash
+source .env
 cat words.txt | anki cli > anki.tsv
 ```
 
