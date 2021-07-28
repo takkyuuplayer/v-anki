@@ -31,12 +31,10 @@
   </head>
   <body>
     <div class="container mt-4">
-      <div class="row">
-        <h3>
-          Anki Card Generator
-          <img src="https://ankiweb.net/static/anki-logo2.png" height="64px" />
-        </h3>
-      </div>
+      <h3>
+        Anki Card Generator
+        <img src="https://ankiweb.net/static/anki-logo2.png" height="64px" />
+      </h3>
       <div class="row">
         <div class="col-8">
           <form action="/cards" method="POST">
@@ -60,7 +58,7 @@
                 placeholder="words and phrases separated by new lines"
               ></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Download</button>
+            <button type="submit" class="btn btn-primary">Download TSV</button>
           </form>
         </div>
         <div class="col-4">
@@ -75,6 +73,7 @@
           </a>
         </div>
       </div>
+      <p class="mt-3 text-start">You can import the TSV file into <a href="https://apps.ankiweb.net/" target="_blank">https://apps.ankiweb.net/</a></p>
       <footer class="mt-3 pt-3 border-top">
         <div class="row">
           <div class="col">
@@ -84,7 +83,7 @@
               var year = new Date().getFullYear();
               document.write(year === begin ? year : begin + " - " + year);
             </script>
-            卓球Player All Rights Reserved.
+            takkyuuplayer All Rights Reserved.
           </div>
           <div class="col float-right">
             <p class="col text-end">

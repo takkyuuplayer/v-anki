@@ -1,0 +1,17 @@
+{
+  "name": "v-anki",
+  "description": "Anki Card Generator",
+  "website": "https://github.com/takkyuuplayer/v-anki",
+  "repository": "https://github.com/takkyuuplayer/v-anki",
+  "env": {
+    "MW_LEARNERS_KEY": {
+      "description": "Learner's key on https://www.dictionaryapi.com/account/my-keys.htm",
+      "value": "replace.me"
+    },
+    "MW_COLLEGIATE_KEY": {
+      "description": "Collegiate key on https://www.dictionaryapi.com/account/my-keys.htm",
+      "value": "replace.me"
+    }
+  },
+  "stack": "container"
+}

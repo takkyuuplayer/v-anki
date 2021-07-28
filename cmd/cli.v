@@ -6,7 +6,6 @@ import dictionary
 import dictionary.mw
 import envars
 import os
-import zztkm.vdotenv
 
 pub fn new_cli_cmd() cli.Command {
 	mut c := cli.Command{
@@ -32,7 +31,6 @@ fn cli(c cli.Command) ? {
 		return error('Only -card=basic|sentences is supported')
 	}
 
-	vdotenv.load()
 	env := envars.load() ?
 
 	mut dictionaries := []dictionary.Dictionary{}

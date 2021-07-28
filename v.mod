@@ -5,7 +5,6 @@ Module {
 	license: ''
 	dependencies: [
         'takkyuuplayer.bytebuf',
-        'takkyuuplayer.streader',
-        'zztkm.vdotenv'
+        'takkyuuplayer.streader'
     ]
 }
