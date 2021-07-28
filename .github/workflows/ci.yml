@@ -68,4 +68,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "tp-v-anki"
           heroku_email: "takkyuuplayer@gmail.com"
+          branch: heroku
 
