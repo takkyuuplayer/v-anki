@@ -68,3 +68,5 @@ jobs:
           heroku_app_name: "tp-v-anki"
           heroku_email: "takkyuuplayer@gmail.com"
           appdir: heroku
+          usedocker: true
+
