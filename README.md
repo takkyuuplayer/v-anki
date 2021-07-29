@@ -1,8 +1,13 @@
 # v-anki
 
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Generate TSV to import into [Anki](https://apps.ankiweb.net/).
+
+## Demo
+
+https://tp-v-anki.herokuapp.com/
 
 ## Usage
 
@@ -15,6 +20,7 @@ Generate TSV to import into [Anki](https://apps.ankiweb.net/).
 ### Web
 
 ```bash
+source .env
 v run main.v web
 ```
 
@@ -23,6 +29,7 @@ v run main.v web
 #### basic card
 
 ```bash
+source .env
 cat words.txt | anki cli > anki.tsv
 ```
 
