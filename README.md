@@ -1,8 +1,13 @@
 # v-anki
 
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Generate TSV to import into [Anki](https://apps.ankiweb.net/).
+
+## Demo
+
+https://tp-v-anki.herokuapp.com/
 
 ## Usage
 
