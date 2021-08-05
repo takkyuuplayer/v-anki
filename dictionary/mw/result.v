@@ -795,7 +795,7 @@ fn candidate(word string, entry Entry) bool {
 	return word.to_lower() in entry.meta.stems
 }
 
-const tag_map = map{
+const tag_map = {
 	'bc':      '<b>:</b> '
 	'b':       '<b>'
 	'/b':      '</b>'

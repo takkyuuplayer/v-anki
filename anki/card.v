@@ -10,7 +10,7 @@ pub:
 
 type ToCard = fn (dictionary.Result) []Card
 
-pub const to_card = map{
+pub const to_card = {
 	'basic':     to_basic_card
 	'sentences': to_sentences_card
 }
