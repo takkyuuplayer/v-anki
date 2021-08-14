@@ -169,7 +169,7 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 			}
 		}
 		for dro in entry.dros {
-			if dro.drp != word {
+			if !match_phrasal_verb(word, dro.drp) {
 				continue
 			}
 			dict_entries << dictionary.Entry{
@@ -793,6 +793,31 @@ fn (mut s Snote) from_json(f json2.Any) {
 
 fn candidate(word string, entry Entry) bool {
 	return word.to_lower() in entry.meta.stems
+}
+
+fn match_phrasal_verb(search string, drp string) bool {
+	if search == drp {
+		return true
+	}
+
+	search_segments := search.split(' ').map(it.trim_space())
+	drp_segements := drp.split(' ').map(it.trim_space())
+
+	if search_segments.len != drp_segements.len {
+		return false
+	}
+
+	next: for i, seg in search_segments {
+		seg2 := drp_segements[i]
+		for word in seg2.split('/').map(it.trim_space()) {
+			if seg == word {
+				continue next
+			}
+		}
+		return false
+	}
+
+	return true
 }
 
 const tag_map = {
