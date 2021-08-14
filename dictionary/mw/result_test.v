@@ -315,6 +315,32 @@ fn test_to_dictionary_result() ? {
 		}]
 	}
 	{
+		// dros: verge on/upon
+		result := parse_response(load('testdata/learners/verge_on.json')) ? as []Entry
+		entries := result.to_dictionary_result('verge on', learners_web_url)
+
+		assert entries.len == 1
+		assert entries == [dictionary.Entry{
+			id: 'verge:2-verge on/upon'
+			headword: 'verge on/upon'
+			function_label: 'phrasal verb'
+			grammatical_note: ''
+			pronunciation: dictionary.Pronunciation{
+				notation: ''
+				accents: []
+			}
+			inflections: []
+			definitions: [dictionary.Definition{
+				grammatical_note: ''
+				sense: '<b>:</b> to come near to being (something)'
+				examples: ['comedy that <i>verges on</i> farce [=comedy that is almost farce]',
+					'His accusations were <i>verging on</i> slander.',
+				]
+			}]
+			variants: []
+		}]
+	}
+	{
 		// Pronunciation in vrs
 		result := parse_response(load('testdata/learners/amortize.json')) ? as []Entry
 		entries := result.to_dictionary_result('amortize', learners_web_url)
@@ -344,6 +370,21 @@ fn test_candidate() {
 	assert candidate('drop', entry) == true
 	assert candidate('DROPS', entry) == true
 	assert candidate('drop-off', entry) == false
+}
+
+fn test_match_phrasal_verb() {
+	{
+		assert match_phrasal_verb('drop off', 'drop off')
+		assert !match_phrasal_verb('drop on', 'drop off')
+	}
+	{
+		assert match_phrasal_verb('verge on', 'verge on/upon')
+		assert match_phrasal_verb('verge upon', 'verge on/upon')
+	}
+	{
+		assert !match_phrasal_verb('put up', 'put up with')
+		assert !match_phrasal_verb('put up with', 'put up')
+	}
 }
 
 fn load(testfile string) string {
