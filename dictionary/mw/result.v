@@ -268,8 +268,15 @@ fn (mut h Hwi) from_json(f json2.Any) {
 			p.from_json(pr)
 			prs << p
 		}
-		h.prs = prs
 	}
+	if 'altprs' in mp {
+		for pr in mp['altprs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+	}
+	h.prs = prs
 }
 
 struct Pr {
@@ -346,14 +353,22 @@ fn (mut i Inf) from_json(f json2.Any) {
 	i.il = normalize(mp['il'].str())
 	i.inf = mp['if'].str()
 	i.ifc = mp['ifc'].str()
+	mut prs := []Pr{}
 	if 'prs' in mp {
-		mut prs := []Pr{}
 		for pr in mp['prs'].arr() {
 			mut p := Pr{}
 			p.from_json(pr)
 			prs << p
 		}
 	}
+	if 'altprs' in mp {
+		for pr in mp['altprs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+	}
+	i.prs = prs
 }
 
 fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
@@ -380,15 +395,22 @@ fn (mut u Uro) from_json(f json2.Any) {
 	mp := f.as_map()
 
 	u.ure = mp['ure'].str()
+	mut prs := []Pr{}
 	if 'prs' in mp {
-		mut prs := []Pr{}
 		for pr in mp['prs'].arr() {
 			mut p := Pr{}
 			p.from_json(pr)
 			prs << p
 		}
-		u.prs = prs
 	}
+	if 'altprs' in mp {
+		for pr in mp['altprs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+	}
+	u.prs = prs
 	u.fl = mp['fl'].str()
 	if 'ins' in mp {
 		mut ins := []Inf{}
@@ -451,15 +473,22 @@ fn (mut v Vr) from_json(f json2.Any) {
 	v.vl = mp['vl'].str()
 	v.va = mp['va'].str()
 
+	mut prs := []Pr{}
 	if 'prs' in mp {
-		mut prs := []Pr{}
 		for pr in mp['prs'].arr() {
 			mut p := Pr{}
 			p.from_json(pr)
 			prs << p
 		}
-		v.prs = prs
 	}
+	if 'altprs' in mp {
+		for pr in mp['altprs'].arr() {
+			mut p := Pr{}
+			p.from_json(pr)
+			prs << p
+		}
+	}
+	v.prs = prs
 }
 
 struct DefinitionSection {

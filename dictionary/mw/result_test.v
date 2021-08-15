@@ -50,6 +50,10 @@ fn test_parse_response() ? {
 		assert first.def[0].sseq[0].dt.vis.len == 9
 		assert first.def[0].sseq[3].dt.uns.len == 1
 		assert first.def[0].sseq[3].dt.uns[0].text == 'often used before another noun'
+
+		assert entries[1].hom == 2
+		assert entries[1].fl == "verb"
+		assert entries[1].hwi.prs.len == 1
 	}
 	{
 		// with vrs
