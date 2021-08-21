@@ -120,6 +120,7 @@ fn test_parse_response() ? {
 		assert entries.len == 1
 		assert entries[0].def.len == 0
 		assert entries[0].uros.len == 1
+		assert entries[0].uros[0].lbs == ['always used before a noun']
 		assert entries[0].dros[0].def[0].sseq[0].dt.uns[0].text == 'often used figuratively to say that someone is very close to dying or very sick'
 	}
 	{
@@ -131,6 +132,14 @@ fn test_parse_response() ? {
 		assert entries[4].meta.app_shortdef.def.len == 0
 
 		assert entries[7].def[0].sseq[0].sgram == 'count'
+	}
+	{
+		// lbs in sense
+		res := mw.parse_response(load('testdata/learners/sheer.json')) ?
+		entries := res as []Entry
+
+		assert entries.len == 3
+		assert entries[0].def[0].sseq[0].lbs == ['always used before a noun']
 	}
 	{
 		// phrasal verb
@@ -266,6 +275,12 @@ fn test_to_dictionary_result() ? {
 		}]
 	}
 	{
+		result := parse_response(load('testdata/learners/sheer.json')) ? as []Entry
+		entries := result.to_dictionary_result('sheer', learners_web_url)
+
+		assert entries[0].definitions[0].sense == '<i>always used before a noun</i>  &mdash; used to emphasize the large amount, size, or degree of something'
+	}
+	{
 		// uros
 		result := parse_response(load('testdata/learners/accountability.json')) ? as []Entry
 		entries := result.to_dictionary_result('accountability', learners_web_url)
@@ -290,6 +305,13 @@ fn test_to_dictionary_result() ? {
 				]
 			}]
 		}
+	}
+	{
+		// basic: lbs to grammatical_note
+		result := parse_response(load('testdata/learners/accountability.json')) ? as []Entry
+		entries := result.to_dictionary_result('accountability', learners_web_url)
+
+		assert entries[0].grammatical_note == '<i>not used before a noun</i>.'
 	}
 	{
 		// dros
@@ -343,6 +365,13 @@ fn test_to_dictionary_result() ? {
 			}]
 			variants: []
 		}]
+	}
+	{
+		// lbs in dros to grammatical_note
+		result := parse_response(load('testdata/learners/deathbed.json')) ? as []Entry
+		entries := result.to_dictionary_result('deathbed', learners_web_url)
+
+		entries[1].grammatical_note == '<i>always used before a noun</i>.'
 	}
 	{
 		// Pronunciation in vrs

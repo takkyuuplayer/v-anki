@@ -130,11 +130,18 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 					accents << accent
 				}
 			}
+			mut grammatical_note := entry.gram
+			if entry.lbs.len > 0 {
+				label := entry.lbs.map(fn (l string) string {
+					return '<i>$l</i>'
+				}).join(', ')
+				grammatical_note = '${label}. $grammatical_note'.trim_space()
+			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
-				grammatical_note: entry.gram
+				grammatical_note: grammatical_note
 				pronunciation: dictionary.Pronunciation{
 					notation: notation
 					accents: accents
@@ -147,22 +154,36 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 				})
 			}
 			for uro in entry.uros {
+				mut ugrammatical_note := uro.gram
+				if uro.lbs.len > 0 {
+					label := uro.lbs.map(fn (l string) string {
+						return '<i>$l</i>'
+					}).join(', ')
+					ugrammatical_note = '${label}. $ugrammatical_note'.trim_space()
+				}
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$uro.ure'
 					headword: normalize(uro.ure)
 					function_label: uro.fl
-					grammatical_note: uro.gram
+					grammatical_note: ugrammatical_note
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
 					definitions: uro.utxt.to_dictionary_result(web_url)
 				}
 			}
 		} else if inflection_match {
+			mut grammatical_note := entry.gram
+			if entry.lbs.len > 0 {
+				label := entry.lbs.map(fn (l string) string {
+					return '<i>$l</i>'
+				}).join(', ')
+				grammatical_note = '${label}. $grammatical_note'.trim_space()
+			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
-				grammatical_note: entry.gram
+				grammatical_note: grammatical_note
 				pronunciation: entry.hwi.prs.to_dictionary_result()
 				inflections: entry.ins.to_dictionary_result()
 				definitions: entry.def.to_dictionary_result(web_url)
@@ -176,6 +197,9 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 				id: '$entry.meta.id-$dro.drp'
 				headword: dro.drp
 				function_label: dro.gram
+				grammatical_note: dro.lbs.map(fn (l string) string {
+					return '<i>$l</i>'
+				}).join(', ')
 				definitions: dro.def.to_dictionary_result(web_url)
 			}
 		}
@@ -389,6 +413,7 @@ pub mut:
 	ins  []Inf
 	gram string
 	utxt Utxt
+	lbs  []string
 }
 
 fn (mut u Uro) from_json(f json2.Any) {
@@ -428,6 +453,10 @@ fn (mut u Uro) from_json(f json2.Any) {
 		utxt.from_json(mp['utxt'])
 		u.utxt = utxt
 	}
+
+	if 'lbs' in mp {
+		u.lbs = mp['lbs'].arr().map(it.str())
+	}
 }
 
 struct Dro {
@@ -436,6 +465,7 @@ pub mut:
 	def  []DefinitionSection
 	gram string
 	vrs  []Vr
+	lbs  []string
 }
 
 fn (mut d Dro) from_json(f json2.Any) {
@@ -458,6 +488,9 @@ fn (mut d Dro) from_json(f json2.Any) {
 			vrs << vr
 		}
 		d.vrs = vrs
+	}
+	if 'lbs' in mp {
+		d.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
@@ -503,6 +536,13 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 		for sense in section.sseq {
 			mut meaning := sense.dt.text
 			mut examples := sense.dt.vis.map(to_html(it, web_url))
+
+			if sense.lbs.len > 0 {
+				label := sense.lbs.map(fn (l string) string {
+					return '<i>$l</i>'
+				}).join(', ')
+				meaning = '$label $meaning'
+			}
 			if sense.sdsense.sd != '' {
 				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
 				for example in sense.sdsense.dt.vis {
@@ -611,6 +651,7 @@ pub mut:
 	dt      DefinitionText
 	sgram   string
 	sdsense Sdsense
+	lbs     []string
 }
 
 fn (mut s Sense) from_json(f json2.Any) {
@@ -629,6 +670,9 @@ fn (mut s Sense) from_json(f json2.Any) {
 		mut sdsense := Sdsense{}
 		sdsense.from_json(mp['sdsense'])
 		s.sdsense = sdsense
+	}
+	if 'lbs' in mp {
+		s.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
