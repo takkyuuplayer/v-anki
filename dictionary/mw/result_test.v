@@ -307,13 +307,6 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
-		// basic: lbs to grammatical_note
-		result := parse_response(load('testdata/learners/accountability.json')) ? as []Entry
-		entries := result.to_dictionary_result('accountability', learners_web_url)
-
-		assert entries[0].grammatical_note == '<i>not used before a noun</i>.'
-	}
-	{
 		// dros
 		result := parse_response(load('testdata/learners/drop_off.json')) ? as []Entry
 		entries := result.to_dictionary_result('drop off', learners_web_url)

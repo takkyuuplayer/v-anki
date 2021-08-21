@@ -130,18 +130,11 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 					accents << accent
 				}
 			}
-			mut grammatical_note := entry.gram
-			if entry.lbs.len > 0 {
-				label := entry.lbs.map(fn (l string) string {
-					return '<i>$l</i>'
-				}).join(', ')
-				grammatical_note = '${label}. $grammatical_note'.trim_space()
-			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
-				grammatical_note: grammatical_note
+				grammatical_note: entry.gram
 				pronunciation: dictionary.Pronunciation{
 					notation: notation
 					accents: accents
@@ -154,36 +147,22 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 				})
 			}
 			for uro in entry.uros {
-				mut ugrammatical_note := uro.gram
-				if uro.lbs.len > 0 {
-					label := uro.lbs.map(fn (l string) string {
-						return '<i>$l</i>'
-					}).join(', ')
-					ugrammatical_note = '${label}. $ugrammatical_note'.trim_space()
-				}
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$uro.ure'
 					headword: normalize(uro.ure)
 					function_label: uro.fl
-					grammatical_note: ugrammatical_note
+					grammatical_note: uro.gram
 					pronunciation: uro.prs.to_dictionary_result()
 					inflections: uro.ins.to_dictionary_result()
 					definitions: uro.utxt.to_dictionary_result(web_url)
 				}
 			}
 		} else if inflection_match {
-			mut grammatical_note := entry.gram
-			if entry.lbs.len > 0 {
-				label := entry.lbs.map(fn (l string) string {
-					return '<i>$l</i>'
-				}).join(', ')
-				grammatical_note = '${label}. $grammatical_note'.trim_space()
-			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
 				headword: normalize(entry.hwi.hw)
 				function_label: entry.fl
-				grammatical_note: grammatical_note
+				grammatical_note: entry.gram
 				pronunciation: entry.hwi.prs.to_dictionary_result()
 				inflections: entry.ins.to_dictionary_result()
 				definitions: entry.def.to_dictionary_result(web_url)
@@ -197,9 +176,6 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 				id: '$entry.meta.id-$dro.drp'
 				headword: dro.drp
 				function_label: dro.gram
-				grammatical_note: dro.lbs.map(fn (l string) string {
-					return '<i>$l</i>'
-				}).join(', ')
 				definitions: dro.def.to_dictionary_result(web_url)
 			}
 		}
