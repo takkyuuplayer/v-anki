@@ -389,6 +389,7 @@ pub mut:
 	ins  []Inf
 	gram string
 	utxt Utxt
+	lbs  []string
 }
 
 fn (mut u Uro) from_json(f json2.Any) {
@@ -428,6 +429,10 @@ fn (mut u Uro) from_json(f json2.Any) {
 		utxt.from_json(mp['utxt'])
 		u.utxt = utxt
 	}
+
+	if 'lbs' in mp {
+		u.lbs = mp['lbs'].arr().map(it.str())
+	}
 }
 
 struct Dro {
@@ -436,6 +441,7 @@ pub mut:
 	def  []DefinitionSection
 	gram string
 	vrs  []Vr
+	lbs  []string
 }
 
 fn (mut d Dro) from_json(f json2.Any) {
@@ -458,6 +464,9 @@ fn (mut d Dro) from_json(f json2.Any) {
 			vrs << vr
 		}
 		d.vrs = vrs
+	}
+	if 'lbs' in mp {
+		d.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
@@ -503,6 +512,13 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 		for sense in section.sseq {
 			mut meaning := sense.dt.text
 			mut examples := sense.dt.vis.map(to_html(it, web_url))
+
+			if sense.lbs.len > 0 {
+				label := sense.lbs.map(fn (l string) string {
+					return '<i>$l</i>'
+				}).join(', ')
+				meaning = '$label $meaning'
+			}
 			if sense.sdsense.sd != '' {
 				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
 				for example in sense.sdsense.dt.vis {
@@ -611,6 +627,7 @@ pub mut:
 	dt      DefinitionText
 	sgram   string
 	sdsense Sdsense
+	lbs     []string
 }
 
 fn (mut s Sense) from_json(f json2.Any) {
@@ -629,6 +646,9 @@ fn (mut s Sense) from_json(f json2.Any) {
 		mut sdsense := Sdsense{}
 		sdsense.from_json(mp['sdsense'])
 		s.sdsense = sdsense
+	}
+	if 'lbs' in mp {
+		s.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
