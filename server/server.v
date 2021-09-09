@@ -6,7 +6,6 @@ import net.http
 import strconv
 import takkyuuplayer.bytebuf
 import takkyuuplayer.streader
-import time
 import vweb
 
 struct App {
@@ -110,7 +109,7 @@ pub fn (mut app App) lookup() vweb.Result {
 	mut input := streader.new(words)
 	mut output := app
 	mut err_output := bytebuf.Buffer{}
-	runner.run(input, err_output, err_output)
+	runner.run(input, output, err_output)
 	app.write(err_output.str().bytes()) or { eprintln(err) }
 
 	return vweb.not_found()
