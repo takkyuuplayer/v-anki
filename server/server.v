@@ -2,12 +2,10 @@ module server
 
 import anki
 import dictionary
-import io
 import net.http
 import takkyuuplayer.bytebuf
 import takkyuuplayer.chunkio
 import takkyuuplayer.streader
-import time
 import vweb
 
 struct App {
