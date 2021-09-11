@@ -37,6 +37,11 @@ jobs:
           cd repo
           v install
           v test .
+      - name: v build .
+        run: |
+          cd repo
+          v install
+          v -prod .
   docker:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
