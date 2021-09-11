@@ -80,5 +80,6 @@ pub fn (mut app App) lookup() vweb.Result {
 	}
 	output.close() or {}
 
+	// To return vweb.Result{}
 	return vweb.not_found()
 }
