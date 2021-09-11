@@ -2,10 +2,12 @@ module server
 
 import anki
 import dictionary
+import io
 import net.http
-import strconv
 import takkyuuplayer.bytebuf
+import takkyuuplayer.chunkio
 import takkyuuplayer.streader
+import time
 import vweb
 
 struct App {
@@ -14,41 +16,6 @@ mut:
 	chunking     bool
 	wrote_header bool
 	dictionaries shared []dictionary.Dictionary
-}
-
-pub fn (mut app App) write(buf []byte) ?int {
-	if app.Context.done {
-		return 0
-	}
-
-	if !app.wrote_header {
-		app.write_header() or {
-			eprintln(err)
-			return err
-		}
-	}
-
-	if app.chunking {
-		app.conn.write(strconv.v_sprintf('%x\r\n', buf.len).bytes()) ?
-		n := app.conn.write(buf) ?
-		app.conn.write('\r\n'.bytes()) ?
-		return n
-	} else {
-		return app.conn.write(buf)
-	}
-}
-
-fn (mut app App) close() {
-	if app.Context.done {
-		return
-	}
-	app.Context.done = true
-
-	if !app.chunking {
-		return
-	}
-
-	app.conn.write('0\r\n\r\n'.bytes()) or {}
 }
 
 fn (mut app App) write_header() ? {
@@ -89,9 +56,6 @@ pub fn new_app(dictionaries []dictionary.Dictionary) &App {
 
 ['/cards'; post]
 pub fn (mut app App) lookup() vweb.Result {
-	defer {
-		app.close()
-	}
 	words := app.form['words']
 	card_type := app.form['cardType']
 
@@ -106,11 +70,17 @@ pub fn (mut app App) lookup() vweb.Result {
 	runner := rlock app.dictionaries {
 		anki.new(app.dictionaries, anki.to_card[card_type])
 	}
+
 	mut input := streader.new(words)
-	mut output := app
+	mut output := chunkio.new_writer(writer: app.Context.conn)
 	mut err_output := bytebuf.Buffer{}
+
+	app.write_header() or {}
 	runner.run(input, output, err_output)
-	app.write(err_output.str().bytes()) or { eprintln(err) }
+	if err_output.str().len > 0 {
+		output.write(err_output.str().bytes()) or { eprintln(err) }
+	}
+	output.close() or {}
 
 	return vweb.not_found()
 }
