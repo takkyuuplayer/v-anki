@@ -49,62 +49,65 @@ pub mut:
 fn (mut e Entry) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	mut meta := Meta{}
-	meta.from_json(mp['meta'])
-	e.meta = meta
-	mut hwi := Hwi{}
-	hwi.from_json(mp['hwi'])
-	e.hwi = hwi
-	e.hom = mp['hom'].int()
-	e.fl = mp['fl'].str()
-	if 'lbs' in mp {
-		e.lbs = mp['lbs'].arr().map(it.str())
-	}
-	if 'ins' in mp {
-		mut ins := []Inf{}
-		for inflection in mp['ins'].arr() {
-			mut i := Inf{}
-			i.from_json(inflection)
-			ins << i
+	for k, v in mp {
+		match k {
+			'meta' {
+				e.meta.from_json(v)
+			}
+			'hwi' {
+				e.hwi.from_json(v)
+			}
+			'hom' {
+				e.hom = v.int()
+			}
+			'fl' {
+				e.fl = v.str()
+			}
+			'lbs' {
+				e.lbs = v.arr().map(it.str())
+			}
+			'ins' {
+				e.ins = v.arr().map(fn (item json2.Any) Inf {
+					mut i := Inf{}
+					i.from_json(item)
+					return i
+				})
+			}
+			'gram' {
+				e.gram = v.str()
+			}
+			'def' {
+				e.def = v.arr().map(fn (item json2.Any) DefinitionSection {
+					mut d := DefinitionSection{}
+					d.from_json(item)
+					return d
+				})
+			}
+			'uros' {
+				e.uros = v.arr().map(fn (item json2.Any) Uro {
+					mut u := Uro{}
+					u.from_json(item)
+					return u
+				})
+			}
+			'dros' {
+				e.dros = v.arr().map(fn (item json2.Any) Dro {
+					mut d := Dro{}
+					d.from_json(item)
+					return d
+				})
+			}
+			'vrs' {
+				e.vrs = v.arr().map(fn (item json2.Any) Vr {
+					mut v := Vr{}
+					v.from_json(item)
+					return v
+				})
+			}
+			else {
+				eprintln('unknown key in Entry: $k')
+			}
 		}
-		e.ins = ins
-	}
-	e.gram = mp['gram'].str()
-	mut def := []DefinitionSection{}
-	if 'def' in mp {
-		for ds in mp['def'].arr() {
-			mut d := DefinitionSection{}
-			d.from_json(ds)
-			def << d
-		}
-	}
-	e.def = def
-	if 'uros' in mp {
-		mut uros := []Uro{}
-		for item in mp['uros'].arr() {
-			mut uro := Uro{}
-			uro.from_json(item)
-			uros << uro
-		}
-		e.uros = uros
-	}
-	if 'dros' in mp {
-		mut dros := []Dro{}
-		for item in mp['dros'].arr() {
-			mut dro := Dro{}
-			dro.from_json(item)
-			dros << dro
-		}
-		e.dros = dros
-	}
-	if 'vrs' in mp {
-		mut vrs := []Vr{}
-		for item in mp['vrs'].arr() {
-			mut vr := Vr{}
-			vr.from_json(item)
-			vrs << vr
-		}
-		e.vrs = vrs
 	}
 }
 
@@ -200,26 +203,41 @@ pub mut:
 fn (mut m Meta) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	m.id = mp['id'].str()
-	m.uuid = mp['uuid'].str()
-	m.src = mp['src'].str()
-	m.section = mp['section'].str()
-	if 'target' in mp {
-		mut target := Target{}
-		target.from_json(mp['target'])
-		m.target = target
-	}
-	if 'highlight' in mp {
-		m.highlight = mp['highlight'].str()
-	}
-	m.stems = mp['stems'].arr().map(it.str())
-	if mp['app-shortdef'].arr().len == 0 {
-		// invalid data in junk.json
-	} else {
-		mut app_shortdef := AppShortdef{}
-		app_shortdef.from_json(mp['app-shortdef'])
-		m.app_shortdef = app_shortdef
-		m.offensive = mp['offensive'].bool()
+	for k, v in mp {
+		match k {
+			'id' {
+				m.id = v.str()
+			}
+			'uuid' {
+				m.uuid = v.str()
+			}
+			'src' {
+				m.src = v.str()
+			}
+			'section' {
+				m.section = v.str()
+			}
+			'target' {
+				m.target.from_json(v)
+			}
+			'highlight' {
+				m.highlight = v.str()
+			}
+			'stems' {
+				m.stems = v.arr().map(it.str())
+			}
+			'app-shortdef' {
+				if v.arr().len > 0 {
+					m.app_shortdef.from_json(v)
+				}
+			}
+			'offensive' {
+				m.offensive = v.bool()
+			}
+			else {
+				eprintln('unknown key in Meta: $k')
+			}
+		}
 	}
 }
 
@@ -232,8 +250,19 @@ pub mut:
 fn (mut t Target) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	t.tuuid = mp['tuuid'].str()
-	t.tsrc = mp['tsrc'].str()
+	for k, v in mp {
+		match k {
+			'tuuid' {
+				t.tuuid = v.str()
+			}
+			'tsrc' {
+				t.tsrc = v.str()
+			}
+			else {
+				eprintln('unknown key in Target: $k')
+			}
+		}
+	}
 }
 
 pub struct AppShortdef {
@@ -246,9 +275,22 @@ pub mut:
 fn (mut a AppShortdef) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	a.hw = mp['hw'].str()
-	a.fl = mp['fl'].str()
-	a.def = mp['def'].arr().map(it.str().trim_space())
+	for k, v in mp {
+		match k {
+			'hw' {
+				a.hw = v.str()
+			}
+			'fl' {
+				a.fl = v.str()
+			}
+			'def' {
+				a.def = v.arr().map(it.str().trim_space())
+			}
+			else {
+				eprintln('unknown key in AppShortdef: $k')
+			}
+		}
+	}
 }
 
 struct Hwi {
@@ -260,23 +302,30 @@ pub mut:
 fn (mut h Hwi) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	h.hw = mp['hw'].str()
-	mut prs := []Pr{}
-	if 'prs' in mp {
-		for pr in mp['prs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
+	for k, v in mp {
+		match k {
+			'hw' {
+				h.hw = v.str()
+			}
+			'prs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					h.prs << p
+				}
+			}
+			'altprs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					h.prs << p
+				}
+			}
+			else {
+				eprintln('unknown key in Hwi: $k')
+			}
 		}
 	}
-	if 'altprs' in mp {
-		for pr in mp['altprs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
-		}
-	}
-	h.prs = prs
 }
 
 struct Pr {
@@ -290,12 +339,25 @@ pub mut:
 fn (mut p Pr) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	p.ipa = mp['ipa'].str()
-	p.l = mp['l'].str()
-	p.mw = mp['mw'].str()
-	mut sound := Sound{}
-	sound.from_json(mp['sound'])
-	p.sound = sound
+	for k, v in mp {
+		match k {
+			'ipa' {
+				p.ipa = v.str()
+			}
+			'l' {
+				p.l = v.str()
+			}
+			'mw' {
+				p.mw = v.str()
+			}
+			'sound' {
+				p.sound.from_json(v)
+			}
+			else {
+				eprintln('unknown key in Pr: $k')
+			}
+		}
+	}
 }
 
 fn (prs []Pr) to_dictionary_result() dictionary.Pronunciation {
@@ -336,7 +398,16 @@ pub mut:
 fn (mut s Sound) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	s.audio = mp['audio'].str()
+	for k, v in mp {
+		match k {
+			'audio' {
+				s.audio = v.str()
+			}
+			else {
+				eprintln('unknown key in Sound: $k')
+			}
+		}
+	}
 }
 
 struct Inf {
@@ -350,25 +421,36 @@ pub mut:
 fn (mut i Inf) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	i.il = normalize(mp['il'].str())
-	i.inf = mp['if'].str()
-	i.ifc = mp['ifc'].str()
-	mut prs := []Pr{}
-	if 'prs' in mp {
-		for pr in mp['prs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
+	for k, v in mp {
+		match k {
+			'il' {
+				i.il = normalize(v.str())
+			}
+			'if' {
+				i.inf = v.str()
+			}
+			'ifc' {
+				i.ifc = v.str()
+			}
+			'prs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					i.prs << p
+				}
+			}
+			'altprs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					i.prs << p
+				}
+			}
+			else {
+				eprintln('unknown key in Inf: $k')
+			}
 		}
 	}
-	if 'altprs' in mp {
-		for pr in mp['altprs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
-		}
-	}
-	i.prs = prs
 }
 
 fn (ins []Inf) to_dictionary_result() []dictionary.Inflection {
@@ -395,43 +477,48 @@ pub mut:
 fn (mut u Uro) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	u.ure = mp['ure'].str()
-	mut prs := []Pr{}
-	if 'prs' in mp {
-		for pr in mp['prs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
+	for k, v in mp {
+		match k {
+			'ure' {
+				u.ure = v.str()
+			}
+			'prs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					u.prs << p
+				}
+			}
+			'altprs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					u.prs << p
+				}
+			}
+			'fl' {
+				u.fl = v.str()
+			}
+			'ins' {
+				u.ins = v.arr().map(fn (item json2.Any) Inf {
+					mut i := Inf{}
+					i.from_json(item)
+					return i
+				})
+			}
+			'gram' {
+				u.gram = v.str()
+			}
+			'utxt' {
+				u.utxt.from_json(v)
+			}
+			'lbs' {
+				u.lbs = v.arr().map(it.str())
+			}
+			else {
+				eprintln('unknown key in Uro: $k')
+			}
 		}
-	}
-	if 'altprs' in mp {
-		for pr in mp['altprs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
-		}
-	}
-	u.prs = prs
-	u.fl = mp['fl'].str()
-	if 'ins' in mp {
-		mut ins := []Inf{}
-		for inflection in mp['ins'].arr() {
-			mut i := Inf{}
-			i.from_json(inflection)
-			ins << i
-		}
-		u.ins = ins
-	}
-	u.gram = mp['gram'].str()
-
-	if 'utxt' in mp {
-		mut utxt := Utxt{}
-		utxt.from_json(mp['utxt'])
-		u.utxt = utxt
-	}
-
-	if 'lbs' in mp {
-		u.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
@@ -447,26 +534,35 @@ pub mut:
 fn (mut d Dro) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	d.drp = mp['drp'].str()
-	mut def := []DefinitionSection{}
-	for item in mp['def'].arr() {
-		mut ds := DefinitionSection{}
-		ds.from_json(item)
-		def << ds
-	}
-	d.def = def
-	d.gram = mp['gram'].str()
-	if 'vrs' in mp {
-		mut vrs := []Vr{}
-		for item in mp['vrs'].arr() {
-			mut vr := Vr{}
-			vr.from_json(item)
-			vrs << vr
+	for k, v in mp {
+		match k {
+			'drp' {
+				d.drp = v.str()
+			}
+			'def' {
+				d.def = v.arr().map(fn (item json2.Any) DefinitionSection {
+					mut d := DefinitionSection{}
+					d.from_json(item)
+					return d
+				})
+			}
+			'gram' {
+				d.gram = v.str()
+			}
+			'vrs' {
+				d.vrs = v.arr().map(fn (item json2.Any) Vr {
+					mut v := Vr{}
+					v.from_json(item)
+					return v
+				})
+			}
+			'lbs' {
+				d.lbs = v.arr().map(it.str())
+			}
+			else {
+				eprintln('unknown key in Dro: $k')
+			}
 		}
-		d.vrs = vrs
-	}
-	if 'lbs' in mp {
-		d.lbs = mp['lbs'].arr().map(it.str())
 	}
 }
 
@@ -477,27 +573,36 @@ pub mut:
 	prs []Pr
 }
 
-fn (mut v Vr) from_json(f json2.Any) {
+fn (mut vr Vr) from_json(f json2.Any) {
 	mp := f.as_map()
-	v.vl = mp['vl'].str()
-	v.va = mp['va'].str()
 
-	mut prs := []Pr{}
-	if 'prs' in mp {
-		for pr in mp['prs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
+	for k, v in mp {
+		match k {
+			'vl' {
+				vr.vl = v.str()
+			}
+			'va' {
+				vr.va = v.str()
+			}
+			'prs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					vr.prs << p
+				}
+			}
+			'altprs' {
+				for pr in v.arr() {
+					mut p := Pr{}
+					p.from_json(pr)
+					vr.prs << p
+				}
+			}
+			else {
+				eprintln('unknown key in Vr: $k')
+			}
 		}
 	}
-	if 'altprs' in mp {
-		for pr in mp['altprs'].arr() {
-			mut p := Pr{}
-			p.from_json(pr)
-			prs << p
-		}
-	}
-	v.prs = prs
 }
 
 struct DefinitionSection {
@@ -546,64 +651,71 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 fn (mut d DefinitionSection) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	if 'sls' in mp {
-		d.sls = mp['sls'].arr().map(it.str())
-	}
-	empty := Sense{}
-	mut sseq := []Sense{}
-	for seq in mp['sseq'].arr() {
-		mut sen := Sen{}
-		mut bs := empty
-		for item in seq.arr() {
-			arr := item.arr()
-			if arr.len != 2 {
-				eprintln('sseq contains array.len = $arr.len array')
+	for k, v in mp {
+		match k {
+			'sls' {
+				d.sls = v.arr().map(it.str())
 			}
-			label, obj := arr[0].str(), arr[1]
-			if label == 'bs' {
-				mut sense := Sense{}
-				sense.from_json(obj.as_map()['sense'])
-				bs = sense
-			} else if label == 'sense' {
-				mut sense := Sense{}
-				sense.from_json(obj)
-				if sen.sgram != '' && sense.sgram == '' {
-					sense.sgram = sen.sgram
-				}
-				if bs != empty {
-					sense.dt.text = '$bs.dt.text $sense.dt.text'
-				}
-				sseq << sense
-			} else if label == 'sen' {
-				sen.from_json(obj)
-			} else if label == 'pseq' {
-				mut bs2 := empty
-				for pseq in obj.arr() {
-					arr2 := pseq.arr()
-					label2, obj2 := arr2[0].str(), arr2[1]
-
-					if label2 == 'bs' {
-						mut sense := Sense{}
-						sense.from_json(obj2.as_map()['sense'])
-						bs2 = sense
-					} else if label2 == 'sense' {
-						mut sense := Sense{}
-						sense.from_json(obj2)
-						if bs2 != empty {
-							sense.dt.text = '$bs2.dt.text $sense.dt.text'
+			'sseq' {
+				empty := Sense{}
+				for seq in v.arr() {
+					mut sen := Sen{}
+					mut bs := empty
+					for item in seq.arr() {
+						arr := item.arr()
+						if arr.len != 2 {
+							eprintln('sseq contains array.len = $arr.len array')
 						}
+						label, obj := arr[0].str(), arr[1]
+						if label == 'bs' {
+							mut sense := Sense{}
+							sense.from_json(obj.as_map()['sense'] or { '' })
+							bs = sense
+						} else if label == 'sense' {
+							mut sense := Sense{}
+							sense.from_json(obj)
+							if sen.sgram != '' && sense.sgram == '' {
+								sense.sgram = sen.sgram
+							}
+							if bs != empty {
+								sense.dt.text = '$bs.dt.text $sense.dt.text'
+							}
+							d.sseq << sense
+						} else if label == 'sen' {
+							sen.from_json(obj)
+						} else if label == 'pseq' {
+							mut bs2 := empty
+							for pseq in obj.arr() {
+								arr2 := pseq.arr()
+								label2, obj2 := arr2[0].str(), arr2[1]
 
-						sseq << sense
-					} else {
-						eprintln('label = $label is not allowed in pseq')
+								if label2 == 'bs' {
+									mut sense := Sense{}
+									sense.from_json(obj2.as_map()['sense'] or { '' })
+									bs2 = sense
+								} else if label2 == 'sense' {
+									mut sense := Sense{}
+									sense.from_json(obj2)
+									if bs2 != empty {
+										sense.dt.text = '$bs2.dt.text $sense.dt.text'
+									}
+
+									d.sseq << sense
+								} else {
+									eprintln('label = $label is not allowed in pseq')
+								}
+							}
+						} else {
+							eprintln('label = $label is not allowed in sseq')
+						}
 					}
 				}
-			} else {
-				eprintln('label = $label is not allowed in sseq')
+			}
+			else {
+				eprintln('unknown key in DefinitionSection: $k')
 			}
 		}
 	}
-	d.sseq = sseq
 }
 
 struct Sen {
@@ -615,9 +727,18 @@ pub mut:
 fn (mut s Sen) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	s.sn = mp['sn'].str()
-	if 'sgram' in mp {
-		s.sgram = mp['sgram'].str()
+	for k, v in mp {
+		match k {
+			'sn' {
+				s.sn = v.str()
+			}
+			'sgram' {
+				s.sgram = v.str()
+			}
+			else {
+				eprintln('unknown key in Sen: $k')
+			}
+		}
 	}
 }
 
@@ -633,22 +754,27 @@ pub mut:
 fn (mut s Sense) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	s.sn = mp['sn'].str()
-	if 'dt' in mp {
-		mut dt := DefinitionText{}
-		dt.from_json(mp['dt'])
-		s.dt = dt
-	}
-	if 'sgram' in mp {
-		s.sgram = mp['sgram'].str()
-	}
-	if 'sdsense' in mp {
-		mut sdsense := Sdsense{}
-		sdsense.from_json(mp['sdsense'])
-		s.sdsense = sdsense
-	}
-	if 'lbs' in mp {
-		s.lbs = mp['lbs'].arr().map(it.str())
+	for k, v in mp {
+		match k {
+			'sn' {
+				s.sn = v.str()
+			}
+			'dt' {
+				s.dt.from_json(v)
+			}
+			'sgram' {
+				s.sgram = v.str()
+			}
+			'sdsense' {
+				s.sdsense.from_json(v)
+			}
+			'lbs' {
+				s.lbs = v.arr().map(it.str())
+			}
+			else {
+				eprintln('unknown key in Sense: $k')
+			}
+		}
 	}
 }
 
@@ -661,11 +787,18 @@ pub mut:
 fn (mut sd Sdsense) from_json(f json2.Any) {
 	mp := f.as_map()
 
-	sd.sd = mp['sd'].str()
-	if 'dt' in mp {
-		mut dt := DefinitionText{}
-		dt.from_json(mp['dt'])
-		sd.dt = dt
+	for k, v in mp {
+		match k {
+			'sd' {
+				sd.sd = v.str()
+			}
+			'dt' {
+				sd.dt.from_json(v)
+			}
+			else {
+				eprintln('unknown key in Sdsense: $k')
+			}
+		}
 	}
 }
 
@@ -692,9 +825,9 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 			for example in obj.arr() {
 				mp := example.as_map()
 				if wsgram == '' {
-					vis << mp['t'].str().trim_space()
+					vis << (mp['t'] or { '' }).str().trim_space()
 				} else {
-					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+					vis << '[$wsgram] ' + (mp['t'] or { '' }).str().trim_space()
 				}
 			}
 		} else if label == 'uns' {
@@ -734,7 +867,7 @@ fn (mut u UsageNote) from_json(f json2.Any) {
 			} else if label == 'vis' {
 				for example in obj.arr() {
 					mp := example.as_map()
-					vis << mp['t'].str().trim_space()
+					vis << (mp['t'] or { '' }).str().trim_space()
 				}
 			} else {
 				eprintln('unknown label $label in UsageNote')
@@ -789,9 +922,9 @@ fn (mut u Utxt) from_json(f json2.Any) {
 			for example in obj.arr() {
 				mp := example.as_map()
 				if wsgram == '' {
-					vis << mp['t'].str().trim_space()
+					vis << (mp['t'] or { '' }).str().trim_space()
 				} else {
-					vis << '[$wsgram] ' + mp['t'].str().trim_space()
+					vis << '[$wsgram] ' + (mp['t'] or { '' }).str().trim_space()
 				}
 			}
 		} else if label == 'uns' {
@@ -830,7 +963,7 @@ fn (mut s Snote) from_json(f json2.Any) {
 		} else if label == 'vis' {
 			for example in obj.arr() {
 				mp := example.as_map()
-				vis << mp['t'].str().trim_space()
+				vis << (mp['t'] or { '' }).str().trim_space()
 			}
 		} else {
 			eprintln('unknown label $label in Snote')
