@@ -31,19 +31,19 @@ pub fn parse_response(body string) ?Result {
 
 struct Entry {
 pub mut:
-	meta      Meta
-	hwi       Hwi
-	vrs       []Vr
-	hom       int
-	fl        string
-	lbs       []string
-	ins       []Inf
-	gram      string
-	def       []DefinitionSection
-	uros      []Uro
-	dros      []Dro
-	dxnls     []string
-	short_def []string
+	meta     Meta
+	hwi      Hwi
+	vrs      []Vr
+	hom      int
+	fl       string
+	lbs      []string
+	ins      []Inf
+	gram     string
+	def      []DefinitionSection
+	uros     []Uro
+	dros     []Dro
+	dxnls    []string
+	shortdef []string
 }
 
 fn (mut e Entry) from_json(f json2.Any) {
@@ -103,6 +103,12 @@ fn (mut e Entry) from_json(f json2.Any) {
 					v.from_json(item)
 					return v
 				})
+			}
+			'shortdef' {
+				e.shortdef = v.arr().map(it.str())
+			}
+			'dxnls' {
+				e.dxnls = v.arr().map(it.str())
 			}
 			else {
 				eprintln('unknown key in Entry: $k')
@@ -334,6 +340,7 @@ pub mut:
 	mw    string
 	l     string
 	sound Sound
+	pun   string
 }
 
 fn (mut p Pr) from_json(f json2.Any) {
@@ -352,6 +359,9 @@ fn (mut p Pr) from_json(f json2.Any) {
 			}
 			'sound' {
 				p.sound.from_json(v)
+			}
+			'pun' {
+				p.pun = v.str()
 			}
 			else {
 				eprintln('unknown key in Pr: $k')
@@ -749,6 +759,7 @@ pub mut:
 	sgram   string
 	sdsense Sdsense
 	lbs     []string
+	sls     []string
 }
 
 fn (mut s Sense) from_json(f json2.Any) {
@@ -770,6 +781,15 @@ fn (mut s Sense) from_json(f json2.Any) {
 			}
 			'lbs' {
 				s.lbs = v.arr().map(it.str())
+			}
+			'sls' {
+				s.sls = v.arr().map(it.str())
+			}
+			'sphrasev' {
+				// Do nothing
+			}
+			'snotebox' {
+				// Do nothing
 			}
 			else {
 				eprintln('unknown key in Sense: $k')
