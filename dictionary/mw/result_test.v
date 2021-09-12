@@ -71,6 +71,7 @@ fn test_parse_response() ? {
 				sound: mw.Sound{
 					audio: 'amorti02'
 				}
+				pun: ','
 			}, mw.Pr{
 				ipa: 'əˈmɔːˌtaɪz'
 				mw: ''
