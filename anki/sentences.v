@@ -19,16 +19,18 @@ pub fn to_sentences_card(result dictionary.Result) []Card {
 				word: result.word
 				dictionary: result.dictionary
 				web_url: result.web_url
-				entries: [dictionary.Entry{
-					id: entry.id
-					headword: entry.headword
-					function_label: entry.function_label
-					grammatical_note: entry.grammatical_note
-					pronunciation: entry.pronunciation
-					inflections: entry.inflections
-					definitions: [definition]
-					variants: entry.variants
-				}]
+				entries: [
+					dictionary.Entry{
+						id: entry.id
+						headword: entry.headword
+						function_label: entry.function_label
+						grammatical_note: entry.grammatical_note
+						pronunciation: entry.pronunciation
+						inflections: entry.inflections
+						definitions: [definition]
+						variants: entry.variants
+					},
+				]
 			})
 			cards << Card{front, back}
 		}

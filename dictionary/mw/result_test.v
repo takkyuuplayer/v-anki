@@ -61,26 +61,31 @@ fn test_parse_response() ? {
 		entries := res as []Entry
 
 		assert entries.len == 1
-		assert entries[0].vrs == [mw.Vr{
-			vl: 'also British'
-			va: 'am*or*tise'
-			prs: [mw.Pr{
-				ipa: 'ˈæmɚˌtaɪz'
-				mw: ''
-				l: ''
-				sound: mw.Sound{
-					audio: 'amorti02'
-				}
-				pun: ','
-			}, mw.Pr{
-				ipa: 'əˈmɔːˌtaɪz'
-				mw: ''
-				l: 'British'
-				sound: mw.Sound{
-					audio: ''
-				}
-			}]
-		}]
+		assert entries[0].vrs == [
+			mw.Vr{
+				vl: 'also British'
+				va: 'am*or*tise'
+				prs: [
+					mw.Pr{
+						ipa: 'ˈæmɚˌtaɪz'
+						mw: ''
+						l: ''
+						sound: mw.Sound{
+							audio: 'amorti02'
+						}
+						pun: ','
+					},
+					mw.Pr{
+						ipa: 'əˈmɔːˌtaɪz'
+						mw: ''
+						l: 'British'
+						sound: mw.Sound{
+							audio: ''
+						}
+					},
+				]
+			},
+		]
 	}
 	{
 		// example sentense with wsgram
@@ -188,12 +193,14 @@ fn test_parse_response() ? {
 		first := entries[0]
 		assert first.hwi == mw.Hwi{
 			hw: 'test'
-			prs: [mw.Pr{
-				mw: 'ˈtest'
-				sound: mw.Sound{
-					audio: 'test0001'
-				}
-			}]
+			prs: [
+				mw.Pr{
+					mw: 'ˈtest'
+					sound: mw.Sound{
+						audio: 'test0001'
+					}
+				},
+			]
 		}
 		assert first.def[0].sseq.len == 9
 		assert first.def[0].sseq[3] == mw.Sense{
@@ -230,10 +237,12 @@ fn test_to_dictionary_result() ? {
 					spelling: 'ˈtɛst'
 				}]
 			}
-			inflections: [dictionary.Inflection{
-				form_label: 'plural'
-				inflected_form: 'tests'
-			}]
+			inflections: [
+				dictionary.Inflection{
+					form_label: 'plural'
+					inflected_form: 'tests'
+				},
+			]
 			definitions: first.definitions
 		}
 		assert first.definitions.len == 6
@@ -247,33 +256,36 @@ fn test_to_dictionary_result() ? {
 				'an IQ <i>test</i>', '<i>test</i> questions',
 				'The <i>test</i> will be on [=the questions on the test will be about] the first three chapters of the book.',
 				'We <b><i>took/had a test</i></b> on European capitals. = (<i>Brit</i>) We <b><i>did a test</i></b> on European capitals.',
-				'The college relies on <b><i>test scores</i></b> in its admissions process.',
-			]
+				'The college relies on <b><i>test scores</i></b> in its admissions process.']
 		}
 
 		second := entries[1]
-		assert second.inflections == [dictionary.Inflection{
-			form_label: ''
-			inflected_form: 'tests'
-			pronunciation: dictionary.Pronunciation{
-				notation: ''
-				accents: []
-			}
-		}, dictionary.Inflection{
-			form_label: ''
-			inflected_form: 'tested'
-			pronunciation: dictionary.Pronunciation{
-				notation: ''
-				accents: []
-			}
-		}, dictionary.Inflection{
-			form_label: ''
-			inflected_form: 'testing'
-			pronunciation: dictionary.Pronunciation{
-				notation: ''
-				accents: []
-			}
-		}]
+		assert second.inflections == [
+			dictionary.Inflection{
+				form_label: ''
+				inflected_form: 'tests'
+				pronunciation: dictionary.Pronunciation{
+					notation: ''
+					accents: []
+				}
+			},
+			dictionary.Inflection{
+				form_label: ''
+				inflected_form: 'tested'
+				pronunciation: dictionary.Pronunciation{
+					notation: ''
+					accents: []
+				}
+			},
+			dictionary.Inflection{
+				form_label: ''
+				inflected_form: 'testing'
+				pronunciation: dictionary.Pronunciation{
+					notation: ''
+					accents: []
+				}
+			},
+		]
 	}
 	{
 		result := parse_response(load('testdata/learners/sheer.json')) ? as []Entry
@@ -299,12 +311,14 @@ fn test_to_dictionary_result() ? {
 				}]
 			}
 			inflections: []
-			definitions: [dictionary.Definition{
-				examples: [
-					'We now have greater <i>accountability</i> in the department. [=people in the department can now be held more responsible for what happens]',
-					'corporate <i>accountability</i>',
-				]
-			}]
+			definitions: [
+				dictionary.Definition{
+					examples: [
+						'We now have greater <i>accountability</i> in the department. [=people in the department can now be held more responsible for what happens]',
+						'corporate <i>accountability</i>',
+					]
+				},
+			]
 		}
 	}
 	{
@@ -313,26 +327,34 @@ fn test_to_dictionary_result() ? {
 		entries := result.to_dictionary_result('drop off', learners_web_url)
 
 		assert entries.len == 1
-		assert entries == [dictionary.Entry{
-			id: 'drop:2-drop off'
-			headword: 'drop off'
-			function_label: 'phrasal verb'
-			grammatical_note: ''
-			pronunciation: dictionary.Pronunciation{
-				notation: ''
-			}
-			definitions: [dictionary.Definition{
+		assert entries == [
+			dictionary.Entry{
+				id: 'drop:2-drop off'
+				headword: 'drop off'
+				function_label: 'phrasal verb'
 				grammatical_note: ''
-				sense: '<b>:</b> to decrease in amount'
-				examples: ['After the holidays, business usually <i>drops off</i>.']
-			}, dictionary.Definition{
-				grammatical_note: ''
-				sense: '<b>:</b> to fall asleep. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/drop">drop</a>'
-				examples: ['The baby tends to <i>drop off</i> after he eats.',
-					'She lay down and <b><i>dropped off to sleep</i></b>.',
+				pronunciation: dictionary.Pronunciation{
+					notation: ''
+				}
+				definitions: [
+					dictionary.Definition{
+						grammatical_note: ''
+						sense: '<b>:</b> to decrease in amount'
+						examples: [
+							'After the holidays, business usually <i>drops off</i>.',
+						]
+					},
+					dictionary.Definition{
+						grammatical_note: ''
+						sense: '<b>:</b> to fall asleep. &mdash; see also <a target="_blank" href="https://learnersdictionary.com/definition/drop">drop</a>'
+						examples: [
+							'The baby tends to <i>drop off</i> after he eats.',
+							'She lay down and <b><i>dropped off to sleep</i></b>.',
+						]
+					},
 				]
-			}]
-		}]
+			},
+		]
 	}
 	{
 		// dros: verge on/upon
@@ -340,25 +362,30 @@ fn test_to_dictionary_result() ? {
 		entries := result.to_dictionary_result('verge on', learners_web_url)
 
 		assert entries.len == 1
-		assert entries == [dictionary.Entry{
-			id: 'verge:2-verge on/upon'
-			headword: 'verge on/upon'
-			function_label: 'phrasal verb'
-			grammatical_note: ''
-			pronunciation: dictionary.Pronunciation{
-				notation: ''
-				accents: []
-			}
-			inflections: []
-			definitions: [dictionary.Definition{
+		assert entries == [
+			dictionary.Entry{
+				id: 'verge:2-verge on/upon'
+				headword: 'verge on/upon'
+				function_label: 'phrasal verb'
 				grammatical_note: ''
-				sense: '<b>:</b> to come near to being (something)'
-				examples: ['comedy that <i>verges on</i> farce [=comedy that is almost farce]',
-					'His accusations were <i>verging on</i> slander.',
+				pronunciation: dictionary.Pronunciation{
+					notation: ''
+					accents: []
+				}
+				inflections: []
+				definitions: [
+					dictionary.Definition{
+						grammatical_note: ''
+						sense: '<b>:</b> to come near to being (something)'
+						examples: [
+							'comedy that <i>verges on</i> farce [=comedy that is almost farce]',
+							'His accusations were <i>verging on</i> slander.',
+						]
+					},
 				]
-			}]
-			variants: []
-		}]
+				variants: []
+			},
+		]
 	}
 	{
 		// lbs in dros to grammatical_note
@@ -375,15 +402,18 @@ fn test_to_dictionary_result() ? {
 		assert entries.len == 2
 		assert entries[0].pronunciation == dictionary.Pronunciation{
 			notation: 'IPA'
-			accents: [dictionary.Accent{
-				label: ''
-				spelling: 'ˈæmɚˌtaɪz'
-				audio: ''
-			}, dictionary.Accent{
-				label: 'British'
-				spelling: 'əˈmɔːˌtaɪz'
-				audio: ''
-			}]
+			accents: [
+				dictionary.Accent{
+					label: ''
+					spelling: 'ˈæmɚˌtaɪz'
+					audio: ''
+				},
+				dictionary.Accent{
+					label: 'British'
+					spelling: 'əˈmɔːˌtaɪz'
+					audio: ''
+				},
+			]
 		}
 	}
 }
