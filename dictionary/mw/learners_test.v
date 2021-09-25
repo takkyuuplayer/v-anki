@@ -70,11 +70,13 @@ fn test_to_dictionary_result() ? {
 			grammatical_note: 'noncount'
 			pronunciation: dictionary.Pronunciation{
 				notation: 'IPA'
-				accents: [dictionary.Accent{
-					label: ''
-					spelling: 'ˈliːnnəs'
-					audio: ''
-				}]
+				accents: [
+					dictionary.Accent{
+						label: ''
+						spelling: 'ˈliːnnəs'
+						audio: ''
+					},
+				]
 			}
 		}
 	}
