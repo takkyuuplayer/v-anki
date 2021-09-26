@@ -634,17 +634,25 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 				}).join(', ')
 				meaning = '$label $meaning'
 			}
-			if sense.sdsense.sd != '' {
-				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
-				for example in sense.sdsense.dt.vis {
-					examples << to_html(example, web_url)
-				}
-			}
 			if sense.dt.uns.len > 0 {
 				for usage_note in sense.dt.uns {
 					meaning += ' &mdash; $usage_note.text'
 					for example in usage_note.vis {
 						examples << to_html(example, web_url)
+					}
+				}
+			}
+			if sense.sdsense.sd != '' {
+				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
+				for example in sense.sdsense.dt.vis {
+					examples << to_html(example, web_url)
+				}
+				if sense.sdsense.dt.uns.len > 0 {
+					for usage_note in sense.sdsense.dt.uns {
+						meaning += ' &mdash; $usage_note.text'
+						for example in usage_note.vis {
+							examples << to_html(example, web_url)
+						}
 					}
 				}
 			}

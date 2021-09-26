@@ -416,6 +416,14 @@ fn test_to_dictionary_result() ? {
 			]
 		}
 	}
+	{
+		// dt.sdsense exists
+		result := parse_response(load('testdata/learners/adherence.json')) ? as []Entry
+		entries := result.to_dictionary_result('adherence', learners_web_url)
+
+		assert entries[0].definitions[0].sense == '<b>:</b> the act of adhering; <i>especially</i> <b>:</b> the act of doing what is required by a rule, belief, etc.. &mdash; compare <a target="_blank" href="https://learnersdictionary.com/definition/adhesion">adhesion</a> &mdash; usually + <i>to</i>'
+		assert entries[0].definitions[0].examples.len == 2
+	}
 }
 
 fn test_candidate() {
