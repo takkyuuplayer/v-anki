@@ -15,7 +15,7 @@ pub fn new(dictionaries []dictionary.Dictionary, to_card ToCard) Runner {
 
 const concurrency = 10
 
-pub fn (r Runner) run(reader io.Reader, writer io.Writer, err_writer io.Writer) {
+pub fn (r Runner) run(reader io.Reader, mut writer io.Writer, mut err_writer io.Writer) {
 	mut br := io.new_buffered_reader(
 		reader: reader
 	)
@@ -35,13 +35,13 @@ pub fn (r Runner) run(reader io.Reader, writer io.Writer, err_writer io.Writer) 
 		ch <- true
 		wg.add(1)
 
-		go r.run_on_word(writer, err_writer, word, ch, mut wg, mut mu)
+		r.run_on_word(mut writer, mut err_writer, word, ch, mut wg, mut mu)
 	}
 
 	wg.wait()
 }
 
-fn (r Runner) run_on_word(writer io.Writer, err_writer io.Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
+fn (r Runner) run_on_word(mut writer io.Writer, mut err_writer io.Writer, word string, ch chan bool, mut wg sync.WaitGroup, mut mu sync.Mutex) {
 	defer {
 		_ = <-ch
 		wg.done()
