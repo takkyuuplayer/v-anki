@@ -3,7 +3,7 @@
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-Generate TSV to import into [Anki](https://apps.ankiweb.net/).
+Generate CSV to import into [Anki](https://apps.ankiweb.net/).
 
 ## Demo
 
@@ -32,13 +32,13 @@ v run main.v web
 
 ```bash
 source .env
-cat words.txt | anki cli > anki.tsv
+cat words.txt | anki cli > anki.csv
 ```
 
 #### example sentences card
 
 ```bash
-cat words.txt | anki cli -card=sentences > anki.tsv
+cat words.txt | anki cli -card=sentences > anki.csv
 ```
 
 ## Supported Dictionaries

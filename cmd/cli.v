@@ -10,7 +10,7 @@ import os
 pub fn new_cli_cmd() cli.Command {
 	mut c := cli.Command{
 		name: 'cli'
-		description: 'Prints tsv for Anki from STDIN'
+		description: 'Prints csv for Anki from STDIN'
 		usage: '<words.txt'
 		execute: cli
 	}
