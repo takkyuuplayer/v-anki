@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: repo/csvenc
-          repository: "https://github.com/takkyuuplayer/v-csvenc.git"
+          repository: takkyuuplayer/v-csvenc
       - name: v-csvenc installation
         run: |
           cd repo/csvenc
