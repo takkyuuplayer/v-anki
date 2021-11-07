@@ -32,6 +32,15 @@ jobs:
         run: |
           cd repo
           v vet .
+      - name: Checkout v-csvenc
+        uses: actions/checkout@v2
+        with:
+          path: repo/csvenc
+          repository: "https://github.com/takkyuuplayer/v-csvenc.git"
+      - name: v-csvenc installation
+        run: |
+          cd repo/csvenc
+          v install
       - name: v test .
         run: |
           cd repo
