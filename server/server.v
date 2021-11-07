@@ -62,7 +62,7 @@ pub fn (mut app App) lookup() vweb.Result {
 
 	app.set_content_type('text/tab-separated-values; charset=UTF-8')
 	app.add_header('X-Content-Type-Options', 'nosniff')
-	app.add_header('Content-Disposition', 'attachment; filename=anki.tsv')
+	app.add_header('Content-Disposition', 'attachment; filename=anki.csv')
 	app.add_header('Transfer-Encoding', 'chunked')
 	app.add_header('Connection', 'keep-alive')
 	app.write_header() or { eprintln(err) }
