@@ -3,6 +3,7 @@ module anki
 import dictionary
 import takkyuuplayer.streader
 import takkyuuplayer.bytebuf
+import encoding.csv
 
 fn test_run() ? {
 	{
@@ -16,9 +17,14 @@ fn test_run() ? {
 		runner.run(reader, writer, err_writer)
 
 		cards := to_basic_card(anki.result)
-		line := cards[0].front + '\t' + cards[0].back.replace_each(['\r', ' ', '\n', ' '])
 
-		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		mut csv_writer := csv.new_writer()
+		fields := [cards[0].front, cards[0].back.replace_each(['\r', ' ', '\n', ' '])]
+		for i := 0; i < 2; i++ { // 2 tests
+			csv_writer.write(fields) or {}
+		}
+
+		assert writer.str() == csv_writer.str()
 		assert err_writer.str() == ''
 	}
 	{
@@ -32,25 +38,30 @@ fn test_run() ? {
 		runner.run(reader, writer, err_writer)
 
 		cards := to_sentences_card(anki.result)
-		line := cards[0].front.replace_each(['\r', ' ', '\n', ' ']) + '\t' +
-			cards[0].back.replace_each(['\r', ' ', '\n', ' '])
+		fields := [
+			cards[0].front.replace_each(['\r', ' ', '\n', ' ']),
+			cards[0].back.replace_each(['\r', ' ', '\n', ' ']),
+		]
+		mut csv_writer := csv.new_writer()
+		for i := 0; i < 2 * 2 * 2; i++ { // 2 tests * 2 entries * 2 definitions
+			csv_writer.write(fields) or {}
+		}
 
-		assert writer.str() == [line + '\n'].repeat(cards.len * 2).join('')
+		assert writer.str() == csv_writer.str()
 		assert err_writer.str() == ''
 	}
 	{
 		// no entries
 		mut dictionaries := []dictionary.Dictionary{}
 		dictionaries << MockDictionary{dictionary.Result{}}
-		mut reader := streader.new('test\n\ntest')
+		mut reader := streader.new('test\n\napple')
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, to_basic_card)
 		runner.run(reader, writer, err_writer)
 
 		assert writer.str() == ''
-		line := 'NotFound\ttest'
-		assert err_writer.str() == [line + '\n'].repeat(2).join('')
+		assert err_writer.str() == 'NotFound,test\nNotFound,apple\n'
 	}
 }
 

@@ -5,3 +5,5 @@ main
 *.so
 *.dylib
 *.dll
+csvenc
+vls.log
