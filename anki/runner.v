@@ -27,8 +27,8 @@ pub fn (r Runner) run(reader io.Reader, mut writer io.Writer, mut err_writer io.
 	}
 	mut wg := sync.new_waitgroup()
 	mut mu := sync.new_mutex()
-	mut csv_writer := csvenc.new_writer(writer: writer) or { panic(err) }
-	mut csv_err_writer := csvenc.new_writer(writer: err_writer) or { panic(err) }
+	mut csv_writer := csvenc.new_writer(writer: writer, delimiter: `\t`) or { panic(err) }
+	mut csv_err_writer := csvenc.new_writer(writer: err_writer, delimiter: `\t`) or { panic(err) }
 
 	for {
 		word := (br.read_line() or { break }).trim_space()
