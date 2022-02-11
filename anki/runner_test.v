@@ -13,10 +13,10 @@ fn test_run() ? {
 		mut reader := streader.new('test\n\ntest')
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
-		runner := new(dictionaries, dictionary.ToLookup.word, to_basic_card)
+		runner := new(dictionaries, dictionary.ToLookup.word, to_all_in_one_card)
 		runner.run(reader, writer, err_writer)
 
-		cards := to_basic_card(anki.result)
+		cards := to_all_in_one_card(anki.result)
 
 		mut csv_writer := csv.new_writer()
 		csv_writer.delimiter = `\t`
@@ -59,7 +59,7 @@ fn test_run() ? {
 		mut reader := streader.new('test\n\napple')
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
-		runner := new(dictionaries, dictionary.ToLookup.word, to_basic_card)
+		runner := new(dictionaries, dictionary.ToLookup.word, to_all_in_one_card)
 		runner.run(reader, writer, err_writer)
 
 		assert writer.str() == ''

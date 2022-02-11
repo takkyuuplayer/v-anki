@@ -73,4 +73,3 @@ fn test_to_entries_card() {
 		assert cards.len == 0
 	}
 }
-

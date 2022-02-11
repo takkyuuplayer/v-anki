@@ -53,9 +53,7 @@ pub fn (mut app App) lookup() vweb.Result {
 		return app.redirect('/')
 	}
 
-	to_card := anki.to_card(anki.to_lookup[to_lookup], card_type) or {
-		return app.redirect('/')
-	}
+	to_card := anki.to_card(anki.to_lookup[to_lookup], card_type) or { return app.redirect('/') }
 	runner := rlock app.dictionaries {
 		anki.new(app.dictionaries, anki.to_lookup[to_lookup], to_card)
 	}

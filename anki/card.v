@@ -17,7 +17,7 @@ pub fn to_card(to_lookup dictionary.ToLookup, card_type string) ?ToCard {
 		return to_entries_card
 	} else if card_type == 'basic' {
 		if to_lookup == dictionary.ToLookup.word {
-			return to_basic_card
+			return to_all_in_one_card
 		} else {
 			return to_entries_card
 		}

@@ -15,7 +15,7 @@ pub fn to_sentences_card(result dictionary.Result) []Card {
 				continue
 			}
 			front := to_sentences_front(definition)
-			back := to_basic_back(dictionary.Result{
+			back := to_all_in_one_back(dictionary.Result{
 				word: result.word
 				dictionary: result.dictionary
 				web_url: result.web_url

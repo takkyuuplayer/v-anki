@@ -11,7 +11,7 @@ pub fn to_entries_card(result dictionary.Result) []Card {
 
 	for entry in result.entries {
 		front := result.word
-		back := to_basic_back(dictionary.Result{
+		back := to_all_in_one_back(dictionary.Result{
 			word: result.word
 			dictionary: result.dictionary
 			web_url: result.web_url
