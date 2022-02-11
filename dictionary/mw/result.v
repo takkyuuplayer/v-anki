@@ -117,15 +117,16 @@ fn (mut e Entry) from_json(f json2.Any) {
 	}
 }
 
-pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) string) []dictionary.Entry {
+pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupCondition, web_url fn (string) string) []dictionary.Entry {
 	mut dict_entries := []dictionary.Entry{}
-	is_phrase := word.split(' ').len > 1
+	is_phrase := condition.word.split(' ').len > 1
 	for entry in entries {
-		if !candidate(word, entry) {
+		if !candidate(condition.word, entry) {
 			continue
 		}
-		inflection_match := normalize(entry.hwi.hw) == word
-			|| entry.ins.any(normalize(it.inf) == word)
+		baseword := normalize(entry.hwi.hw)
+		inflection_match := baseword == condition.word
+			|| entry.ins.any(normalize(it.inf) == condition.word)
 		if !is_phrase || inflection_match {
 			pronunciation := entry.hwi.prs.to_dictionary_result()
 			mut notation := pronunciation.notation
@@ -141,7 +142,7 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 			}
 			dict_entries << dictionary.Entry{
 				id: entry.meta.id
-				headword: normalize(entry.hwi.hw)
+				headword: baseword
 				function_label: entry.fl
 				grammatical_note: entry.gram
 				pronunciation: dictionary.Pronunciation{
@@ -168,14 +169,15 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 			}
 		}
 		for dro in entry.dros {
-			if !match_phrasal_verb(word, dro.drp) {
-				continue
-			}
-			dict_entries << dictionary.Entry{
-				id: '$entry.meta.id-$dro.drp'
-				headword: dro.drp
-				function_label: dro.gram
-				definitions: dro.def.to_dictionary_result(web_url)
+			if (condition.to_lookup == dictionary.ToLookup.phrase && dro.drp.contains(baseword))
+				|| (condition.to_lookup == dictionary.ToLookup.word
+				&& match_phrase(condition.word, dro.drp)) {
+				dict_entries << dictionary.Entry{
+					id: '$entry.meta.id-$dro.drp'
+					headword: dro.drp
+					function_label: dro.gram
+					definitions: dro.def.to_dictionary_result(web_url)
+				}
 			}
 		}
 	}
@@ -995,7 +997,7 @@ fn candidate(word string, entry Entry) bool {
 	return word.to_lower() in entry.meta.stems
 }
 
-fn match_phrasal_verb(search string, drp string) bool {
+fn match_phrase(search string, drp string) bool {
 	if search == drp {
 		return true
 	}

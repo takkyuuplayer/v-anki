@@ -71,7 +71,7 @@ struct MockDictionary {
 	result dictionary.Result
 }
 
-fn (m MockDictionary) lookup(word string) ?dictionary.Result {
+fn (m MockDictionary) lookup(condition dictionary.LookupCondition) ?dictionary.Result {
 	return m.result
 }
 

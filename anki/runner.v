@@ -53,7 +53,7 @@ fn (r Runner) run_on_word(mut writer csvenc.Writer, mut err_writer csvenc.Writer
 	}
 
 	for dict in r.dictionaries {
-		lookedup := dict.lookup(word) or { continue }
+		lookedup := dict.lookup(dictionary.LookupCondition{ word: word }) or { continue }
 		cards := r.to_card(lookedup)
 		if cards.len == 0 {
 			continue

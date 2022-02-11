@@ -2,6 +2,7 @@ module mw
 
 import net.http
 import os
+import dictionary
 
 fn test_collegiate_lookup_request() {
 	collegiate := new_collegiate('dummy key')
@@ -22,7 +23,8 @@ fn test_to_dictionary_result() ? {
 		// basic
 		collegiate := new_collegiate('dummy key')
 		entries := parse_response(load('testdata/collegiate/test.json')) ?
-		res := collegiate.to_dictionary_result('test', entries)
+		res := collegiate.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
+			entries)
 
 		assert res.word == 'test'
 		assert res.dictionary == "Merriam-Webster's Collegiate Dictionary"
@@ -33,13 +35,15 @@ fn test_to_dictionary_result() ? {
 		// phrasal verb
 		collegiate := new_collegiate('dummy key')
 		entries := parse_response(load('testdata/collegiate/drop_off.json')) ?
-		res := collegiate.to_dictionary_result('drop off', entries)
+		res := collegiate.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
+			entries)
 
 		assert res.word == 'drop off'
 		assert res.dictionary == "Merriam-Webster's Collegiate Dictionary"
 		assert res.entries.len == 1
 
-		res2 := collegiate.to_dictionary_result('dropping off', entries)
+		res2 := collegiate.to_dictionary_result(dictionary.LookupCondition{ word: 'dropping off' },
+			entries)
 		assert res2.word == 'drop off'
 		assert res2.entries.len == 1
 	}

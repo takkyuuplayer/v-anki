@@ -223,7 +223,8 @@ fn test_to_dictionary_result() ? {
 	{
 		// basic
 		result := parse_response(load('testdata/learners/test.json')) ? as []Entry
-		entries := result.to_dictionary_result('test', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
+			learners_web_url)
 		assert entries.len == 3
 		first := entries.first()
 		assert first == dictionary.Entry{
@@ -289,14 +290,16 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		result := parse_response(load('testdata/learners/sheer.json')) ? as []Entry
-		entries := result.to_dictionary_result('sheer', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'sheer' },
+			learners_web_url)
 
 		assert entries[0].definitions[0].sense == '<i>always used before a noun</i>  &mdash; used to emphasize the large amount, size, or degree of something'
 	}
 	{
 		// uros
 		result := parse_response(load('testdata/learners/accountability.json')) ? as []Entry
-		entries := result.to_dictionary_result('accountability', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'accountability' },
+			learners_web_url)
 
 		assert entries.len == 2
 		assert entries[1] == dictionary.Entry{
@@ -324,7 +327,8 @@ fn test_to_dictionary_result() ? {
 	{
 		// dros
 		result := parse_response(load('testdata/learners/drop_off.json')) ? as []Entry
-		entries := result.to_dictionary_result('drop off', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
+			learners_web_url)
 
 		assert entries.len == 1
 		assert entries == [
@@ -359,7 +363,8 @@ fn test_to_dictionary_result() ? {
 	{
 		// dros: verge on/upon
 		result := parse_response(load('testdata/learners/verge_on.json')) ? as []Entry
-		entries := result.to_dictionary_result('verge on', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'verge on' },
+			learners_web_url)
 
 		assert entries.len == 1
 		assert entries == [
@@ -390,14 +395,16 @@ fn test_to_dictionary_result() ? {
 	{
 		// lbs in dros to grammatical_note
 		result := parse_response(load('testdata/learners/deathbed.json')) ? as []Entry
-		entries := result.to_dictionary_result('deathbed', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'deathbed' },
+			learners_web_url)
 
 		entries[1].grammatical_note == '<i>always used before a noun</i>.'
 	}
 	{
 		// Pronunciation in vrs
 		result := parse_response(load('testdata/learners/amortize.json')) ? as []Entry
-		entries := result.to_dictionary_result('amortize', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'amortize' },
+			learners_web_url)
 
 		assert entries.len == 2
 		assert entries[0].pronunciation == dictionary.Pronunciation{
@@ -419,7 +426,8 @@ fn test_to_dictionary_result() ? {
 	{
 		// dt.sdsense exists
 		result := parse_response(load('testdata/learners/adherence.json')) ? as []Entry
-		entries := result.to_dictionary_result('adherence', learners_web_url)
+		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'adherence' },
+			learners_web_url)
 
 		assert entries[0].definitions[0].sense == '<b>:</b> the act of adhering; <i>especially</i> <b>:</b> the act of doing what is required by a rule, belief, etc.. &mdash; compare <a target="_blank" href="https://learnersdictionary.com/definition/adhesion">adhesion</a> &mdash; usually + <i>to</i>'
 		assert entries[0].definitions[0].examples.len == 2
@@ -439,16 +447,16 @@ fn test_candidate() {
 
 fn test_match_phrasal_verb() {
 	{
-		assert match_phrasal_verb('drop off', 'drop off')
-		assert !match_phrasal_verb('drop on', 'drop off')
+		assert match_phrase('drop off', 'drop off')
+		assert !match_phrase('drop on', 'drop off')
 	}
 	{
-		assert match_phrasal_verb('verge on', 'verge on/upon')
-		assert match_phrasal_verb('verge upon', 'verge on/upon')
+		assert match_phrase('verge on', 'verge on/upon')
+		assert match_phrase('verge upon', 'verge on/upon')
 	}
 	{
-		assert !match_phrasal_verb('put up', 'put up with')
-		assert !match_phrasal_verb('put up with', 'put up')
+		assert !match_phrase('put up', 'put up with')
+		assert !match_phrase('put up with', 'put up')
 	}
 }
 
