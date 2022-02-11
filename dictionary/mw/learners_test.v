@@ -85,6 +85,20 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
+		// phrase
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/test.json')) ?
+		res := learners.to_dictionary_result(dictionary.LookupCondition{
+			word: 'test'
+			to_lookup: dictionary.ToLookup.phrase
+		}, entries)
+
+		assert res.word == 'put (someone or something) to the test'
+		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
+		assert res.web_url == 'https://learnersdictionary.com/definition/test'
+		assert res.entries.len == 4
+	}
+	{
 		// Suggestions
 		learners := new_learners('dummy key')
 		suggestions := parse_response(load('testdata/learners/furnitura.json')) ?

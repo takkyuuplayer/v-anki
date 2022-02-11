@@ -127,7 +127,7 @@ pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupConditi
 		baseword := normalize(entry.hwi.hw)
 		inflection_match := baseword == condition.word
 			|| entry.ins.any(normalize(it.inf) == condition.word)
-		if !is_phrase || inflection_match {
+		if condition.to_lookup == dictionary.ToLookup.word && (!is_phrase || inflection_match) {
 			pronunciation := entry.hwi.prs.to_dictionary_result()
 			mut notation := pronunciation.notation
 			mut accents := pronunciation.accents
