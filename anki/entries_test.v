@@ -14,52 +14,19 @@ fn test_to_entries_card() {
 					id: 'id'
 					headword: 'headword'
 					function_label: 'function_label'
-					grammatical_note: 'grammatical_note'
-					pronunciation: dictionary.Pronunciation{
-						notation: 'IPA'
-						accents: [
-							dictionary.Accent{
-								label: 'US'
-								spelling: 'spelling'
-							},
-						].repeat(2)
-					}
-					inflections: [
-						dictionary.Inflection{
-							form_label: 'form_label'
-							inflected_form: 'inflected_form'
-							pronunciation: dictionary.Pronunciation{
-								notation: 'IPA'
-								accents: [
-									dictionary.Accent{
-										label: 'US'
-										spelling: 'spelling'
-									},
-								].repeat(2)
-							}
-						},
-					].repeat(2)
-					definitions: [
-						dictionary.Definition{
-							grammatical_note: 'grammatical_note'
-							sense: 'sense'
-							examples: [
-								'example sentence',
-							].repeat(5)
-						},
-					].repeat(3)
-					variants: [
-						dictionary.Variant{
-							label: 'variant_label'
-							variant: 'variant'
-						},
-					].repeat(2)
 				},
-			].repeat(2)
+				dictionary.Entry{
+					id: 'id'
+					headword: 'headword2'
+					function_label: 'function_label'
+				},
+			]
 		}
 
 		cards := to_entries_card(result)
 		assert cards.len == 2
+		assert cards[0].front == 'headword'
+		assert cards[1].front == 'headword2'
 	}
 	{
 		// empty

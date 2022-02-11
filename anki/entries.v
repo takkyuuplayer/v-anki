@@ -10,7 +10,7 @@ pub fn to_entries_card(result dictionary.Result) []Card {
 	mut cards := []Card{}
 
 	for entry in result.entries {
-		front := result.word
+		front := entry.headword
 		back := to_all_in_one_back(dictionary.Result{
 			word: result.word
 			dictionary: result.dictionary
