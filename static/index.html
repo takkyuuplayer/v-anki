@@ -39,6 +39,17 @@
         <div class="col-8">
           <form action="/cards" method="POST">
             <div class="mb-3">
+              <label for="cardType" class="form-label">Look up for</label>
+              <select
+                name="toLookup"
+                class="form-select"
+                aria-label="to lookup"
+              >
+                <option value="word">words, derivative words, and phrases exactly matching the search word.</option>
+                <option value="phrase">phrases including the search word.</option>
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="cardType" class="form-label">Card Type</label>
               <select
                 name="cardType"
@@ -46,7 +57,7 @@
                 aria-label="card type"
               >
                 <option value="basic">Basic</option>
-                <option value="sentences">Sentence</option>
+                <option value="sentences">Sentences</option>
               </select>
             </div>
             <div class="mb-3">
@@ -55,7 +66,7 @@
                 class="form-control"
                 name="words"
                 rows="5"
-                placeholder="words and phrases separated by new lines"
+                placeholder="words or phrases separated by new lines"
               ></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Download TSV</button>

@@ -7,11 +7,6 @@ pub enum ToLookup {
 	phrase
 }
 
-pub const to_lookup = {
-	'word':   ToLookup.word
-	'phrase': ToLookup.phrase
-}
-
 pub struct LookupCondition {
 pub:
 	word      string

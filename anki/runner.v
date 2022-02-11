@@ -5,13 +5,19 @@ import dictionary
 import sync
 import csvenc
 
+pub const to_lookup = {
+	'word':   dictionary.ToLookup.word
+	'phrase': dictionary.ToLookup.phrase
+}
+
 struct Runner {
 	dictionaries []dictionary.Dictionary
+	to_lookup    dictionary.ToLookup
 	to_card      ToCard
 }
 
-pub fn new(dictionaries []dictionary.Dictionary, to_card ToCard) Runner {
-	return Runner{dictionaries, to_card}
+pub fn new(dictionaries []dictionary.Dictionary, to_lookup dictionary.ToLookup, to_card ToCard) Runner {
+	return Runner{dictionaries, to_lookup, to_card}
 }
 
 const concurrency = 10
@@ -53,7 +59,9 @@ fn (r Runner) run_on_word(mut writer csvenc.Writer, mut err_writer csvenc.Writer
 	}
 
 	for dict in r.dictionaries {
-		lookedup := dict.lookup(dictionary.LookupCondition{ word: word }) or { continue }
+		lookedup := dict.lookup(dictionary.LookupCondition{ word: word, to_lookup: r.to_lookup }) or {
+			continue
+		}
 		cards := r.to_card(lookedup)
 		if cards.len == 0 {
 			continue

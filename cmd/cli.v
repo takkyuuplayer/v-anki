@@ -20,15 +20,22 @@ pub fn new_cli_cmd() cli.Command {
 		default_value: ['basic']
 		description: 'the type of card to generate. basic|sentences'
 	})
+	c.add_flag(cli.Flag{
+		flag: .string
+		name: 'to_lookup'
+		default_value: ['word']
+		description: 'word|phrase'
+	})
 
 	return c
 }
 
 fn cli(c cli.Command) ? {
 	card_type := c.flags.get_string('card') ?
+	to_lookup := c.flags.get_string('to_lookup') ?
 
-	if card_type !in anki.to_card {
-		return error('Only -card=basic|sentences is supported')
+	if to_lookup !in anki.to_lookup {
+		return error('Only -to_lookup=word|phrase is supported')
 	}
 
 	env := envars.load() ?
@@ -37,8 +44,8 @@ fn cli(c cli.Command) ? {
 	dictionaries << mw.new_learners(env.mw_learners_key)
 	dictionaries << mw.new_collegiate(env.mw_collegiate_key)
 
-	to_card := anki.to_card[card_type]
-	runner := anki.new(dictionaries, to_card)
+	to_card := anki.to_card(anki.to_lookup[to_lookup], card_type) ?
+	runner := anki.new(dictionaries, anki.to_lookup[to_lookup], to_card)
 	mut input := os.stdin()
 	mut output := os.stdout()
 	mut err_output := os.stderr()

@@ -47,13 +47,17 @@ pub fn new_app(dictionaries []dictionary.Dictionary) &App {
 pub fn (mut app App) lookup() vweb.Result {
 	words := app.form['words']
 	card_type := app.form['cardType']
+	to_lookup := app.form['toLookup']
 
-	if card_type !in anki.to_card {
+	if to_lookup !in anki.to_lookup {
 		return app.redirect('/')
 	}
 
+	to_card := anki.to_card(anki.to_lookup[to_lookup], card_type) or {
+		return app.redirect('/')
+	}
 	runner := rlock app.dictionaries {
-		anki.new(app.dictionaries, anki.to_card[card_type])
+		anki.new(app.dictionaries, anki.to_lookup[to_lookup], to_card)
 	}
 
 	mut input := streader.new(words)
