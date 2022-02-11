@@ -126,7 +126,7 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 		}
 		inflection_match := normalize(entry.hwi.hw) == word
 			|| entry.ins.any(normalize(it.inf) == word)
-		if !is_phrase {
+		if !is_phrase || inflection_match {
 			pronunciation := entry.hwi.prs.to_dictionary_result()
 			mut notation := pronunciation.notation
 			mut accents := pronunciation.accents
@@ -165,16 +165,6 @@ pub fn (entries []Entry) to_dictionary_result(word string, web_url fn (string) s
 					inflections: uro.ins.to_dictionary_result()
 					definitions: uro.utxt.to_dictionary_result(web_url)
 				}
-			}
-		} else if inflection_match {
-			dict_entries << dictionary.Entry{
-				id: entry.meta.id
-				headword: normalize(entry.hwi.hw)
-				function_label: entry.fl
-				grammatical_note: entry.gram
-				pronunciation: entry.hwi.prs.to_dictionary_result()
-				inflections: entry.ins.to_dictionary_result()
-				definitions: entry.def.to_dictionary_result(web_url)
 			}
 		}
 		for dro in entry.dros {
