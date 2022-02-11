@@ -169,9 +169,9 @@ pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupConditi
 			}
 		}
 		for dro in entry.dros {
-			if (condition.to_lookup == dictionary.ToLookup.phrase && dro.drp.contains(baseword))
-				|| (condition.to_lookup == dictionary.ToLookup.word
-				&& match_phrase(condition.word, dro.drp)) {
+			if (!is_phrase && condition.to_lookup == dictionary.ToLookup.phrase
+				&& dro.drp.contains(baseword))
+				|| match_phrase(condition.word, dro.drp) {
 				dict_entries << dictionary.Entry{
 					id: '$entry.meta.id-$dro.drp'
 					headword: dro.drp
