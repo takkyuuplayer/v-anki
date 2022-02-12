@@ -23,7 +23,8 @@ fn test_to_dictionary_result() ? {
 		// basic
 		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/test.json')) ?
-		res := learners.to_dictionary_result('test', entries)
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
+			entries)
 
 		assert res.word == 'test'
 		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
@@ -34,7 +35,8 @@ fn test_to_dictionary_result() ? {
 		// uros
 		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/accountability.json')) ?
-		res := learners.to_dictionary_result('accountability', entries)
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'accountability' },
+			entries)
 
 		assert res.word == 'accountable'
 		assert res.entries.len == 2
@@ -43,7 +45,8 @@ fn test_to_dictionary_result() ? {
 		// dros
 		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/drop_off.json')) ?
-		res := learners.to_dictionary_result('drop off', entries)
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
+			entries)
 
 		assert res.word == 'drop off'
 		assert res.entries.len == 1
@@ -52,7 +55,8 @@ fn test_to_dictionary_result() ? {
 		// uns
 		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/lean.json')) ?
-		res := learners.to_dictionary_result('lean', entries)
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'lean' },
+			entries)
 
 		assert res.entries.len == 3
 		assert res.entries[0].definitions.len == 7
@@ -81,10 +85,25 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
+		// phrase
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/test.json')) ?
+		res := learners.to_dictionary_result(dictionary.LookupCondition{
+			word: 'test'
+			to_lookup: dictionary.ToLookup.phrase
+		}, entries)
+
+		assert res.word == 'put (someone or something) to the test'
+		assert res.dictionary == "Merriam-Webster's Learner's Dictionary"
+		assert res.web_url == 'https://learnersdictionary.com/definition/test'
+		assert res.entries.len == 4
+	}
+	{
 		// Suggestions
 		learners := new_learners('dummy key')
 		suggestions := parse_response(load('testdata/learners/furnitura.json')) ?
-		res := learners.to_dictionary_result('furnitura', suggestions)
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'furnitura' },
+			suggestions)
 
 		assert res == dictionary.Result{
 			word: 'furnitura'

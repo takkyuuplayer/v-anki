@@ -2,7 +2,7 @@ module anki
 
 import dictionary
 
-fn test_to_basic_card() {
+fn test_to_all_in_one_card() {
 	{
 		// basic
 		result := dictionary.Result{
@@ -58,7 +58,7 @@ fn test_to_basic_card() {
 			].repeat(2)
 		}
 
-		cards := to_basic_card(result)
+		cards := to_all_in_one_card(result)
 		assert cards[0].front == 'word'
 		assert cards[0].back.len > 0
 		// dump(card[0].back)
@@ -71,7 +71,7 @@ fn test_to_basic_card() {
 			dictionary: 'dictionary'
 			web_url: 'https://example.com/test'
 		}
-		cards := to_basic_card(result)
+		cards := to_all_in_one_card(result)
 
 		assert cards.len == 0
 	}

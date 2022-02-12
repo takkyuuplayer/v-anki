@@ -39,6 +39,17 @@
         <div class="col-8">
           <form action="/cards" method="POST">
             <div class="mb-3">
+              <label for="cardType" class="form-label">Look up for</label>
+              <select
+                name="toLookup"
+                class="form-select"
+                aria-label="to lookup"
+              >
+                <option value="word">matching words, derivative words &amp; phrases.</option>
+                <option value="phrase">phrases &amp; idioms using the search word/phrase.</option>
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="cardType" class="form-label">Card Type</label>
               <select
                 name="cardType"
