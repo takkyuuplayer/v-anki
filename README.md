@@ -9,7 +9,7 @@ Generate TSV to import into [Anki](https://apps.ankiweb.net/).
 
 https://tp-v-anki.herokuapp.com/
 
-![Demo](demo.gif)
+![Demo](demo.mov)
 
 ## Usage
 
