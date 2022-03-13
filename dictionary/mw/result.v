@@ -649,7 +649,11 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 				}
 			}
 			if sense.dt.snote.t.len > 0 {
-				meaning += "\nNote: $sense.dt.snote.t"
+				meaning += if meaning.len == 0 {
+					sense.dt.snote.t
+				} else {
+					"\nNote: $sense.dt.snote.t"
+				}
 			}
 			if sense.dt.snote.vis.len > 0 {
 				for example in sense.dt.snote.vis {

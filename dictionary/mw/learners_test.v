@@ -93,7 +93,7 @@ fn test_to_dictionary_result() ? {
 
 		assert res.word == 'elude'
 		assert res.entries.len == 1
-		assert res.entries[0].definitions[3].sense.starts_with('\nNote: When something')
+		assert res.entries[0].definitions[3].sense.starts_with('When something')
 		assert res.entries[0].definitions[3].examples.len == 1
 	}
 	{
