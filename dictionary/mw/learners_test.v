@@ -85,6 +85,18 @@ fn test_to_dictionary_result() ? {
 		}
 	}
 	{
+		// snote
+		learners := new_learners('dummy key')
+		entries := parse_response(load('testdata/learners/elude.json')) ?
+		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'elude' },
+			entries)
+
+		assert res.word == 'elude'
+		assert res.entries.len == 1
+		assert res.entries[0].definitions[3].sense.starts_with('When something')
+		assert res.entries[0].definitions[3].examples.len == 1
+	}
+	{
 		// phrase
 		learners := new_learners('dummy key')
 		entries := parse_response(load('testdata/learners/test.json')) ?

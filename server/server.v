@@ -69,7 +69,7 @@ pub fn (mut app App) lookup() vweb.Result {
 	app.add_header('Connection', 'keep-alive')
 	app.write_header() or { eprintln(err) }
 
-	runner.run(input, output, err_output)
+	runner.run(input, mut output, mut err_output)
 	if err_output.str().len > 0 {
 		output.write(err_output.str().bytes()) or { eprintln(err) }
 	}

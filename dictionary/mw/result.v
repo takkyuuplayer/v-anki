@@ -648,6 +648,18 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 					}
 				}
 			}
+			if sense.dt.snote.t.len > 0 {
+				meaning += if meaning.len == 0 {
+					sense.dt.snote.t
+				} else {
+					'\nNote: $sense.dt.snote.t'
+				}
+			}
+			if sense.dt.snote.vis.len > 0 {
+				for example in sense.dt.snote.vis {
+					examples << to_html(example, web_url)
+				}
+			}
 			definitions << dictionary.Definition{
 				grammatical_note: sense.sgram
 				sense: to_html(meaning, web_url)

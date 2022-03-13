@@ -14,7 +14,7 @@ fn test_run() ? {
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, dictionary.ToLookup.word, to_all_in_one_card)
-		runner.run(reader, writer, err_writer)
+		runner.run(reader, mut writer, mut err_writer)
 
 		cards := to_all_in_one_card(anki.result)
 
@@ -36,7 +36,7 @@ fn test_run() ? {
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, dictionary.ToLookup.word, to_sentences_card)
-		runner.run(reader, writer, err_writer)
+		runner.run(reader, mut writer, mut err_writer)
 
 		cards := to_sentences_card(anki.result)
 		fields := [
@@ -60,7 +60,7 @@ fn test_run() ? {
 		mut writer := bytebuf.Buffer{}
 		mut err_writer := bytebuf.Buffer{}
 		runner := new(dictionaries, dictionary.ToLookup.word, to_all_in_one_card)
-		runner.run(reader, writer, err_writer)
+		runner.run(reader, mut writer, mut err_writer)
 
 		assert writer.str() == ''
 		assert err_writer.str() == 'NotFound\ttest\nNotFound\tapple\n'
