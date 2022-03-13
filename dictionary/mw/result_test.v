@@ -148,16 +148,6 @@ fn test_parse_response() ? {
 		assert entries[0].def[0].sseq[0].lbs == ['always used before a noun']
 	}
 	{
-		// snotes in definition
-		res := mw.parse_response(load('testdata/learners/elude.json')) ?
-		entries := res as []Entry
-
-		assert entries.len == 1
-		dump(entries)
-		assert false
-		assert entries[0].def[0].sseq[0].lbs == ['always used before a noun']
-	}
-	{
 		// phrasal verb
 		res := mw.parse_response(load('testdata/learners/drop_off.json')) ?
 		entries := res as []Entry
