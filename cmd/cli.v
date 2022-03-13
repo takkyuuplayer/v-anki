@@ -49,7 +49,7 @@ fn cli(c cli.Command) ? {
 	mut input := os.stdin()
 	mut output := os.stdout()
 	mut err_output := os.stderr()
-	runner.run(input, output, err_output)
+	runner.run(input, mut output, mut err_output)
 	output.flush()
 	err_output.flush()
 }
