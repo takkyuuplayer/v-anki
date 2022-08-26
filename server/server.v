@@ -30,7 +30,7 @@ fn (mut app App) write_header() ? {
 	resp.set_version(.v1_1)
 	resp.set_status(http.status_from_int(200))
 
-	app.Context.conn.write(resp.bytes()) ?
+	app.Context.conn.write(resp.bytes())?
 }
 
 pub fn new_app(dictionaries []dictionary.Dictionary) &App {
