@@ -129,8 +129,8 @@ pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupConditi
 			|| entry.ins.any(normalize(it.inf) == condition.word)
 		if condition.to_lookup == dictionary.ToLookup.word && (!is_phrase || inflection_match) {
 			pronunciation := entry.hwi.prs.to_dictionary_result()
-			mut notation := pronunciation.notation
-			mut accents := pronunciation.accents
+			mut notation := pronunciation.notation.clone()
+			mut accents := pronunciation.accents.clone()
 			for vr in entry.vrs {
 				pr := vr.prs.to_dictionary_result()
 				if notation == '' && pr.notation != '' {

@@ -5,7 +5,8 @@ Module {
 	license: ''
 	dependencies: [
         'takkyuuplayer.bytebuf',
-        'takkyuuplayer.streader',
         'takkyuuplayer.chunkio',
+        'takkyuuplayer.csvenc',
+        'takkyuuplayer.streader',
     ]
 }
