@@ -3,7 +3,7 @@ module anki
 import io
 import dictionary
 import sync
-import csvenc
+import takkyuuplayer.csvenc
 
 pub const to_lookup = {
 	'word':   dictionary.ToLookup.word
