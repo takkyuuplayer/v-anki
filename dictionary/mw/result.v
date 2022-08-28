@@ -7,7 +7,7 @@ import dictionary
 type Result = []Entry | []string
 
 pub fn parse_response(body string) ?Result {
-	raw_entries := json2.raw_decode(body) ?
+	raw_entries := json2.raw_decode(body)?
 
 	arr := raw_entries.arr()
 

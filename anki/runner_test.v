@@ -18,8 +18,7 @@ fn test_run() ? {
 
 		cards := to_all_in_one_card(anki.result)
 
-		mut csv_writer := csv.new_writer()
-		csv_writer.delimiter = `\t`
+		mut csv_writer := csv.new_writer(delimiter: `\t`)
 		fields := [cards[0].front, cards[0].back.replace_each(['\r', ' ', '\n', ' '])]
 		for i := 0; i < 2; i++ { // 2 tests
 			csv_writer.write(fields) or {}
@@ -43,8 +42,7 @@ fn test_run() ? {
 			cards[0].front.replace_each(['\r', ' ', '\n', ' ']),
 			cards[0].back.replace_each(['\r', ' ', '\n', ' ']),
 		]
-		mut csv_writer := csv.new_writer()
-		csv_writer.delimiter = `\t`
+		mut csv_writer := csv.new_writer(delimiter: `\t`)
 		for i := 0; i < 2 * 2 * 2; i++ { // 2 tests * 2 entries * 2 definitions
 			csv_writer.write(fields) or {}
 		}
