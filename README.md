@@ -1,7 +1,8 @@
 # v-anki
 
 ![CI](https://github.com/takkyuuplayer/v-anki/workflows/CI/badge.svg)
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
+
 
 Generate TSV to import into [Anki](https://apps.ankiweb.net/).
 
