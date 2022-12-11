@@ -130,5 +130,5 @@ fn test_to_dictionary_result() ! {
 }
 
 fn load(testfile string) string {
-	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
+	return os.read_file('./dictionary/mw/${testfile}') or { panic(err) }
 }
