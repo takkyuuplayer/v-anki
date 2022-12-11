@@ -14,5 +14,5 @@ pub:
 }
 
 interface Dictionary {
-	lookup(LookupCondition) ?Result
+	lookup(LookupCondition) !Result
 }

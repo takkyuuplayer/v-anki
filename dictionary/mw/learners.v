@@ -16,9 +16,9 @@ pub fn new_learners(api_key string) Learners {
 	}
 }
 
-pub fn (l Learners) lookup(condition dictionary.LookupCondition) ?dictionary.Result {
+pub fn (l Learners) lookup(condition dictionary.LookupCondition) !dictionary.Result {
 	req := l.lookup_request(condition.word)
-	return l.to_dictionary_result(condition, parse_response((req.do()?).body)?)
+	return l.to_dictionary_result(condition, parse_response((req.do()!).body)!)
 }
 
 pub fn (l Learners) lookup_request(word string) http.Request {
