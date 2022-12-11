@@ -4,10 +4,10 @@ import dictionary.mw
 import os
 import dictionary
 
-fn test_parse_response() ? {
+fn test_parse_response() ! {
 	{
 		// basic
-		res := mw.parse_response(load('testdata/learners/test.json'))?
+		res := mw.parse_response(load('testdata/learners/test.json'))!
 
 		assert res is []Entry
 
@@ -57,7 +57,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// with vrs
-		res := mw.parse_response(load('testdata/learners/amortize.json'))?
+		res := mw.parse_response(load('testdata/learners/amortize.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 1
@@ -89,7 +89,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// example sentense with wsgram
-		res := mw.parse_response(load('testdata/learners/hemorrhage.json'))?
+		res := mw.parse_response(load('testdata/learners/hemorrhage.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 2
@@ -103,7 +103,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// entry in uros
-		res := mw.parse_response(load('testdata/learners/accountability.json'))?
+		res := mw.parse_response(load('testdata/learners/accountability.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 1
@@ -120,7 +120,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// no def section
-		res := mw.parse_response(load('testdata/learners/deathbed.json'))?
+		res := mw.parse_response(load('testdata/learners/deathbed.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 1
@@ -131,7 +131,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// meta.app_shortdef.def is not an object
-		res := mw.parse_response(load('testdata/learners/junk.json'))?
+		res := mw.parse_response(load('testdata/learners/junk.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 8
@@ -141,7 +141,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// lbs in sense
-		res := mw.parse_response(load('testdata/learners/sheer.json'))?
+		res := mw.parse_response(load('testdata/learners/sheer.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 3
@@ -149,7 +149,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// phrasal verb
-		res := mw.parse_response(load('testdata/learners/drop_off.json'))?
+		res := mw.parse_response(load('testdata/learners/drop_off.json'))!
 		entries := res as []Entry
 
 		assert entries.len == 2
@@ -161,7 +161,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// when not found
-		res := mw.parse_response(load('testdata/learners/abcabcabcabc.json'))?
+		res := mw.parse_response(load('testdata/learners/abcabcabcabc.json'))!
 
 		assert res is []string
 
@@ -171,7 +171,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// when suggested
-		res := mw.parse_response(load('testdata/learners/furnitura.json'))?
+		res := mw.parse_response(load('testdata/learners/furnitura.json'))!
 
 		assert res is []string
 
@@ -182,7 +182,7 @@ fn test_parse_response() ? {
 	}
 	{
 		// collegiate
-		res := mw.parse_response(load('testdata/collegiate/test.json'))?
+		res := mw.parse_response(load('testdata/collegiate/test.json'))!
 
 		assert res is []Entry
 
@@ -219,10 +219,10 @@ fn test_parse_response() ? {
 	}
 }
 
-fn test_to_dictionary_result() ? {
+fn test_to_dictionary_result() ! {
 	{
 		// basic
-		result := parse_response(load('testdata/learners/test.json'))? as []Entry
+		result := parse_response(load('testdata/learners/test.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
 			learners_web_url)
 		assert entries.len == 3
@@ -289,7 +289,7 @@ fn test_to_dictionary_result() ? {
 		]
 	}
 	{
-		result := parse_response(load('testdata/learners/sheer.json'))? as []Entry
+		result := parse_response(load('testdata/learners/sheer.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'sheer' },
 			learners_web_url)
 
@@ -297,7 +297,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// uros
-		result := parse_response(load('testdata/learners/accountability.json'))? as []Entry
+		result := parse_response(load('testdata/learners/accountability.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'accountability' },
 			learners_web_url)
 
@@ -326,7 +326,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// dros
-		result := parse_response(load('testdata/learners/drop_off.json'))? as []Entry
+		result := parse_response(load('testdata/learners/drop_off.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
 			learners_web_url)
 
@@ -362,7 +362,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// dros: verge on/upon
-		result := parse_response(load('testdata/learners/verge_on.json'))? as []Entry
+		result := parse_response(load('testdata/learners/verge_on.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'verge on' },
 			learners_web_url)
 
@@ -394,7 +394,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// lbs in dros to grammatical_note
-		result := parse_response(load('testdata/learners/deathbed.json'))? as []Entry
+		result := parse_response(load('testdata/learners/deathbed.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'deathbed' },
 			learners_web_url)
 
@@ -402,7 +402,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// Pronunciation in vrs
-		result := parse_response(load('testdata/learners/amortize.json'))? as []Entry
+		result := parse_response(load('testdata/learners/amortize.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'amortize' },
 			learners_web_url)
 
@@ -425,7 +425,7 @@ fn test_to_dictionary_result() ? {
 	}
 	{
 		// dt.sdsense exists
-		result := parse_response(load('testdata/learners/adherence.json'))? as []Entry
+		result := parse_response(load('testdata/learners/adherence.json'))! as []Entry
 		entries := result.to_dictionary_result(dictionary.LookupCondition{ word: 'adherence' },
 			learners_web_url)
 
@@ -461,5 +461,5 @@ fn test_match_phrasal_verb() {
 }
 
 fn load(testfile string) string {
-	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
+	return os.read_file('./dictionary/mw/${testfile}') or { panic(err) }
 }

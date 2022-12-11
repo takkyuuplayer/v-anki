@@ -18,11 +18,11 @@ fn test_collegiate_web_url() {
 	assert url == 'https://www.merriam-webster.com/dictionary/put%20up'
 }
 
-fn test_to_dictionary_result() ? {
+fn test_to_dictionary_result() ! {
 	{
 		// basic
 		collegiate := new_collegiate('dummy key')
-		entries := parse_response(load('testdata/collegiate/test.json'))?
+		entries := parse_response(load('testdata/collegiate/test.json'))!
 		res := collegiate.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
 			entries)
 
@@ -34,7 +34,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// phrasal verb
 		collegiate := new_collegiate('dummy key')
-		entries := parse_response(load('testdata/collegiate/drop_off.json'))?
+		entries := parse_response(load('testdata/collegiate/drop_off.json'))!
 		res := collegiate.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
 			entries)
 
@@ -50,5 +50,5 @@ fn test_to_dictionary_result() ? {
 }
 
 fn load(testfile string) string {
-	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
+	return os.read_file('./dictionary/mw/${testfile}') or { panic(err) }
 }

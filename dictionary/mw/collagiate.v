@@ -16,9 +16,9 @@ pub fn new_collegiate(api_key string) Collegiate {
 	}
 }
 
-pub fn (c Collegiate) lookup(condition dictionary.LookupCondition) ?dictionary.Result {
+pub fn (c Collegiate) lookup(condition dictionary.LookupCondition) !dictionary.Result {
 	req := c.lookup_request(condition.word)
-	return c.to_dictionary_result(condition, parse_response((req.do()?).body)?)
+	return c.to_dictionary_result(condition, parse_response((req.do()!).body)!)
 }
 
 pub fn (c Collegiate) lookup_request(word string) http.Request {

@@ -18,11 +18,11 @@ fn test_learners_web_url() {
 	assert url == 'https://learnersdictionary.com/definition/put%20up'
 }
 
-fn test_to_dictionary_result() ? {
+fn test_to_dictionary_result() ! {
 	{
 		// basic
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/test.json'))?
+		entries := parse_response(load('testdata/learners/test.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'test' },
 			entries)
 
@@ -34,7 +34,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// uros
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/accountability.json'))?
+		entries := parse_response(load('testdata/learners/accountability.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'accountability' },
 			entries)
 
@@ -44,7 +44,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// dros
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/drop_off.json'))?
+		entries := parse_response(load('testdata/learners/drop_off.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'drop off' },
 			entries)
 
@@ -54,7 +54,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// uns
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/lean.json'))?
+		entries := parse_response(load('testdata/learners/lean.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'lean' },
 			entries)
 
@@ -87,7 +87,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// snote
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/elude.json'))?
+		entries := parse_response(load('testdata/learners/elude.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'elude' },
 			entries)
 
@@ -99,7 +99,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// phrase
 		learners := new_learners('dummy key')
-		entries := parse_response(load('testdata/learners/test.json'))?
+		entries := parse_response(load('testdata/learners/test.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{
 			word: 'test'
 			to_lookup: dictionary.ToLookup.phrase
@@ -113,7 +113,7 @@ fn test_to_dictionary_result() ? {
 	{
 		// Suggestions
 		learners := new_learners('dummy key')
-		suggestions := parse_response(load('testdata/learners/furnitura.json'))?
+		suggestions := parse_response(load('testdata/learners/furnitura.json'))!
 		res := learners.to_dictionary_result(dictionary.LookupCondition{ word: 'furnitura' },
 			suggestions)
 
@@ -130,5 +130,5 @@ fn test_to_dictionary_result() ? {
 }
 
 fn load(testfile string) string {
-	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
+	return os.read_file('./dictionary/mw/${testfile}') or { panic(err) }
 }
