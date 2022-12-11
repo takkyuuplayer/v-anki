@@ -28,7 +28,7 @@ fn get(key string, default string) string {
 fn must_get(key string) !string {
 	env := os.getenv(key)
 	if env == '' {
-		return error('ENV{$key} does not exist')
+		return error('ENV{${key}} does not exist')
 	}
 	return env
 }

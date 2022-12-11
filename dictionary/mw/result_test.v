@@ -461,5 +461,5 @@ fn test_match_phrasal_verb() {
 }
 
 fn load(testfile string) string {
-	return os.read_file('./dictionary/mw/$testfile') or { panic(err) }
+	return os.read_file('./dictionary/mw/${testfile}') or { panic(err) }
 }

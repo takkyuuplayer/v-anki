@@ -111,7 +111,7 @@ fn (mut e Entry) from_json(f json2.Any) {
 				e.dxnls = v.arr().map(it.str())
 			}
 			else {
-				eprintln('unknown key in Entry: $k')
+				eprintln('unknown key in Entry: ${k}')
 			}
 		}
 	}
@@ -158,7 +158,7 @@ pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupConditi
 			}
 			for uro in entry.uros {
 				dict_entries << dictionary.Entry{
-					id: '$entry.meta.id-$uro.ure'
+					id: '${entry.meta.id}-${uro.ure}'
 					headword: normalize(uro.ure)
 					function_label: uro.fl
 					grammatical_note: uro.gram
@@ -173,7 +173,7 @@ pub fn (entries []Entry) to_dictionary_result(condition dictionary.LookupConditi
 				&& dro.drp.contains(baseword))
 				|| match_phrase(condition.word, dro.drp) {
 				dict_entries << dictionary.Entry{
-					id: '$entry.meta.id-$dro.drp'
+					id: '${entry.meta.id}-${dro.drp}'
 					headword: dro.drp
 					function_label: dro.gram
 					definitions: dro.def.to_dictionary_result(web_url)
@@ -233,7 +233,7 @@ fn (mut m Meta) from_json(f json2.Any) {
 				m.offensive = v.bool()
 			}
 			else {
-				eprintln('unknown key in Meta: $k')
+				eprintln('unknown key in Meta: ${k}')
 			}
 		}
 	}
@@ -257,7 +257,7 @@ fn (mut t Target) from_json(f json2.Any) {
 				t.tsrc = v.str()
 			}
 			else {
-				eprintln('unknown key in Target: $k')
+				eprintln('unknown key in Target: ${k}')
 			}
 		}
 	}
@@ -285,7 +285,7 @@ fn (mut a AppShortdef) from_json(f json2.Any) {
 				a.def = v.arr().map(it.str().trim_space())
 			}
 			else {
-				eprintln('unknown key in AppShortdef: $k')
+				eprintln('unknown key in AppShortdef: ${k}')
 			}
 		}
 	}
@@ -320,7 +320,7 @@ fn (mut h Hwi) from_json(f json2.Any) {
 				}
 			}
 			else {
-				eprintln('unknown key in Hwi: $k')
+				eprintln('unknown key in Hwi: ${k}')
 			}
 		}
 	}
@@ -356,7 +356,7 @@ fn (mut p Pr) from_json(f json2.Any) {
 				p.pun = v.str()
 			}
 			else {
-				eprintln('unknown key in Pr: $k')
+				eprintln('unknown key in Pr: ${k}')
 			}
 		}
 	}
@@ -406,7 +406,7 @@ fn (mut s Sound) from_json(f json2.Any) {
 				s.audio = v.str()
 			}
 			else {
-				eprintln('unknown key in Sound: $k')
+				eprintln('unknown key in Sound: ${k}')
 			}
 		}
 	}
@@ -449,7 +449,7 @@ fn (mut i Inf) from_json(f json2.Any) {
 				}
 			}
 			else {
-				eprintln('unknown key in Inf: $k')
+				eprintln('unknown key in Inf: ${k}')
 			}
 		}
 	}
@@ -518,7 +518,7 @@ fn (mut u Uro) from_json(f json2.Any) {
 				u.lbs = v.arr().map(it.str())
 			}
 			else {
-				eprintln('unknown key in Uro: $k')
+				eprintln('unknown key in Uro: ${k}')
 			}
 		}
 	}
@@ -562,7 +562,7 @@ fn (mut d Dro) from_json(f json2.Any) {
 				d.lbs = v.arr().map(it.str())
 			}
 			else {
-				eprintln('unknown key in Dro: $k')
+				eprintln('unknown key in Dro: ${k}')
 			}
 		}
 	}
@@ -601,7 +601,7 @@ fn (mut vr Vr) from_json(f json2.Any) {
 				}
 			}
 			else {
-				eprintln('unknown key in Vr: $k')
+				eprintln('unknown key in Vr: ${k}')
 			}
 		}
 	}
@@ -622,26 +622,26 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 
 			if sense.lbs.len > 0 {
 				label := sense.lbs.map(fn (l string) string {
-					return '<i>$l</i>'
+					return '<i>${l}</i>'
 				}).join(', ')
-				meaning = '$label $meaning'
+				meaning = '${label} ${meaning}'
 			}
 			if sense.dt.uns.len > 0 {
 				for usage_note in sense.dt.uns {
-					meaning += ' &mdash; $usage_note.text'
+					meaning += ' &mdash; ${usage_note.text}'
 					for example in usage_note.vis {
 						examples << to_html(example, web_url)
 					}
 				}
 			}
 			if sense.sdsense.sd != '' {
-				meaning += '; <i>$sense.sdsense.sd</i> $sense.sdsense.dt.text'
+				meaning += '; <i>${sense.sdsense.sd}</i> ${sense.sdsense.dt.text}'
 				for example in sense.sdsense.dt.vis {
 					examples << to_html(example, web_url)
 				}
 				if sense.sdsense.dt.uns.len > 0 {
 					for usage_note in sense.sdsense.dt.uns {
-						meaning += ' &mdash; $usage_note.text'
+						meaning += ' &mdash; ${usage_note.text}'
 						for example in usage_note.vis {
 							examples << to_html(example, web_url)
 						}
@@ -652,7 +652,7 @@ fn (sections []DefinitionSection) to_dictionary_result(web_url fn (string) strin
 				meaning += if meaning.len == 0 {
 					sense.dt.snote.t
 				} else {
-					'\nNote: $sense.dt.snote.t'
+					'\nNote: ${sense.dt.snote.t}'
 				}
 			}
 			if sense.dt.snote.vis.len > 0 {
@@ -686,7 +686,7 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 					for item in seq.arr() {
 						arr := item.arr()
 						if arr.len != 2 {
-							eprintln('sseq contains array.len = $arr.len array')
+							eprintln('sseq contains array.len = ${arr.len} array')
 						}
 						label, obj := arr[0].str(), arr[1]
 						if label == 'bs' {
@@ -700,7 +700,7 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 								sense.sgram = sen.sgram
 							}
 							if bs != empty {
-								sense.dt.text = '$bs.dt.text $sense.dt.text'
+								sense.dt.text = '${bs.dt.text} ${sense.dt.text}'
 							}
 							d.sseq << sense
 						} else if label == 'sen' {
@@ -719,22 +719,22 @@ fn (mut d DefinitionSection) from_json(f json2.Any) {
 									mut sense := Sense{}
 									sense.from_json(obj2)
 									if bs2 != empty {
-										sense.dt.text = '$bs2.dt.text $sense.dt.text'
+										sense.dt.text = '${bs2.dt.text} ${sense.dt.text}'
 									}
 
 									d.sseq << sense
 								} else {
-									eprintln('label = $label is not allowed in pseq')
+									eprintln('label = ${label} is not allowed in pseq')
 								}
 							}
 						} else {
-							eprintln('label = $label is not allowed in sseq')
+							eprintln('label = ${label} is not allowed in sseq')
 						}
 					}
 				}
 			}
 			else {
-				eprintln('unknown key in DefinitionSection: $k')
+				eprintln('unknown key in DefinitionSection: ${k}')
 			}
 		}
 	}
@@ -758,7 +758,7 @@ fn (mut s Sen) from_json(f json2.Any) {
 				s.sgram = v.str()
 			}
 			else {
-				eprintln('unknown key in Sen: $k')
+				eprintln('unknown key in Sen: ${k}')
 			}
 		}
 	}
@@ -804,7 +804,7 @@ fn (mut s Sense) from_json(f json2.Any) {
 				// Do nothing
 			}
 			else {
-				eprintln('unknown key in Sense: $k')
+				eprintln('unknown key in Sense: ${k}')
 			}
 		}
 	}
@@ -828,7 +828,7 @@ fn (mut sd Sdsense) from_json(f json2.Any) {
 				sd.dt.from_json(v)
 			}
 			else {
-				eprintln('unknown key in Sdsense: $k')
+				eprintln('unknown key in Sdsense: ${k}')
 			}
 		}
 	}
@@ -859,7 +859,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 				if wsgram == '' {
 					vis << (mp['t'] or { '' }).str().trim_space()
 				} else {
-					vis << '[$wsgram] ' + (mp['t'] or { '' }).str().trim_space()
+					vis << '[${wsgram}] ' + (mp['t'] or { '' }).str().trim_space()
 				}
 			}
 		} else if label == 'uns' {
@@ -875,7 +875,7 @@ fn (mut d DefinitionText) from_json(f json2.Any) {
 		} else if label in ['ca', 'srefs', 'urefs'] {
 			// nothing to do
 		} else {
-			eprintln('unknown label $label in DefinitionText')
+			eprintln('unknown label ${label} in DefinitionText')
 		}
 	}
 
@@ -902,7 +902,7 @@ fn (mut u UsageNote) from_json(f json2.Any) {
 					vis << (mp['t'] or { '' }).str().trim_space()
 				}
 			} else {
-				eprintln('unknown label $label in UsageNote')
+				eprintln('unknown label ${label} in UsageNote')
 			}
 		}
 	}
@@ -926,7 +926,7 @@ fn (u Utxt) to_dictionary_result(web_url fn (string) string) []dictionary.Defini
 	mut examples := u.vis.map(to_html(it, web_url))
 	if u.uns.len > 0 {
 		for usage_note in u.uns {
-			meaning += ' &mdash; $usage_note.text'
+			meaning += ' &mdash; ${usage_note.text}'
 			for example in usage_note.vis {
 				examples << to_html(example, web_url)
 			}
@@ -956,7 +956,7 @@ fn (mut u Utxt) from_json(f json2.Any) {
 				if wsgram == '' {
 					vis << (mp['t'] or { '' }).str().trim_space()
 				} else {
-					vis << '[$wsgram] ' + (mp['t'] or { '' }).str().trim_space()
+					vis << '[${wsgram}] ' + (mp['t'] or { '' }).str().trim_space()
 				}
 			}
 		} else if label == 'uns' {
@@ -968,7 +968,7 @@ fn (mut u Utxt) from_json(f json2.Any) {
 		} else if label == 'snotebox' {
 			// nothing to do
 		} else {
-			eprintln('unknown label $label in Utxt.')
+			eprintln('unknown label ${label} in Utxt.')
 		}
 	}
 
@@ -998,7 +998,7 @@ fn (mut s Snote) from_json(f json2.Any) {
 				vis << (mp['t'] or { '' }).str().trim_space()
 			}
 		} else {
-			eprintln('unknown label $label in Snote')
+			eprintln('unknown label ${label} in Snote')
 		}
 	}
 	s.t = texts.join('. ')
@@ -1082,9 +1082,9 @@ fn to_html(sentence string, web_url fn (string) string) string {
 		} else if tag.contains('|') {
 			segments := tag.split('|')
 			link_word := segments[1].split(':')[0]
-			res += '<a target="_blank" href="${web_url(link_word)}">$link_word</a>'
+			res += '<a target="_blank" href="${web_url(link_word)}">${link_word}</a>'
 		} else {
-			eprintln('unknown tag: $tag in sentence: $sentence')
+			eprintln('unknown tag: ${tag} in sentence: ${sentence}')
 		}
 		before, after = after.before('{'), after.all_after('{')
 	}

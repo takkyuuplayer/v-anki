@@ -22,6 +22,6 @@ pub fn to_card(to_lookup dictionary.ToLookup, card_type string) !ToCard {
 			return to_entries_card
 		}
 	} else {
-		return error('$card_type not found')
+		return error('${card_type} not found')
 	}
 }
