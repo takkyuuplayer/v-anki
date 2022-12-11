@@ -17,8 +17,8 @@ pub fn new_web_cmd() cli.Command {
 	return c
 }
 
-fn web(c cli.Command) ? {
-	env := envars.load()?
+fn web(c cli.Command) ! {
+	env := envars.load()!
 
 	mut dictionaries := []dictionary.Dictionary{}
 	dictionaries << mw.new_learners(env.mw_learners_key)

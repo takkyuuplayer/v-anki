@@ -5,7 +5,7 @@ import takkyuuplayer.streader
 import takkyuuplayer.bytebuf
 import encoding.csv
 
-fn test_run() ? {
+fn test_run() ! {
 	{
 		// basic
 		mut dictionaries := []dictionary.Dictionary{}
@@ -69,7 +69,7 @@ struct MockDictionary {
 	result dictionary.Result
 }
 
-fn (m MockDictionary) lookup(condition dictionary.LookupCondition) ?dictionary.Result {
+fn (m MockDictionary) lookup(condition dictionary.LookupCondition) !dictionary.Result {
 	return m.result
 }
 
