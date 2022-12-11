@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout V
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: vlang/v
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: repo
       - name: Build V
@@ -32,15 +32,6 @@ jobs:
         run: |
           cd repo
           v vet .
-      - name: Checkout v-csvenc
-        uses: actions/checkout@v2
-        with:
-          path: repo/csvenc
-          repository: takkyuuplayer/v-csvenc
-      - name: v-csvenc installation
-        run: |
-          cd repo/csvenc
-          v install
       - name: v test .
         run: |
           cd repo
