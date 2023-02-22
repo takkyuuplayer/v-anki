@@ -12,7 +12,7 @@ pub fn new_cli_cmd() cli.Command {
 		name: 'cli'
 		description: 'Prints tsv for Anki from STDIN'
 		usage: '<words.txt'
-		execute: cli
+		execute: run
 	}
 	c.add_flag(cli.Flag{
 		flag: .string
@@ -30,7 +30,7 @@ pub fn new_cli_cmd() cli.Command {
 	return c
 }
 
-fn cli(c cli.Command) ! {
+fn run(c cli.Command) ! {
 	card_type := c.flags.get_string('card')!
 	to_lookup := c.flags.get_string('to_lookup')!
 
