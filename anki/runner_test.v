@@ -19,9 +19,11 @@ fn test_run() ! {
 		cards := to_all_in_one_card(anki.result)
 
 		mut csv_writer := csv.new_writer(delimiter: `\t`)
+		csv_writer.write(['#separator:tab'])!
+		csv_writer.write(['#html:true'])!
 		fields := [cards[0].front, cards[0].back.replace_each(['\r', ' ', '\n', ' '])]
 		for i := 0; i < 2; i++ { // 2 tests
-			csv_writer.write(fields) or {}
+			csv_writer.write(fields)!
 		}
 
 		assert writer.str() == csv_writer.str()
@@ -43,8 +45,10 @@ fn test_run() ! {
 			cards[0].back.replace_each(['\r', ' ', '\n', ' ']),
 		]
 		mut csv_writer := csv.new_writer(delimiter: `\t`)
+		csv_writer.write(['#separator:tab'])!
+		csv_writer.write(['#html:true'])!
 		for i := 0; i < 2 * 2 * 2; i++ { // 2 tests * 2 entries * 2 definitions
-			csv_writer.write(fields) or {}
+			csv_writer.write(fields)!
 		}
 
 		assert writer.str() == csv_writer.str()
@@ -60,7 +64,7 @@ fn test_run() ! {
 		runner := new(dictionaries, dictionary.ToLookup.word, to_all_in_one_card)
 		runner.run(reader, mut writer, mut err_writer)
 
-		assert writer.str() == ''
+		assert writer.str() == '#separator:tab\n#html:true\n'
 		assert err_writer.str() == 'NotFound\ttest\nNotFound\tapple\n'
 	}
 }
