@@ -36,6 +36,9 @@ pub fn (r Runner) run(reader io.Reader, mut writer io.Writer, mut err_writer io.
 	mut csv_writer := csvenc.new_writer(writer: writer, delimiter: `\t`) or { panic(err) }
 	mut csv_err_writer := csvenc.new_writer(writer: err_writer, delimiter: `\t`) or { panic(err) }
 
+	csv_writer.write(['#separator:tab']) or {}
+	csv_writer.write(['#html:true']) or {}
+
 	for {
 		word := (br.read_line() or { break }).trim_space()
 		if word == '' {
