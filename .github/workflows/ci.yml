@@ -76,3 +76,4 @@ jobs:
         with:
           service: "v-anki"
           image: "takkyuuplayer/vanki:latest"
+          region: "asia-northeast1"
