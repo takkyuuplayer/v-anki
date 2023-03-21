@@ -73,4 +73,5 @@ jobs:
           workload_identity_provider: "projects/619579999657/locations/global/workloadIdentityPools/v-anki/attribute.repository/takkyuuplayer/v-anki"
           service_account: "v-anki@takkyuuplayer.iam.gserviceaccount.com"
       - run: |
-          gcloud run deploy v-anki --image=takkyuuplayer/vanki:latest --region=asia-northeast1 --allow-unauthenticated
+          gcloud run deploy v-anki --image=takkyuuplayer/vanki:latest --region=asia-northeast1 --allow-unauthenticated \
+            --service-account="v-anki@takkyuuplayer.iam.gserviceaccount.com"
