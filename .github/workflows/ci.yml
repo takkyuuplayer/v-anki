@@ -8,55 +8,69 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  test:
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout V
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: vlang/v
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
+  #       with:
+  #         path: repo
+  #     - name: Build V
+  #       run: |
+  #         make
+  #         sudo ./v symlink
+  #     - name: v fmt
+  #       run: |
+  #         cd repo
+  #         v fmt -w .
+  #         git diff --exit-code
+  #     - name: v vet .
+  #       run: |
+  #         cd repo
+  #         v vet .
+  #     - name: v test .
+  #       run: |
+  #         cd repo
+  #         v install
+  #         v test .
+  #     - name: v build .
+  #       run: |
+  #         cd repo
+  #         v install
+  #         v -prod .
+  # docker:
+  #   runs-on: ubuntu-latest
+  #   needs: [test]
+  #   steps:
+  #     - uses: docker/setup-qemu-action@v2
+  #     - uses: docker/setup-buildx-action@v2
+  #     - uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Build and push
+  #       id: docker_build
+  #       uses: docker/build-push-action@v3
+  #       with:
+  #         push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
+  #         tags: takkyuuplayer/vanki:latest
+  #     - name: Image digest
+  #       run: echo ${{ steps.docker_build.outputs.digest }}
+  deploy:
     runs-on: ubuntu-latest
+    # needs: [test, docker]
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
-      - name: Checkout V
-        uses: actions/checkout@v3
+      - uses: "actions/checkout@v3"
+      - uses: "google-github-actions/auth@v1"
         with:
-          repository: vlang/v
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          path: repo
-      - name: Build V
-        run: |
-          make
-          sudo ./v symlink
-      - name: v fmt
-        run: |
-          cd repo
-          v fmt -w .
-          git diff --exit-code
-      - name: v vet .
-        run: |
-          cd repo
-          v vet .
-      - name: v test .
-        run: |
-          cd repo
-          v install
-          v test .
-      - name: v build .
-        run: |
-          cd repo
-          v install
-          v -prod .
-  docker:
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
-      - uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v3
-        with:
-          push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
-          tags: takkyuuplayer/vanki:latest
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          workload_identity_provider: "projects/619579999657/locations/global/workloadIdentityPools/v-anki/attribute.repository/takkyuuplayer/v-anki"
+          service_account: "v-anki@takkyuuplayer.iam.gserviceaccount.com"
+      - run: |
+          gcloud run deploy v-anki --image=takkyuuplayer/vanki:latest --region=asia-northeast1 --allow-unauthenticated
